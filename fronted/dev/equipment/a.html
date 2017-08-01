@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<script>
+    var data1 = [
+        [["性质"],['自主','合资','进口']],
+        [["级别"],["A","A0","A00", "B","BUS", "C" , "D", "Pickup"]],
+        [["车身"],["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"]],
+        [["燃油"],[ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "汽油/CNG"]]
+    ];
+
+    var data= [
+        { "性质": ['自主','合资','进口']},
+        { "级别": ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"]},
+        { "车身": ["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"]},
+        { "燃油": [ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "汽油/CNG"]}
+    ];
+        for(var tmp in data){
+            for(var item in data[tmp]){
+//                console.log(item);//“键名”
+                for(var key in data[tmp][item]){
+//                    console.log(data[tmp][item][key]);
+                }
+            }
+        }
+//    console.log(data);
+
+    var conditionKey= ['性质','级别','车身','燃油'];
+    var conditionValue=[['自主','合资','进口'],["A","A0","A00", "B","BUS", "C" , "D", "Pickup"],["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"],[ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "汽油/CNG"]];
+    var conditions=[conditionKey,conditionValue];
+    console.log(conditionKey);
+    console.log(conditionValue);
+    console.log(conditions);
+
+    var arr = [{
+        "name1": "ZYTX",
+        "age": "Y13xG_4wQnOWK1QwJLgg11d0pS4hewePU95UHtpMl3eE81uS74NC-6zu-Rtnw4Ix",
+        "gender": "AAAAAA.doc"
+    }, {
+        "name1": "ZYTA",
+        "age": "Y13xG_4wQnOWK1QwJLgg11d0pS4hewePU95UHtpMl3eE81uS74NC-6zu-Rtnw4Ix",
+        "gender": "BBBBBB.doc"
+    }, {
+        "name1": "ZDTX",
+        "age": "Y13xG_4wQnOWK1QwJLgg11d0pS4hewePU95UHtpMl3eE81uS74NC-6zu-Rtnw4Ix",
+        "gender": "CCCCCC.doc"
+    }, {
+        "name1": "ZYTX",
+        "age": "Y13xG_4wQnOWK1QwJLgg11d0pS4hewePU95UHtpMl3eE81uS74NC-6zu-Rtnw4Ix",
+        "gender": "AAAAAA.doc"
+    }];
+    var hash = {};
+    arr = arr.reduce(function(item, next) {
+        hash[next.name1] ? '' : hash[next.name1] = true && item.push(next);
+        return item
+    }, [])
+    console.log(arr);
+
+    var array = [
+        {
+            age: 20,
+            name: 'U',
+            cnName:  '路飞'
+        }, {
+            age: 25,
+            name: 'D',
+            cnName:  '乌索普'
+        }, {
+            age: 12,
+            name: 'Z',
+            cnName:  '涛'
+        }, {
+            age: 34,
+            name: 'T',
+            cnName: '罗宾'
+        }
+    ];
+
+    function sortArr(arr, sortStr) {
+        // 排序函数（用以返回次序关系）
+        var bySort = function() {
+            return function(o, p) {  // p 是 o 的下一项
+                var a = o[sortStr],
+                        b = p[sortStr];
+                if (isNaN(a)) {  // 非数字排序
+                    return a.localeCompare(b);  // 用本地特定顺序来比较(支持中文)
+                } else {
+                    if (a === b) {
+                        return 0;
+                    } else {
+                        return a > b ? 1 : -1;
+                    }
+                }
+            }
+        };
+        for (var i = 0; i < arr.length; i++) {
+            //console.log(arr[i][sortStr])
+            arr.sort(bySort(arr[i][sortStr]));
+        }
+    }
+
+    //    sortArr(array, 'age');  // 按 age 排序
+    sortArr(array, 'name');  // 按 name 排序
+    //    sortArr(array, 'cnName');  // 按 中文名 cnName 排序
+    console.log(array);
+
+</script>
+</body>
+</html>
