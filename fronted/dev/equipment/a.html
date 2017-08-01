@@ -5,8 +5,23 @@
     <title></title>
 </head>
 <body>
-
+<div class="add"></div>
 <script>
+    var arry=[
+        {'性质':['自主','合资','进口']},
+        {'级别':['A','D','E']},
+        {'车身':['50','40','30']}
+    ];
+    for(var item in arry){
+        console.log('----------');
+        //console.log(arr[item]);
+        for(var item2  in arry[item]){
+            console.log(item2);
+            console.log(arry[item][item2]);
+        }
+        console.log('`````````````');
+    }
+
     var data1 = [
         [["性质"],['自主','合资','进口']],
         [["级别"],["A","A0","A00", "B","BUS", "C" , "D", "Pickup"]],
@@ -20,11 +35,13 @@
         { "车身": ["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"]},
         { "燃油": [ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "汽油/CNG"]}
     ];
+    let itemhtml=''
         for(var tmp in data){
             for(var item in data[tmp]){
-//                console.log(item);//“键名”
+                console.log(item);//“键名”
                 for(var key in data[tmp][item]){
-//                    console.log(data[tmp][item][key]);
+                    itemhtml+="<div></div>";
+                    console.log(data[tmp][item][key]);
                 }
             }
         }
@@ -33,9 +50,9 @@
     var conditionKey= ['性质','级别','车身','燃油'];
     var conditionValue=[['自主','合资','进口'],["A","A0","A00", "B","BUS", "C" , "D", "Pickup"],["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"],[ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "汽油/CNG"]];
     var conditions=[conditionKey,conditionValue];
-    console.log(conditionKey);
-    console.log(conditionValue);
-    console.log(conditions);
+//    console.log(conditionKey);
+//    console.log(conditionValue);
+//    console.log(conditions);
 
     var arr = [{
         "name1": "ZYTX",
@@ -59,7 +76,7 @@
         hash[next.name1] ? '' : hash[next.name1] = true && item.push(next);
         return item
     }, [])
-    console.log(arr);
+//    console.log(arr);
 
     var array = [
         {
@@ -107,7 +124,7 @@
     //    sortArr(array, 'age');  // 按 age 排序
     sortArr(array, 'name');  // 按 name 排序
     //    sortArr(array, 'cnName');  // 按 中文名 cnName 排序
-    console.log(array);
+//    console.log(array);
 
 </script>
 </body>

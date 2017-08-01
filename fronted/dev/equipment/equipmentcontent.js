@@ -2,11 +2,11 @@
  * Created by Administrator on 2017/7/25.
  */
 import React from "react";
-import {Link} from "react-router";
+// import {Link} from "react-router";
 
 import Header from "../common/header/header";
 import Sider from "../common/sider/sider";
-import Ajax from "../common/ajax";
+// import Ajax from "../common/ajax";
 import EquipDetail from "./equipDetail.js"
 
 import {Modal} from "antd";

@@ -111,6 +111,7 @@ var SegBodyLi = React.createClass({
         });
     },
     componentWillReceiveProps: function (nextProps) {
+        this.setState({segTitle:nextProps.segTitle});
         this.loadData(nextProps.segTitle);
     },
     allChoose:function(e){

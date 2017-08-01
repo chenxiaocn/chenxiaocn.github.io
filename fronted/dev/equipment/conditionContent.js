@@ -11,58 +11,46 @@ import './equip.less'
 
 var ConditionContent = React.createClass({
     getInitialState:function(){
-        return{allConditions:this.props.allConditions,
-            conditionKeys:[],//条件名
-            conditionValues:[]//每一个条件对应的全部内容，即不限情况下
+        return{
+            conditionTitle:this.props.conditionTitle,
+            conditionContent:this.props.conditionContent
         }
     },
     componentDidMount:function(){
-        this.setState({allConditions:this.props.allConditions});
-        this.getConditionKeyValue(this.props.allConditions);
-    },
-    getConditionKeyValue:function(allConditions){
-        this.setState({conditionKeys:allConditions[0]});
-        this.setState({conditionValues:allConditions[1]});
+        //this.setState({conditionTitle:this.props.conditionTitle,conditionContent:this.props.conditionContent});
     },
     componentWillReceiveProps:function(nextprops){
+        this.setState({conditionTitle:this.props.conditionTitle,conditionContent:this.props.conditionContent});
     },
+    selectedCellCondition:function(e){
+        var liText = $(e.target)[0].innerText;
+        var conditionTypeInnerText=$(e.target).attr("data-parent");
+        $(".condition-title span").removeClass("title-choose-active");
+        if($(e.target).hasClass("choose-active")){
+            $(e.target).removeClass("choose-active");
+            //加载数据
+            this.props.selectedCellCondition(liText,'remove');
+        }else{
+            $(e.target).addClass("choose-active");
+            //加载数据
+            this.props.selectedCellCondition(liText,'add',conditionTypeInnerText);
+        }
 
+        if($(e.target).parent().find('.choose-active').length==0){
+            $(e.target).parent().parent().parent().find('.no-limit').addClass("title-choose-active")
+        }
+    },
     render:function(){
-        let chooseLi=this.state.allConditions.map(function(content,index){
-            return(
-                <div className="clearfix ">
-                    <div className="pull-left condition-title">性质：<span className="title-choose-active" onClick={this.chooseNoLimit}>不限</span></div>
-                    <div className="pull-left">
-                        <ul className='condition-ul'>
-                            <li>合资</li>
-                            <li>自主</li>
-                            <li>进口</li>
-                        </ul>
-                    </div>
-                </div>
-            )
+        let conditionItem=this.state.conditionContent.map(function(content,index){
+            return( <li key={index} onClick={this.selectedCellCondition} data-parent={this.state.conditionTitle}>{content}</li>)
         }.bind(this));
         return (
-            <div className="condition-body">
-                <div className="clearfix ">
-                    <div className="pull-left condition-title">性质：<span className="title-choose-active" onClick={this.chooseNoLimit}>不限</span></div>
-                    <div className="pull-left">
-                        <ul className='condition-ul'>
-                            <li>合资</li>
-                            <li>自主</li>
-                            <li>进口</li>
-                        </ul>
-                    </div>
-                </div>
-                <div className="clearfix ">
-                    <div className="pull-left condition-title">性质：<span className="title-choose-active" onClick={this.chooseNoLimit}>不限</span></div>
-                    <div className="pull-left">
-                        <ul className='condition-ul'>
-                            <li>合资</li>
-                            <li>自主</li>
-                            <li>进口</li>
-                        </ul>
-                    </div>
+            <div className="clearfix ">
+                <div className="pull-left condition-title"><span className="conditonType">{this.state.conditionTitle}：</span><span className="title-choose-active no-limit" onClick={this.chooseNoLimit}>不限</span></div>
+                <div className="pull-left">
+                    <ul className='condition-ul'>
+                        {conditionItem}
+                    </ul>
                 </div>
             </div>
         )
