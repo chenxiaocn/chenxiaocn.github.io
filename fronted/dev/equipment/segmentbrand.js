@@ -34,8 +34,8 @@ var Segment = React.createClass({
             segItemSelectedFlag:nextprops.segItemSelectedFlag
         });
     },
-    chooseContent:function(chooseContent,chooseType){
-        this.props.chooseContent(chooseContent,chooseType);
+    chooseContent:function(chooseContent,SegmentType){
+        this.props.chooseContent(chooseContent,SegmentType);
     },
     chooseBrandPrefix:function(content,clickType){
         this.props.chooseBrandPrefix(content,clickType);
@@ -52,7 +52,7 @@ var Segment = React.createClass({
                                 <BrandtArea equipList={this.state.equipList} chooseBrandPrefix={this.chooseBrandPrefix} chooseContent={this.chooseContent} selectedHZZZ={this.props.selectedHZZZ}  selectedFuel={this.props.selectedFuel} selectedBody={this.props.selectedBody} selectedSegment={this.props.selectedSegment} selectedFlag={this.props.selectedFlag}/>
                             </TabPane>
                             <TabPane tab="按级别" key="2">
-                                <SegmentArea  selectedSegmentList={this.state.selectedSegmentList} segItemSelectedFlag={this.state.segItemSelectedFlag} segmentList={this.state.segmentList} chooseContent={this.chooseContent} selectedHZZZ={this.props.selectedHZZZ}  selectedFuel={this.props.selectedFuel} selectedBody={this.props.selectedBody} selectedSegment={this.props.selectedSegment}/>
+                                <SegmentArea chooseContent={this.props.chooseContent} segItemSelectedFlag={this.state.segItemSelectedFlag} segmentList={this.state.segmentList} chooseContent={this.chooseContent}/>
                             </TabPane>
                         </Tabs>
                     </div>

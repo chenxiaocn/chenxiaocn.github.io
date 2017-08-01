@@ -29,9 +29,8 @@ var SegmentArea = React.createClass({
             selectedSegmentList:nextProps.selectedSegmentList
         });
     },
-
-    chooseContent:function(chooseContent,chooseType){
-        this.props.chooseContent(chooseContent,chooseType);
+    chooseContent:function(content,Type){
+        this.props.chooseContent(content,Type);
     },
     render: function () {
         let segBody=this.state.segmentList.map(function(content,index){
@@ -85,15 +84,15 @@ var SegBodyLi = React.createClass({
     },
     allChoose:function(e){
         var segTitle=$(e.target).next()[0].innerText;
-        var chooseType='all';
         //该级别下的所有model
         var modelLi= $(e.target).parent().next().find('.model-li');
-        DataDeal.selectedAll(modelLi);
-
-
+        DataDeal.modelHasSelected(modelLi);
+        DataDeal.allOrCancel(segTitle,$(e.target));
+        var ModelLiArry= DataDeal.getModelLiValue(modelLi);
+        this.props.chooseContent(ModelLiArry,'Segment');
     },
-    subSegmentChoose:function(subSegment,chooseType){
-        this.props.chooseContent(subSegment,chooseType);
+    subSegmentChoose:function(subSegment){
+        this.props.chooseContent(subSegment);
     },
     render: function () {
         let itemBodyRow=this.state.subSegment.map(function(content,index){
@@ -140,10 +139,16 @@ var ItemBodyRow = React.createClass({
                 var Model=[];
                 for(var i=0;i<dataList.length;i++){
                     if(subSegment==dataList[i].SubSegment){
-                        Model.push(dataList[i].Model);
+                        Model.push({Model:dataList[i].Model,ModelID:dataList[i].ModelID});
                     }
                 }
-                Model = DataDeal.unique(Model);
+                //数组对象去重
+                var hash = {};
+                Model = Model.reduce(function(item, next) {
+                    hash[next.ModelID] ?'' : hash[next.ModelID] = true && item.push(next);
+                    return item
+                }, []);
+
                 this.setState({Model:Model});
             }.bind(this)
         });
@@ -151,7 +156,7 @@ var ItemBodyRow = React.createClass({
     subSegmentChoose:function(e){
         var subSegment=$(e.target)[0].innerText;
         var chooseType='subSegment';
-        this.props.subSegmentChoose(subSegment,chooseType);
+        this.props.subSegmentChoose(subSegment);
 
         if($(e.target).hasClass('selectedSub')){
             $(e.target).removeClass('selectedSub');
@@ -163,10 +168,17 @@ var ItemBodyRow = React.createClass({
         var modelLi= $(e.target).next().find('.model-li');
         DataDeal.selectedAll(modelLi);
     },
+    chooseModel:function(e){
+        var target=$(e.target);
+        DataDeal.selectedModel(target);
+    },
     render: function () {
         let itemModel=this.state.Model.map(function(content,index){
             return(
-                <ItemModel  key={index} Model={content}/>
+                <li className="model-li" key={index} onClick={this.chooseModel} id={content.ModelID}>
+                    {content.Model}
+                    <b></b>
+                </li>
             );
         }.bind(this));
         return (
@@ -178,30 +190,6 @@ var ItemBodyRow = React.createClass({
                     </ul>
                 </Col>
             </Row>
-        );
-    }
-
-});
-
-var ItemModel = React.createClass({
-    getInitialState: function () {
-        return {
-            Model:this.props.Model
-        }
-    },
-
-    componentDidMount: function () {
-    },
-    chooseModel:function(e){
-        var target=$(e.target);
-        DataDeal.selectedModel(target);
-    },
-    render: function () {
-        return (
-            <li className="model-li" onClick={this.chooseModel}>
-                {this.props.Model}
-                <b></b>
-            </li>
         );
     }
 

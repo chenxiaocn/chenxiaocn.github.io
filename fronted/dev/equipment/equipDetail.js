@@ -31,8 +31,7 @@ var EquipDetail = React.createClass({
             selectedBodyList:[],
             selectedFuel:[],//选中的燃油，
             selectedFuelList:[],
-            chooseContent:'',//已选
-            chooseType:'',//已选级别类型,
+            hasChooseList:[],//已选级别类型,
             segItemSelectedFlag:0,//选中单个级别
             selectedSubSegmentList:[],
             selectedBrandList:[],
@@ -78,10 +77,6 @@ var EquipDetail = React.createClass({
             this.setState({visible: true});
         }
     },
-
-    chooseContent:function(chooseContent,chooseType){
-        this.setState({chooseContent:chooseContent,chooseType:chooseType});
-    },
     //首字母筛选品牌
     chooseBrandPrefix:function(content,clickType){
         this.getEquipList();
@@ -116,7 +111,7 @@ var EquipDetail = React.createClass({
     charcterNolimit:function(){
 
     },
-    //选择条件
+    //条件选择
     selectedCellCondition:function(content,clickType,conditionTypeInnerText){
         this.getJsonData();
         var dataList=this.state.carListData;
@@ -159,9 +154,9 @@ var EquipDetail = React.createClass({
 
         //该条件下的车的级别、车身、燃油
         for(var j=0;j<equipListArry.length;j++){
-                segmentList.push(equipListArry[j].Segment);
-                bodyList.push(equipListArry[j].BodyType);
-                fuelList.push(equipListArry[j].Fuel);
+            segmentList.push(equipListArry[j].Segment);
+            bodyList.push(equipListArry[j].BodyType);
+            fuelList.push(equipListArry[j].Fuel);
         }
         segmentList = DataDeal.unique(segmentList);
         bodyList = DataDeal.unique(bodyList);
@@ -204,6 +199,10 @@ var EquipDetail = React.createClass({
         });
         this.setState({allConditions:allConditions,carListData:equipListArry});
     },
+    //选择车系
+    chooseContent:function(chooseContent,SegmentType){
+        this.props.chooseContent(chooseContent,SegmentType);
+    },
     submitModifyOrAddStu: function () {
     },
     render(){
@@ -243,7 +242,7 @@ var EquipDetail = React.createClass({
                                                chooseContent={this.chooseContent} selectedHZZZ={this.state.selectedHZZZ} selectedFuel={this.state.selectedFuel}
                                                selectedBody={this.state.selectedBody} selectedSegment={this.state.selectedSegment}/>
                                 {/*已选条件*/}
-                                <Haschoose  chooseContent={this.state.chooseContent} chooseType={this.state.chooseType}/>
+                                <Haschoose hasChooseList={this.state.hasChooseList}/>
                             </TabPane>
                         </Tabs>
                     </div>

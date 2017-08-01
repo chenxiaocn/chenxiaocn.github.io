@@ -47,20 +47,33 @@ let Datadeal = {
         }
         return str_big;
     },
-    //全选selected
-    selectedAll:function(modelLi){
+    //车系被选中样式
+    modelHasSelected:function(modelLi){
         var modelItemInnertext=[];
-        var flag=0;//有
         for(var i=0;i<modelLi.length;i++){
             modelItemInnertext=$($(modelLi)[i])[0].innerText;
             if($($(modelLi)[i]).hasClass('selected')){
                 $($(modelLi)[i]).removeClass('selected');
             }else{
                 $($(modelLi)[i]).addClass('selected');
-                var innerHtml="<li class='"+i+"'><span class='licontent'>"+modelItemInnertext+"</span><span>×</span></li>";
-                $('.has-choose-ul').append(innerHtml);
+                //var innerHtml="<li class='"+i+"'><span class='licontent'>"+modelItemInnertext+"</span><span>×</span></li>";
+                //$('.has-choose-ul').append(innerHtml);
             }
         }
+    },
+    //获取被选中的车系值
+    getModelLiValue:function(modelLi){
+        var modeLiValue=[],modelLiID=[],modelArry=[];
+        for(var i=0;i<modelLi.length;i++){
+            modeLiValue.push($($(modelLi)[i])[0].innerText);
+            modelLiID.push($($(modelLi)[i]).attr('id'));
+        }
+        modelArry=[modeLiValue,modelLiID];
+        return modelArry;
+    },
+    //"取消"或"全选"
+    allOrCancel:function(segTitle,target){
+        segTitle=="取消"?target[0].innerText="全选":target[0].innerText="取消";
     },
     //单个车系选中
     selectedModel:function(target){
