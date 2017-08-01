@@ -38,9 +38,9 @@ var EquipDetail = React.createClass({
             selectedBrandList:[],
             selectedOEMList:[],
             selectedBrandPrefixList:[],
-            segmentList:[],//某种性质下所有级别列表
-            bodyList:[],//某种性质下所有车身列表
-            fuelList:[],//某种性质下所有燃油列表
+            segmentList: ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"],//某种性质下所有级别列表
+            bodyList:["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"],//某种性质下所有车身列表
+            fuelList:[ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "汽油/CNG"],//某种性质下所有燃油列表
             carListData:[],//所有的车系数据
             allConditions:[
                 { "性质": ['自主','合资','进口']},
@@ -77,137 +77,6 @@ var EquipDetail = React.createClass({
         if (nextProps.addOrModifyModalVisible) {
             this.setState({visible: true});
         }
-    },
-    characterSelectedList:function(content,clickType){
-        this.getEquipList();
-        var dataList=this.state.equipList;
-
-        var segmentList=[],bodyList=[],fuelList=[],equipListArry=[];
-        var selectedHZZZList=this.state.selectedHZZZList;
-        var selectedSegmentList=this.state.selectedSegmentList;
-        var selectedBodyList=this.state.selectedBodyList;
-        var selectedFuelList=this.state.selectedFuelList;
-        var selectedSubSegmentList=this.state.selectedSubSegmentList;
-        var selectedBrandList=this.state.selectedBrandList;
-        var selectedOEMList=this.state.selectedOEMList;
-        var selectedBrandPrefixList=this.state.selectedBrandPrefixList;
-
-        if(clickType=='add'){
-            selectedHZZZList.push(content);
-        }else{
-            selectedHZZZList = DataDeal.removeByValue(selectedHZZZList,content);
-        }
-
-        equipListArry=DataDeal.selectedCondition(selectedHZZZList,selectedSegmentList,selectedBodyList,selectedFuelList,selectedSubSegmentList,selectedBrandList,selectedOEMList,selectedBrandPrefixList,dataList);
-
-        //筛选该性质下的车的级别、车身、燃油
-        for(var j=0;j<equipListArry.length;j++){
-            segmentList.push(equipListArry[j].Segment);
-            bodyList.push(equipListArry[j].BodyType);
-            fuelList.push(equipListArry[j].Fuel);
-        }
-        segmentList = DataDeal.unique(segmentList);
-        bodyList = DataDeal.unique(bodyList);
-        fuelList = DataDeal.unique(fuelList);
-        this.setState({selectedHZZZList:selectedHZZZList,equipList:equipListArry,selectedHZZZ:content,characterRelatedList:equipListArry,
-            segmentList:segmentList,bodyList:bodyList,fuelList:fuelList,selectedFlag:1});
-    },
-
-    levelSelectedList:function(content,clickType){
-        this.getEquipList();
-        var dataList=this.state.equipList;
-
-        var bodyList=this.state.bodyList,fuelList=[],equipListArry=[];
-        var selectedHZZZList=this.state.selectedHZZZList;
-        var selectedSegmentList=this.state.selectedSegmentList;
-        var selectedBodyList=this.state.selectedBodyList;
-        var selectedFuelList=this.state.selectedFuelList;
-        var selectedSubSegmentList=this.state.selectedSubSegmentList;
-        var selectedBrandList=this.state.selectedBrandList;
-        var selectedOEMList=this.state.selectedOEMList;
-        var selectedBrandPrefixList=this.state.selectedBrandPrefixList;
-
-        if(clickType=='add'){
-            selectedSegmentList.push(content);
-            this.setState({segItemSelectedFlag:1,selectedSegmentList:selectedSegmentList});
-        }else{
-            selectedSegmentList = DataDeal.removeByValue(selectedSegmentList,content);
-            this.setState({segItemSelectedFlag:0});
-        }
-
-        equipListArry=DataDeal.selectedCondition(selectedHZZZList,selectedSegmentList,selectedBodyList,selectedFuelList,selectedSubSegmentList,selectedBrandList,selectedOEMList,selectedBrandPrefixList,dataList);
-
-        //筛选该性质下的车、车身、燃油
-        for(var j=0;j<equipListArry.length;j++){
-            bodyList.push(equipListArry[j].BodyType);
-            fuelList.push(equipListArry[j].Fuel);
-        }
-        bodyList = DataDeal.unique(bodyList);
-        fuelList = DataDeal.unique(fuelList);
-        this.setState({selectedHZZZList:selectedHZZZList,equipList:equipListArry,selectedHZZZ:content,characterRelatedList:equipListArry,
-            bodyList:bodyList,fuelList:fuelList,selectedFlag:1});
-    },
-
-    bodySelectedList:function(content,clickType){
-        this.getEquipList();
-        var dataList=this.state.equipList;
-        var segmentList=[],fuelList=[],equipListArry=[];
-        var selectedHZZZList=this.state.selectedHZZZList;
-        var selectedSegmentList=this.state.selectedSegmentList;
-        var selectedBodyList=this.state.selectedBodyList;
-        var selectedFuelList=this.state.selectedFuelList;
-        var selectedSubSegmentList=this.state.selectedSubSegmentList;
-        var selectedBrandList=this.state.selectedBrandList;
-        var selectedOEMList=this.state.selectedOEMList;
-        var selectedBrandPrefixList=this.state.selectedBrandPrefixList;
-
-        if(clickType=='add'){
-            selectedBodyList.push(content);
-            //this.setState({segItemSelectedFlag:1,selectedSegmentList:selectedSegmentList});
-        }else{
-            selectedBodyList = DataDeal.removeByValue(selectedBodyList,content);
-        }
-
-        equipListArry=DataDeal.selectedCondition(selectedHZZZList,selectedSegmentList,selectedBodyList,selectedFuelList,selectedSubSegmentList,selectedBrandList,selectedOEMList,selectedBrandPrefixList,dataList);
-
-        //筛选该性质下的车的燃油
-        for(var j=0;j<equipListArry.length;j++){
-            segmentList.push(equipListArry[j].Segment);
-            fuelList.push(equipListArry[j].Fuel);
-        }
-        segmentList = DataDeal.unique(segmentList);
-        fuelList = DataDeal.unique(fuelList);
-        this.setState({segmentList:segmentList,selectedHZZZList:selectedHZZZList,equipList:equipListArry,selectedHZZZ:content,characterRelatedList:equipListArry,
-            fuelList:fuelList,selectedFlag:1});
-    },
-    oilSelectedList:function(content,clickType){
-        this.getEquipList();
-        var dataList=this.state.equipList;
-        var segmentList=[],equipListArry=[];
-        var selectedHZZZList=this.state.selectedHZZZList;
-        var selectedSegmentList=this.state.selectedSegmentList;
-        var selectedBodyList=this.state.selectedBodyList;
-        var selectedFuelList=this.state.selectedFuelList;
-        var selectedSubSegmentList=this.state.selectedSubSegmentList;
-        var selectedBrandList=this.state.selectedBrandList;
-        var selectedOEMList=this.state.selectedOEMList;
-        var selectedBrandPrefixList=this.state.selectedBrandPrefixList;
-
-        if(clickType=='add'){
-            selectedFuelList.push(content);
-        }else{
-            selectedFuelList = DataDeal.removeByValue(selectedFuelList,content);
-        }
-
-        equipListArry=DataDeal.selectedCondition(selectedHZZZList,selectedSegmentList,selectedBodyList,selectedFuelList,selectedSubSegmentList,selectedBrandList,selectedOEMList,selectedBrandPrefixList,dataList);
-
-        //筛选该性质下的车的燃油
-        for(var j=0;j<equipListArry.length;j++){
-            segmentList.push(equipListArry[j].Segment);
-        }
-        segmentList = DataDeal.unique(segmentList);
-        this.setState({segmentList:segmentList,selectedHZZZList:selectedHZZZList,equipList:equipListArry,selectedHZZZ:content,
-            characterRelatedList:equipListArry,selectedFlag:1});
     },
 
     chooseContent:function(chooseContent,chooseType){
@@ -290,20 +159,46 @@ var EquipDetail = React.createClass({
 
         //该条件下的车的级别、车身、燃油
         for(var j=0;j<equipListArry.length;j++){
-            segmentList.push(equipListArry[j].Segment);
-            bodyList.push(equipListArry[j].BodyType);
-            fuelList.push(equipListArry[j].Fuel);
+                segmentList.push(equipListArry[j].Segment);
+                bodyList.push(equipListArry[j].BodyType);
+                fuelList.push(equipListArry[j].Fuel);
         }
         segmentList = DataDeal.unique(segmentList);
         bodyList = DataDeal.unique(bodyList);
         fuelList = DataDeal.unique(fuelList);
 
-        allConditions=[
-            { "性质": ['自主','合资','进口']},
-            { "级别": segmentList},
-            { "车身": bodyList},
-            { "燃油": fuelList}
-        ];
+        if(conditionTypeInnerText=='级别'){
+            allConditions=[
+                { "性质": ['自主','合资','进口']},
+                { "级别": ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"]},
+                { "车身": bodyList},
+                { "燃油": fuelList}
+            ];
+        }
+        if(conditionTypeInnerText=='车身'){
+            allConditions=[
+                { "性质": ['自主','合资','进口']},
+                { "级别": ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"]},
+                { "车身": ["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"]},
+                { "燃油": fuelList}
+            ];
+        }
+        if(conditionTypeInnerText=='燃油'){
+            allConditions=[
+                { "性质": ['自主','合资','进口']},
+                { "级别": ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"]},
+                { "车身": ["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"]},
+                { "燃油": [ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "汽油/CNG"]}
+            ];
+        }if(conditionTypeInnerText=='性质'){
+            allConditions=[
+                { "性质": ['自主','合资','进口']},
+                { "级别": segmentList},
+                { "车身": bodyList},
+                { "燃油": fuelList}
+            ];
+        }
+        this.setState({segmentList:segmentList,bodyList:bodyList,fuelList:fuelList});
         this.setState({selectedHZZZList:selectedHZZZList,selectedSegmentList:selectedSegmentList,selectedBodyList:selectedBodyList,selectedFuelList:selectedFuelList,
             selectedSubSegmentList:selectedSubSegmentList,selectedBrandList:selectedBrandList,selectedOEMList:selectedOEMList,selectedBrandPrefixList:selectedBrandPrefixList
         });
@@ -344,7 +239,9 @@ var EquipDetail = React.createClass({
                                     </div>
                                 </div>
                                 {/*按品牌、级别*/}
-                                <Segmentbrand chooseBrandPrefix={this.chooseBrandPrefix} equipList={this.state.carListData} selectedSegmentList={this.state.selectedSegmentList} segItemSelectedFlag={this.state.segItemSelectedFlag}  segmentList={this.state.segmentList} chooseContent={this.chooseContent} selectedHZZZ={this.state.selectedHZZZ} selectedFuel={this.state.selectedFuel} selectedBody={this.state.selectedBody} selectedSegment={this.state.selectedSegment}/>
+                                <Segmentbrand chooseBrandPrefix={this.chooseBrandPrefix}  segmentList={this.state.segmentList}  equipList={this.state.carListData} selectedSegmentList={this.state.selectedSegmentList} segItemSelectedFlag={this.state.segItemSelectedFlag}
+                                               chooseContent={this.chooseContent} selectedHZZZ={this.state.selectedHZZZ} selectedFuel={this.state.selectedFuel}
+                                               selectedBody={this.state.selectedBody} selectedSegment={this.state.selectedSegment}/>
                                 {/*已选条件*/}
                                 <Haschoose  chooseContent={this.state.chooseContent} chooseType={this.state.chooseType}/>
                             </TabPane>

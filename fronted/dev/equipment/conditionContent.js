@@ -26,10 +26,11 @@ var ConditionContent = React.createClass({
         var liText = $(e.target)[0].innerText;
         var conditionTypeInnerText=$(e.target).attr("data-parent");
         $(".condition-title span").removeClass("title-choose-active");
+
         if($(e.target).hasClass("choose-active")){
             $(e.target).removeClass("choose-active");
             //加载数据
-            this.props.selectedCellCondition(liText,'remove');
+            this.props.selectedCellCondition(liText,'remove',conditionTypeInnerText);
         }else{
             $(e.target).addClass("choose-active");
             //加载数据

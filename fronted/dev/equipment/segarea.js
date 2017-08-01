@@ -16,37 +16,8 @@ import './equip.less'
 var SegmentArea = React.createClass({
     getInitialState: function () {
         return {
-            segmentList:this.props.segmentList,
-            selectedSegmentList:this.props.selectedSegmentList,
-            segItemSelectedFlag:this.props.segItemSelectedFlag
-        }
-    },
-    componentDidMount:function(){
-    },
-    componentWillReceiveProps:function(nextprops){
-        this.setState({segmentList:nextprops.segmentList,
-            selectedSegmentList:nextprops.selectedSegmentList,
-            segItemSelectedFlag:nextprops.segItemSelectedFlag
-        });
-    },
-    chooseContent:function(chooseContent,chooseType){
-        this.props.chooseContent(chooseContent,chooseType);
-    },
-    render:function(){
-        return (
-            <div>
-                <SegmentAreaBody selectedSegmentList={this.state.selectedSegmentList} segItemSelectedFlag={this.state.segItemSelectedFlag}  segmentList={this.state.segmentList} chooseContent={this.chooseContent} selectedHZZZ={this.props.selectedHZZZ}  selectedFuel={this.props.selectedFuel} selectedBody={this.props.selectedBody} selectedSegment={this.props.selectedSegment} selectedFlag={this.props.selectedFlag}/>
-            </div>
-
-        )
-    }
-});
-var SegmentAreaBody = React.createClass({
-    getInitialState: function () {
-        return {
             segmentList:["A","A0","A00", "B","BUS", "C" , "D", "Pickup"],//所有级别列表
-            selectedSegmentList:this.props.selectedSegmentList,
-            segItemSelectedFlag:this.props.segItemSelectedFlag
+            selectedSegmentList:this.props.selectedSegmentList
         }
     },
 
@@ -54,11 +25,9 @@ var SegmentAreaBody = React.createClass({
         //this.setState({segmentList:this.props.segmentList});
     },
     componentWillReceiveProps: function (nextProps) {
-        if(nextProps.segItemSelectedFlag==1){
-            this.setState({segmentList:nextProps.selectedSegmentList});
-        }else{
-            this.setState({segmentList:nextProps.segmentList});
-        }
+        this.setState({segmentList:nextProps.segmentList,
+            selectedSegmentList:nextProps.selectedSegmentList
+        });
     },
 
     chooseContent:function(chooseContent,chooseType){
