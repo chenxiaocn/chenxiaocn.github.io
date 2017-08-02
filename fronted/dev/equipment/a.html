@@ -7,19 +7,51 @@
 <body>
 <div class="add"></div>
 <script>
+//数组相减
+    var a1=[
+        {'id':'1',"value":['1','2','3']},
+        {'id':'2',"value":['2','2','3']},
+        {'id':'3',"value":['3','2','3']},
+        {'id':'4',"value":['4','2','3']}
+    ];
+    var a2=[
+        {'id':'1',"value":['1','2','3']},
+        {'id':'2',"value":['2','2','3']}
+    ];
+
+    for (var i = 0; i<a1.length; i++){
+        for(var j=0;j<a2.length;j++){
+            if(a1[i].id==a2[j].id){
+                a1.splice(i,1);
+            }
+        }
+    }
+    console.log(a1);
+
+
     var arry=[
         {'性质':['自主','合资','进口']},
         {'级别':['A','D','E']},
         {'车身':['50','40','30']}
     ];
+    var b=[
+        {'性质':['自主']},
+        {'级别':['A','D']},
+        {'车身':['50','40','30']}
+    ];
+    var a=arry.concat(b);
+//    console.log(a);
+
+    var c=[];
+    var d=c.concat(b);
+//    console.log(d);
+
     for(var item in arry){
-        console.log('----------');
         //console.log(arr[item]);
         for(var item2  in arry[item]){
-            console.log(item2);
-            console.log(arry[item][item2]);
+//            console.log(item2);
+//            console.log(arry[item][item2]);
         }
-        console.log('`````````````');
     }
 
     var data1 = [

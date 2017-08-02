@@ -38,6 +38,17 @@ let Datadeal = {
             arr.sort(bySort(arr[i][sortStr]));
         }
     },
+    //数组对象相减
+    sorSplice:function(arr1,arr2){
+        for (var i = 0; i<arr1.length; i++){
+            for(var j=0;j<arr2.length;j++){
+                if(arr1[i].modelId==arr2[j].modelId){
+                    arr1.splice(i,1);
+                }
+            }
+        }
+        return arr1;
+    },
     //大写字母
     generateBig:function(){
         var ch_big = 'A';
@@ -49,27 +60,28 @@ let Datadeal = {
     },
     //车系被选中样式
     modelHasSelected:function(modelLi){
-        var modelItemInnertext=[];
+        var modelItemInnertext=[], flag=0;
         for(var i=0;i<modelLi.length;i++){
             modelItemInnertext=$($(modelLi)[i])[0].innerText;
             if($($(modelLi)[i]).hasClass('selected')){
                 $($(modelLi)[i]).removeClass('selected');
+                flag=0;
             }else{
                 $($(modelLi)[i]).addClass('selected');
-                //var innerHtml="<li class='"+i+"'><span class='licontent'>"+modelItemInnertext+"</span><span>×</span></li>";
-                //$('.has-choose-ul').append(innerHtml);
+                flag=1;
             }
         }
+        return flag;
     },
     //获取被选中的车系值
     getModelLiValue:function(modelLi){
-        var modeLiValue=[],modelLiID=[],modelArry=[];
+        var modeLiValue=[],modelLiID=[];
         for(var i=0;i<modelLi.length;i++){
-            modeLiValue.push($($(modelLi)[i])[0].innerText);
-            modelLiID.push($($(modelLi)[i]).attr('id'));
+            var itemValue=$($(modelLi)[i])[0].innerText;
+            var itemId=$($(modelLi)[i]).attr('id');
+            modeLiValue.push({"modeValue":itemValue,"modelId":itemId}) ;
         }
-        modelArry=[modeLiValue,modelLiID];
-        return modelArry;
+        return modeLiValue;
     },
     //"取消"或"全选"
     allOrCancel:function(segTitle,target){
@@ -78,26 +90,16 @@ let Datadeal = {
     //单个车系选中
     selectedModel:function(target){
         var thisInnerText=target[0].innerText;
-        var ulLi=$(".licontent");
         var flag=0;//有
         if(target.hasClass('selected')){
             target.removeClass('selected');
+            flag=0;
         }
         else{
             target.addClass('selected');
+            flag=1;
         }
-        //有，删除，无，添加
-        for(var i=0;i<ulLi.length;i++){
-            if(thisInnerText==$(ulLi[i])[0].innerText){
-                $('.has-choose-ul li')[i].remove();
-                flag=1;
-                break;
-            }else{flag=0;}
-        }
-        if(flag==0){
-            var innerHtml="<li><span class='licontent'>"+thisInnerText+"</span><span>×</span></li>";
-            $('.has-choose-ul').append(innerHtml);
-        }
+        return flag;
     },
     //条件多选
     selectedCondition:function(arr1,arr2,arr3,arr4,arr5,arr6,arr7,arr8,data){

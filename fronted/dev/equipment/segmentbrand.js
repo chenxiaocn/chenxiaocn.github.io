@@ -34,8 +34,8 @@ var Segment = React.createClass({
             segItemSelectedFlag:nextprops.segItemSelectedFlag
         });
     },
-    chooseContent:function(chooseContent,SegmentType){
-        this.props.chooseContent(chooseContent,SegmentType);
+    chooseContent:function(chooseContent,flag){
+        this.props.chooseContent(chooseContent,flag);
     },
     chooseBrandPrefix:function(content,clickType){
         this.props.chooseBrandPrefix(content,clickType);

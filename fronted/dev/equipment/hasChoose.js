@@ -13,64 +13,54 @@ import './equip.less'
 var Haschoose = React.createClass({
     getInitialState: function () {
         return {
-            modelList:[],
-            chooseType:''
+            hasChooseList:[],
+            selectedOrCancelflag:0
         }
     },
     componentDidMount:function(){
 
     },
     componentWillReceiveProps:function(nextprops){
-        this.loadAlltData(nextprops.chooseContent,nextprops.chooseType);//全选
+        var hasChooseList=this.state.hasChooseList;
+        if(nextprops.selectedOrCancelflag==0){
+            hasChooseList= DataDeal.sorSplice(hasChooseList,nextprops.hasChooseList);
+        }else{
+            hasChooseList=hasChooseList.concat(nextprops.hasChooseList);
+        }
+        this.setState({hasChooseList:hasChooseList,selectedOrCancelflag:nextprops.selectedOrCancelflag});
     },
-    loadAlltData:function(chooseContent,chooseType){
-        Ajax({
-            type: 'GET',
-            url: API_URL.equipment.list,
-            //data:{content:content},
-            success: function(data) {
-                var dataList=data.data.content;
-                var modelList=this.state.modelList;
-                if(chooseType=='all'){
-                    for(var i=0;i<dataList.length;i++){
-                        if(dataList[i].Segment==chooseContent){
-                            modelList.push(dataList[i].Model);
-                        }
-                    }
-                }
-                if(chooseType=='subSegment'){
-                    for(var i=0;i<dataList.length;i++){
-                        if(dataList[i].SubSegment==chooseContent){
-                            modelList.push(dataList[i].Model);
-                        }
-                    }
-                }
-                modelList = DataDeal.unique(modelList);
 
-                this.setState({modelList:modelList});
-            }.bind(this)
-        });
-    },
     modelDel:function(e){
+        var hasChooseList=this.state.hasChooseList;
         var thisInnerText=$(e.target).prev()[0].innerText;
-        for(var i=0;i< $('.model-li').length;i++){
-            if(thisInnerText==$('.model-li')[i][0].innerText){
-                $('.model-li')[i].removeClass('selected');
+        var thisId=$(e.target).parent().attr('id');
+
+        //console.log(($('.selected')));
+        //for(var i=0;i<$($('.selected')).length;i++){
+        //    if(thisInnerText==$($('.selected'))[i].innerText){
+        //        $($($('.selected')))[i].removeClass('selected');
+        //        break;
+        //    }
+        //}
+
+        for(var i=0;i<hasChooseList.length;i++){
+            if(hasChooseList[i].modelId==thisId){
+                hasChooseList.splice(i,1);
                 break;
             }
         }
-        $(e.target).parent().remove();
+        this.setState({hasChooseList:hasChooseList});
     },
     delAll:function(e){
         $('.model-li').removeClass('selected');
         $('.ant-col-2').removeClass('selectedSub');
-        this.setState({modelList:[]});
+        this.setState({hasChooseList:[]});
     },
     render:function(){
-        let chooseLi=this.state.modelList.map(function(content,index){
+        let chooseLi=this.state.hasChooseList.map(function(content,index){
             return(
-                <li key={index}>
-                    <span className="licontent">{content}</span>
+                <li key={index} id={content.modelId}>
+                    <span className="licontent">{content.modeValue}</span>
                     <span onClick={this.modelDel}>×</span>
                 </li>
             )

@@ -2,8 +2,6 @@
  * Created by Administrator on 2017/7/31.
  */
 import React from "react";
-import {Link} from "react-router";
-
 import SearchItem from "../common/searchItem/searchItem";
 import Ajax from "../common/ajax";
 import store from "../../reduxFile/store";
@@ -31,12 +29,13 @@ var EquipDetail = React.createClass({
             selectedBodyList:[],
             selectedFuel:[],//选中的燃油，
             selectedFuelList:[],
-            hasChooseList:[],//已选级别类型,
+            hasChooseList:[],//已选级别
             segItemSelectedFlag:0,//选中单个级别
             selectedSubSegmentList:[],
             selectedBrandList:[],
             selectedOEMList:[],
             selectedBrandPrefixList:[],
+            selectedOrCancelflag:0,
             segmentList: ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"],//某种性质下所有级别列表
             bodyList:["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"],//某种性质下所有车身列表
             fuelList:[ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "汽油/CNG"],//某种性质下所有燃油列表
@@ -200,8 +199,8 @@ var EquipDetail = React.createClass({
         this.setState({allConditions:allConditions,carListData:equipListArry});
     },
     //选择车系
-    chooseContent:function(chooseContent,SegmentType){
-        this.props.chooseContent(chooseContent,SegmentType);
+    chooseContent:function(chooseContent,flag){
+        this.setState({hasChooseList:chooseContent,selectedOrCancelflag:flag});
     },
     submitModifyOrAddStu: function () {
     },
@@ -242,7 +241,7 @@ var EquipDetail = React.createClass({
                                                chooseContent={this.chooseContent} selectedHZZZ={this.state.selectedHZZZ} selectedFuel={this.state.selectedFuel}
                                                selectedBody={this.state.selectedBody} selectedSegment={this.state.selectedSegment}/>
                                 {/*已选条件*/}
-                                <Haschoose hasChooseList={this.state.hasChooseList}/>
+                                <Haschoose hasChooseList={this.state.hasChooseList}  selectedOrCancelflag={this.state.selectedOrCancelflag}/>
                             </TabPane>
                         </Tabs>
                     </div>

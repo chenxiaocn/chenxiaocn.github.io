@@ -29,8 +29,8 @@ var SegmentArea = React.createClass({
             selectedSegmentList:nextProps.selectedSegmentList
         });
     },
-    chooseContent:function(content,Type){
-        this.props.chooseContent(content,Type);
+    chooseContent:function(content,flag){
+        this.props.chooseContent(content,flag);
     },
     render: function () {
         let segBody=this.state.segmentList.map(function(content,index){
@@ -39,7 +39,7 @@ var SegmentArea = React.createClass({
             );
         }.bind(this));
         return (
-            <div className="segmentArea border clearfix brandArea">
+            <div className="segmentArea border clearfix brandArea segBody">
                 <ul>
                     {segBody}
                 </ul>
@@ -86,18 +86,21 @@ var SegBodyLi = React.createClass({
         var segTitle=$(e.target).next()[0].innerText;
         //该级别下的所有model
         var modelLi= $(e.target).parent().next().find('.model-li');
-        DataDeal.modelHasSelected(modelLi);
-        DataDeal.allOrCancel(segTitle,$(e.target));
+        var flag=DataDeal.modelHasSelected(modelLi);//选中1，取消0
+        DataDeal.allOrCancel(segTitle,$(e.target));//全选或取消
         var ModelLiArry= DataDeal.getModelLiValue(modelLi);
-        this.props.chooseContent(ModelLiArry,'Segment');
+        this.props.chooseContent(ModelLiArry,flag);
     },
-    subSegmentChoose:function(subSegment){
-        this.props.chooseContent(subSegment);
+    subSegmentChooose:function(ModelLiArry,flag){
+        this.props.chooseContent(ModelLiArry,flag);
+    },
+    modelChoose:function(ModelLiArry,flag){
+        this.props.chooseContent(ModelLiArry,flag);
     },
     render: function () {
         let itemBodyRow=this.state.subSegment.map(function(content,index){
             return(
-                <ItemBodyRow  key={index} subSegment={content} subSegmentChoose={this.subSegmentChoose}/>
+                <ItemBodyRow  key={index} subSegment={content} subSegmentChooose={this.subSegmentChooose} modelChoose={this.modelChoose}/>
             );
         }.bind(this));
         return (
@@ -154,28 +157,29 @@ var ItemBodyRow = React.createClass({
         });
     },
     subSegmentChoose:function(e){
-        var subSegment=$(e.target)[0].innerText;
-        var chooseType='subSegment';
-        this.props.subSegmentChoose(subSegment);
-
         if($(e.target).hasClass('selectedSub')){
             $(e.target).removeClass('selectedSub');
-        }
-        else{
+        }else{
             $(e.target).addClass('selectedSub');
         }
         //该级别下的所有model
         var modelLi= $(e.target).next().find('.model-li');
-        DataDeal.selectedAll(modelLi);
+        var flag=DataDeal.modelHasSelected(modelLi);//选中1，取消0
+        var ModelLiArry= DataDeal.getModelLiValue(modelLi);
+        this.props.subSegmentChooose(ModelLiArry,flag);
     },
-    chooseModel:function(e){
+    modelChoose:function(e){
         var target=$(e.target);
-        DataDeal.selectedModel(target);
+        var itemValue=target[0].innerText;
+        var itemId=target.attr('id');
+        var flag= DataDeal.selectedModel(target);//选中1，取消0
+        var ModelLiArry=[{"modeValue":itemValue,"modelId":itemId}];
+        this.props.modelChoose(ModelLiArry,flag);
     },
     render: function () {
         let itemModel=this.state.Model.map(function(content,index){
             return(
-                <li className="model-li" key={index} onClick={this.chooseModel} id={content.ModelID}>
+                <li className="model-li" key={index} onClick={this.modelChoose} id={content.ModelID}>
                     {content.Model}
                     <b></b>
                 </li>
