@@ -13,13 +13,13 @@ export default class SearchItem extends React.Component{
         this.setState({
             placeHolder:this.props.placeHolder
         });
-        //this.refs.search.value=this.props.content;
+        this.refs.search.value=this.props.content;
     }
     componentWillReceiveProps(nextProps){
         this.setState({
             placeHolder:nextProps.placeHolder
         });
-        //this.refs.search.value=nextProps.content;
+        this.refs.search.value=nextProps.content;
     }
     handleSearch(status){
         this.props.onSearch(this.refs.search.value,status);

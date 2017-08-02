@@ -200,6 +200,7 @@ var ItemBodyRow = React.createClass({
         this.loadData(this.props.OEM);
     },
     componentWillReceiveProps: function (nextProps) {
+        this.setState({OEM:nextProps.OEM});
         this.loadData(nextProps.OEM);
     },
     loadData:function(OEM){

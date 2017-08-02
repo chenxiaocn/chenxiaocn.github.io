@@ -41,6 +41,17 @@ var ConditionContent = React.createClass({
             $(e.target).parent().parent().parent().find('.no-limit').addClass("title-choose-active");
         }
     },
+    chooseNoLimit:function(e){
+        var typeInnerText=$(e.target).prev()[0].innerText;
+        typeInnerText=typeInnerText.substring(0,typeInnerText.length-1);
+        var conditionLi=$(e.target).parent().parent().find('.condition-ul li');
+        for(var i=0;i<conditionLi.length;i++){
+            if($(conditionLi[i]).hasClass('choose-active')){
+                $(conditionLi[i]).removeClass('choose-active');
+            }
+        }
+        this.props.chooseNoLimit(typeInnerText);
+    },
     render:function(){
         let conditionItem=this.state.conditionContent.map(function(content,index){
             return( <li key={index} onClick={this.selectedCellCondition} data-parent={this.state.conditionTitle}>{content}</li>)

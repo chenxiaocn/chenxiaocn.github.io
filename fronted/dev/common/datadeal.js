@@ -172,6 +172,13 @@ let Datadeal = {
                 }
             }
         }
+        //数组对象去重
+        var hash = {};
+        arr = arr.reduce(function(item, next) {
+            hash[next.ModelID] ?'' : hash[next.ModelID] = true && item.push(next);
+            return item;
+        }, []);
+
         return arr;
     }
 };
