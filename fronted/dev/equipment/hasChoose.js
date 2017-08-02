@@ -35,13 +35,12 @@ var Haschoose = React.createClass({
         var thisInnerText=$(e.target).prev()[0].innerText;
         var thisId=$(e.target).parent().attr('id');
 
-        //console.log(($('.selected')));
-        //for(var i=0;i<$($('.selected')).length;i++){
-        //    if(thisInnerText==$($('.selected'))[i].innerText){
-        //        $($($('.selected')))[i].removeClass('selected');
-        //        break;
-        //    }
-        //}
+        for(var i=0;i<$('.selected').length;i++){
+            if(thisInnerText==$('.selected')[i].innerText){
+                $($('.selected')[i]).removeClass('selected');
+                break;
+            }
+        }
 
         for(var i=0;i<hasChooseList.length;i++){
             if(hasChooseList[i].modelId==thisId){
