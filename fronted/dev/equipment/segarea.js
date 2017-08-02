@@ -17,16 +17,18 @@ var SegmentArea = React.createClass({
     getInitialState: function () {
         return {
             segmentList:["A","A0","A00", "B","BUS", "C" , "D", "Pickup"],//所有级别列表
-            selectedSegmentList:this.props.selectedSegmentList
+            selectedSegmentList:this.props.selectedSegmentList,
+            equipList:this.props.equipList
         }
     },
 
     componentDidMount: function () {
-        //this.setState({segmentList:this.props.segmentList});
+        this.setState({equipList:this.props.equipList});
     },
     componentWillReceiveProps: function (nextProps) {
         this.setState({segmentList:nextProps.segmentList,
-            selectedSegmentList:nextProps.selectedSegmentList
+            selectedSegmentList:nextProps.selectedSegmentList,
+            equipList:nextProps.equipList
         });
     },
     chooseContent:function(content,flag){
@@ -35,7 +37,7 @@ var SegmentArea = React.createClass({
     render: function () {
         let segBody=this.state.segmentList.map(function(content,index){
             return(
-                <SegBodyLi  key={index} segTitle={content} chooseContent={this.chooseContent}/>
+                <SegBodyLi  key={index} segTitle={content} chooseContent={this.chooseContent} equipList={this.state.equipList}/>
             );
         }.bind(this));
         return (
@@ -53,7 +55,9 @@ var SegBodyLi = React.createClass({
     getInitialState: function () {
         return {
             segTitle:this.props.segTitle,
-            subSegment:[]
+            subSegment:[],
+            equipList:this.props.equipList,
+            subSegEquipList:[]
         }
     },
 
@@ -61,25 +65,19 @@ var SegBodyLi = React.createClass({
         this.loadData(this.props.segTitle);
     },
     loadData:function(segTitle){
-        Ajax({
-            type: 'GET',
-            url: API_URL.equipment.list,
-            //data:{content:content},
-            success: function(data) {
-                var dataList=data.data.content;
-                var subSegment=[];
-                for(var i=0;i<dataList.length;i++){
-                    if(segTitle==dataList[i].Segment){
-                        subSegment.push(dataList[i].SubSegment);
-                    }
-                }
-                subSegment = DataDeal.unique(subSegment);
-                this.setState({subSegment:subSegment});
-            }.bind(this)
-        });
+        var dataList=this.state.equipList;
+        var subSegment=[],subSegEquipList=[];
+        for(var i=0;i<dataList.length;i++){
+            if(segTitle==dataList[i].Segment){
+                subSegment.push(dataList[i].SubSegment);
+                subSegEquipList.push(dataList[i]);
+            }
+        }
+        subSegment = DataDeal.unique(subSegment);
+        this.setState({subSegment:subSegment,subSegEquipList:subSegEquipList});
     },
     componentWillReceiveProps: function (nextProps) {
-        this.setState({segTitle:nextProps.segTitle});
+        this.setState({segTitle:nextProps.segTitle,equipList:nextProps.equipList});
         this.loadData(nextProps.segTitle);
     },
     allChoose:function(e){
@@ -100,7 +98,7 @@ var SegBodyLi = React.createClass({
     render: function () {
         let itemBodyRow=this.state.subSegment.map(function(content,index){
             return(
-                <ItemBodyRow  key={index} subSegment={content} subSegmentChooose={this.subSegmentChooose} modelChoose={this.modelChoose}/>
+                <ItemBodyRow  key={index} subSegEquipList={this.state.subSegEquipList} subSegment={content} subSegmentChooose={this.subSegmentChooose} modelChoose={this.modelChoose}/>
             );
         }.bind(this));
         return (
@@ -122,7 +120,8 @@ var ItemBodyRow = React.createClass({
     getInitialState: function () {
         return {
             subSegment:this.props.subSegment,
-            Model:[]
+            Model:[],
+            subSegEquipList:this.props.subSegEquipList
         }
     },
 
@@ -130,15 +129,11 @@ var ItemBodyRow = React.createClass({
         this.loadData(this.props.subSegment);
     },
     componentWillReceiveProps: function (nextProps) {
+        this.setState({subSegEquipList:nextProps.subSegEquipList});
         this.loadData(nextProps.subSegment);
     },
     loadData:function(subSegment){
-        Ajax({
-            type: 'GET',
-            url: API_URL.equipment.list,
-            //data:{content:content},
-            success: function(data) {
-                var dataList=data.data.content;
+                var dataList=this.state.subSegEquipList;
                 var Model=[];
                 for(var i=0;i<dataList.length;i++){
                     if(subSegment==dataList[i].SubSegment){
@@ -153,8 +148,6 @@ var ItemBodyRow = React.createClass({
                 }, []);
 
                 this.setState({Model:Model});
-            }.bind(this)
-        });
     },
     subSegmentChoose:function(e){
         if($(e.target).hasClass('selectedSub')){

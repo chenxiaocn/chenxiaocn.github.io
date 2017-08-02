@@ -38,7 +38,7 @@ var ConditionContent = React.createClass({
         }
 
         if($(e.target).parent().find('.choose-active').length==0){
-            $(e.target).parent().parent().parent().find('.no-limit').addClass("title-choose-active")
+            $(e.target).parent().parent().parent().find('.no-limit').addClass("title-choose-active");
         }
     },
     render:function(){

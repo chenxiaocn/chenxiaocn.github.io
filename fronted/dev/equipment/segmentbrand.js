@@ -10,6 +10,7 @@ import store from "../../reduxFile/store";
 import {chooseContentConditions} from "../../reduxFile/actions";
 import BrandtArea from "./brandarea.js";
 import SegmentArea from "./segarea.js";
+import DataDeal from "../common/datadeal.js";
 import $ from "jquery";
 import API_URL from "../common/url";
 import './equip.less'
@@ -21,10 +22,13 @@ var Segment = React.createClass({
             equipList:this.props.equipList,
             segmentList:this.props.segmentList,
             selectedSegmentList:this.props.selectedSegmentList,
-            segItemSelectedFlag:this.props.segItemSelectedFlag
+            segItemSelectedFlag:this.props.segItemSelectedFlag,
+            searchContent:'',//搜索内容
+            searchResult:[]
         }
     },
     componentDidMount:function(){
+        this.setState({equipList:this.props.equipList});
     },
     componentWillReceiveProps:function(nextprops){
         this.setState({
@@ -40,11 +44,29 @@ var Segment = React.createClass({
     chooseBrandPrefix:function(content,clickType){
         this.props.chooseBrandPrefix(content,clickType);
     },
+    handleSearch:function(searchContent, status){
+        this.setState({searchContent: searchContent});
+        if (status) {
+            let conditions = {searchContent : searchContent};
+            var searchResult=DataDeal.fuzzySearch(this.state.equipList,searchContent);
+            var segmentList=this.getResultSeg(searchResult);
+            this.setState({equipList:searchResult,segmentList:segmentList});
+        }
+    },
+    //获取级别
+    getResultSeg:function(searchResult){
+        var segList=[];
+        for(var i=0;i<searchResult.length;i++){
+            segList.push(searchResult[i].Segment);
+        }
+        segList=DataDeal.unique(segList);
+        return segList;
+    },
     render:function(){
         return (
             <div className="seg-brand-body">
-                    <div className="pull-right searchConsult">
-                        <SearchItem placeHolder="请输入车系名称" onSearch={this.handleSearch} content={this.state.searchContent}/>
+                    <div className="pull-right clearfix">
+                        <SearchItem  onSearch={this.handleSearch} content={this.state.searchContent}/>
                     </div>
                     <div className="pull-left">
                         <Tabs type="card">
@@ -52,7 +74,7 @@ var Segment = React.createClass({
                                 <BrandtArea equipList={this.state.equipList} chooseBrandPrefix={this.chooseBrandPrefix} chooseContent={this.chooseContent} selectedHZZZ={this.props.selectedHZZZ}  selectedFuel={this.props.selectedFuel} selectedBody={this.props.selectedBody} selectedSegment={this.props.selectedSegment} selectedFlag={this.props.selectedFlag}/>
                             </TabPane>
                             <TabPane tab="按级别" key="2">
-                                <SegmentArea chooseContent={this.props.chooseContent} segItemSelectedFlag={this.state.segItemSelectedFlag} segmentList={this.state.segmentList} chooseContent={this.chooseContent}/>
+                                <SegmentArea  equipList={this.state.equipList} segItemSelectedFlag={this.state.segItemSelectedFlag} segmentList={this.state.segmentList} chooseContent={this.chooseContent}/>
                             </TabPane>
                         </Tabs>
                     </div>

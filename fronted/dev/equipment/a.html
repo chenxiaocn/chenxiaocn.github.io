@@ -7,7 +7,62 @@
 <body>
 <div class="add"></div>
 <script>
-//数组相减
+    //模糊查询
+    var list=[
+        {
+            "HZZZ": "自主",
+            "Segment": "A",
+            "SubSegment": "A-L",
+            "BodyType": "SUV",
+            "OEM": "东风柳汽",
+            "Brand": "东风",
+            "Model": "景逸X5",
+            "OEMID": "815",
+            "BrandPrefix": "D",
+            "ModelID": "219385",
+            "Fuel": "汽油"
+        },
+        {
+            "HZZZ": "他主",
+            "Segment": "A",
+            "SubSegment": "A-L",
+            "BodyType": "SUV",
+            "OEM": "东风柳汽",
+            "Brand": "东风",
+            "Model": "景逸X5",
+            "OEMID": "815",
+            "BrandPrefix": "D",
+            "ModelID": "219385",
+            "Fuel": "汽油"
+        },
+        {
+            "HZZZ": "自主",
+            "Segment": "A",
+            "SubSegment": "A-L",
+            "BodyType": "SUV",
+            "OEM": "东风柳汽",
+            "Brand": "东风",
+            "Model": "景逸X5",
+            "OEMID": "815",
+            "BrandPrefix": "D",
+            "ModelID": "219385",
+            "Fuel": "汽油"
+        }
+    ];
+    var keyWord='自',result=[];
+
+    for(var item in list){
+        for(var key in list[item]){
+            var listItem=list[item][key];
+            if((list[item][key].indexOf(keyWord))>=0){
+                result.push(list[item]);
+            }
+        }
+    }
+
+    console.log(result);
+
+    //数组相减
     var a1=[
         {'id':'1',"value":['1','2','3']},
         {'id':'2',"value":['2','2','3']},
@@ -26,7 +81,7 @@
             }
         }
     }
-    console.log(a1);
+//    console.log(a1);
 
 
     var arry=[
@@ -40,11 +95,11 @@
         {'车身':['50','40','30']}
     ];
     var a=arry.concat(b);
-//    console.log(a);
+    //    console.log(a);
 
     var c=[];
     var d=c.concat(b);
-//    console.log(d);
+    //    console.log(d);
 
     for(var item in arry){
         //console.log(arr[item]);
@@ -68,23 +123,23 @@
         { "燃油": [ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "汽油/CNG"]}
     ];
     let itemhtml=''
-        for(var tmp in data){
-            for(var item in data[tmp]){
-                console.log(item);//“键名”
-                for(var key in data[tmp][item]){
-                    itemhtml+="<div></div>";
-                    console.log(data[tmp][item][key]);
-                }
+    for(var tmp in data){
+        for(var item in data[tmp]){
+//            console.log(item);//“键名”
+            for(var key in data[tmp][item]){
+                itemhtml+="<div></div>";
+//                console.log(data[tmp][item][key]);
             }
         }
-//    console.log(data);
+    }
+    //    console.log(data);
 
     var conditionKey= ['性质','级别','车身','燃油'];
     var conditionValue=[['自主','合资','进口'],["A","A0","A00", "B","BUS", "C" , "D", "Pickup"],["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"],[ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "汽油/CNG"]];
     var conditions=[conditionKey,conditionValue];
-//    console.log(conditionKey);
-//    console.log(conditionValue);
-//    console.log(conditions);
+    //    console.log(conditionKey);
+    //    console.log(conditionValue);
+    //    console.log(conditions);
 
     var arr = [{
         "name1": "ZYTX",
@@ -108,7 +163,7 @@
         hash[next.name1] ? '' : hash[next.name1] = true && item.push(next);
         return item
     }, [])
-//    console.log(arr);
+    //    console.log(arr);
 
     var array = [
         {
@@ -156,7 +211,7 @@
     //    sortArr(array, 'age');  // 按 age 排序
     sortArr(array, 'name');  // 按 name 排序
     //    sortArr(array, 'cnName');  // 按 中文名 cnName 排序
-//    console.log(array);
+    //    console.log(array);
 
 </script>
 </body>

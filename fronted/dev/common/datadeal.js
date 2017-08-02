@@ -161,6 +161,18 @@ let Datadeal = {
         var conditionValue=[['自主','合资','进口'],["A","A0","A00", "B","BUS", "C" , "D", "Pickup"],["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"],[ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "汽油/CNG"]];
         var conditions=[conditionKey,conditionValue];
         return conditions;
+    },
+    //模糊查询
+    fuzzySearch:function(list,keyWord){
+        var arr = [];
+        for(var item in list){
+            for(var key in list[item]){
+                if((list[item][key].indexOf(keyWord))>=0){
+                    arr.push(list[item]);
+                }
+            }
+        }
+        return arr;
     }
-}
+};
 module.exports=Datadeal;
