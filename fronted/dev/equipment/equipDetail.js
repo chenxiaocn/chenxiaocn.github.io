@@ -38,13 +38,13 @@ var EquipDetail = React.createClass({
             selectedOrCancelflag:0,
             segmentList: ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"],//某种性质下所有级别列表
             bodyList:["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"],//某种性质下所有车身列表
-            fuelList:[ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "汽油/CNG"],//某种性质下所有燃油列表
+            fuelList:[ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "CNG"],//某种性质下所有燃油列表
             carListData:[],//所有的车系数据
             allConditions:[
                 { "性质": ['自主','合资','进口']},
                 { "级别": ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"]},
                 { "车身": ["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"]},
-                { "燃油": [ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "汽油/CNG"]}
+                { "燃油": [ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "CNG"]}
             ]
         }
     },
@@ -176,7 +176,7 @@ var EquipDetail = React.createClass({
                 { "性质": ['自主','合资','进口']},
                 { "级别": ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"]},
                 { "车身": ["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"]},
-                { "燃油": [ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "汽油/CNG"]}
+                { "燃油": [ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "CNG"]}
             ];
         }if(conditionTypeInnerText=='性质'){
             allConditions=[
@@ -250,7 +250,7 @@ var EquipDetail = React.createClass({
                 { "性质": ['自主','合资','进口']},
                 { "级别": ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"]},
                 { "车身": ["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"]},
-                { "燃油": [ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "汽油/CNG"]}
+                { "燃油": [ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "CNG"]}
             ];
         }if(type=='性质'){
             allConditions=[

@@ -133,21 +133,21 @@ var ItemBodyRow = React.createClass({
         this.loadData(nextProps.subSegment);
     },
     loadData:function(subSegment){
-                var dataList=this.state.subSegEquipList;
-                var Model=[];
-                for(var i=0;i<dataList.length;i++){
-                    if(subSegment==dataList[i].SubSegment){
-                        Model.push({Model:dataList[i].Model,ModelID:dataList[i].ModelID});
-                    }
-                }
-                //数组对象去重
-                var hash = {};
-                Model = Model.reduce(function(item, next) {
-                    hash[next.ModelID] ?'' : hash[next.ModelID] = true && item.push(next);
-                    return item
-                }, []);
+        var dataList=this.state.subSegEquipList;
+        var Model=[];
+        for(var i=0;i<dataList.length;i++){
+            if(subSegment==dataList[i].SubSegment){
+                Model.push({Model:dataList[i].Model,ModelID:dataList[i].ModelID});
+            }
+        }
+        //数组对象去重
+        var hash = {};
+        Model = Model.reduce(function(item, next) {
+            hash[next.ModelID] ?'' : hash[next.ModelID] = true && item.push(next);
+            return item
+        }, []);
 
-                this.setState({Model:Model});
+        this.setState({Model:Model});
     },
     subSegmentChoose:function(e){
         if($(e.target).hasClass('selectedSub')){

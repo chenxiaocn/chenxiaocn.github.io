@@ -11,7 +11,7 @@ import $ from "jquery";
 import API_URL from "../common/url";
 import './equip.less'
 
-var Brand = React.createClass({
+var BrandArea = React.createClass({
     getInitialState: function () {
         return {
             segmentList:["A","A0","A00", "B","BUS", "C" , "D", "Pickup"],//所有级别列表
@@ -30,15 +30,16 @@ var Brand = React.createClass({
     },
     componentDidMount: function () {
         var bigCharts=DataDeal.generateBig();
-        this.setState({bigCharts:bigCharts});
+        this.setState({bigCharts:bigCharts,equipList:this.props.equipList});
         this.loadBrandPrefix(this.state.equipList);
     },
     componentWillReceiveProps:function(nextprops){
         this.setState({equipList:nextprops.equipList});
+        this.loadBrandPrefix(nextprops.equipList);
     },
     loadBrandPrefix:function(equipList){
         var dataList=equipList;
-        var brandPrefix=[],brandPrefixBrand=this.state.brandPrefixBrand;
+        var brandPrefix=[],brandPrefixBrand=[];
         for(var i=0;i<dataList.length;i++){
             brandPrefix.push(dataList[i].BrandPrefix);
             brandPrefixBrand.push({"BrandPrefix":dataList[i].BrandPrefix,"Brand":dataList[i].Brand});
@@ -54,17 +55,8 @@ var Brand = React.createClass({
         //数组对象按大写字母排序
         DataDeal. sortArr(brandPrefixBrand, 'BrandPrefix');
 
-        this.setState({brandPrefix:brandPrefix,brandPrefixBrand:brandPrefixBrand});
+        this.setState({brandPrefix:brandPrefix,brandPrefixBrand:brandPrefixBrand,equipList:equipList});
     },
-    componentWillReceiveProps: function (nextProps) {
-        var selectedHZZZ=[nextProps.selectedHZZZ];
-        var selectedSegment=[nextProps.selectedSegment];
-        var selectedBody=[nextProps.selectedBody];
-        var selectedFuel=[nextProps.selectedFuel];
-        this.loadBrandPrefix(nextProps.equipList);
-        this.setState({equipList:nextProps.equipList,selectedHZZZ: selectedHZZZ,selectedSegment:selectedSegment,selectedBody:selectedBody,selectedFuel:selectedFuel});
-    },
-
     chooseContent:function(chooseContent,chooseType){
         this.props.chooseContent(chooseContent,chooseType);
     },
@@ -100,7 +92,7 @@ var Brand = React.createClass({
         }.bind(this));
         let segBody=this.state.brandPrefixBrand.map(function(content,index){
             return(
-                <BodyLi  key={index} brandPrefixBrand={content} chooseContent={this.chooseContent} brand={content.Brand}/>
+                <BodyLi  key={index} brandPrefixBrand={content} chooseContent={this.chooseContent} brand={content.Brand} equipList={this.state.equipList}/>
             );
         }.bind(this));
         return (
@@ -118,7 +110,6 @@ var Brand = React.createClass({
             </div>
         );
     }
-
 });
 
 var BodyLi = React.createClass({
@@ -126,33 +117,32 @@ var BodyLi = React.createClass({
         return {
             brand:'',
             brandPrefix:'',
-            OEM:[]
+            OEM:[],
+            equipList:this.props.equipList,
+            OEMCarList:[]
         }
     },
 
     componentDidMount: function () {
-        this.loadData(this.props.brand);
+        this.setState({equipList:this.props.equipList});
+        this.loadData(this.props.brand,this.state.equipList);
     },
-    loadData:function(brand){
-        Ajax({
-            type: 'GET',
-            url: API_URL.equipment.list,
-            //data:{content:content},
-            success: function(data) {
-                var dataList=data.data.content;
-                var OEM=[];
-                for(var i=0;i<dataList.length;i++){
-                    if(brand==dataList[i].Brand){
-                        OEM.push(dataList[i].OEM);
-                    }
-                }
-                OEM = DataDeal.unique(OEM);
-                this.setState({OEM:OEM});
-            }.bind(this)
-        });
+
+    loadData:function(brand,equipList){
+        var dataList=equipList;
+        var OEM=[],OEMCarList=[];
+        for(var i=0;i<dataList.length;i++){
+            if(brand==dataList[i].Brand){
+                OEM.push(dataList[i].OEM);
+                OEMCarList.push(dataList[i]);
+            }
+        }
+        OEM = DataDeal.unique(OEM);
+        this.setState({OEM:OEM,OEMCarList:OEMCarList});
     },
     componentWillReceiveProps: function (nextProps) {
-        this.loadData(nextProps.brandPrefixBrand.Brand);
+        this.setState({equipList:nextProps.equipList});
+        this.loadData(nextProps.brandPrefixBrand.Brand,nextProps.equipList);
         this.setState({brandPrefix:nextProps.brandPrefixBrand.BrandPrefix,brand:nextProps.brandPrefixBrand.Brand});
     },
     allChoose:function(e){
@@ -169,7 +159,7 @@ var BodyLi = React.createClass({
     render: function () {
         let itemBodyRow=this.state.OEM.map(function(content,index){
             return(
-                <ItemBodyRow  key={index} OEM={content} subSegmentChoose={this.subSegmentChoose}/>
+                <ItemBodyRow  key={index} OEM={content} subSegmentChoose={this.subSegmentChoose} OEMCarList={this.state.OEMCarList}/>
             );
         }.bind(this));
         return (
@@ -192,34 +182,35 @@ var ItemBodyRow = React.createClass({
     getInitialState: function () {
         return {
             OEM:this.props.OEM,
-            Model:[]
+            Model:[],
+            OEMCarList:this.props.OEMCarList
         }
     },
 
     componentDidMount: function () {
+        this.setState({OEMCarList:this.props.OEMCarList});
         this.loadData(this.props.OEM);
     },
     componentWillReceiveProps: function (nextProps) {
-        this.setState({OEM:nextProps.OEM});
+        this.setState({OEM:nextProps.OEM,OEMCarList:nextProps.OEMCarList});
         this.loadData(nextProps.OEM);
     },
     loadData:function(OEM){
-        Ajax({
-            type: 'GET',
-            url: API_URL.equipment.list,
-            //data:{content:content},
-            success: function(data) {
-                var dataList=data.data.content;
-                var Model=[];
-                for(var i=0;i<dataList.length;i++){
-                    if(OEM==dataList[i].OEM){
-                        Model.push(dataList[i].Model);
-                    }
-                }
-                Model = DataDeal.unique(Model);
-                this.setState({Model:Model});
-            }.bind(this)
-        });
+        var dataList=this.state.OEMCarList;
+        var Model=[];
+        for(var i=0;i<dataList.length;i++){
+            if(OEM==dataList[i].OEM){
+                Model.push({Model:dataList[i].Model,ModelID:dataList[i].ModelID});
+            }
+        }
+        //数组对象去重
+        var hash = {};
+        Model = Model.reduce(function(item, next) {
+            hash[next.ModelID] ?'' : hash[next.ModelID] = true && item.push(next);
+            return item
+        }, []);
+
+        this.setState({Model:Model});
     },
     subSegmentChoose:function(e){
         var subSegment=$(e.target)[0].innerText;
@@ -236,10 +227,17 @@ var ItemBodyRow = React.createClass({
         var modelLi= $(e.target).next().find('.model-li');
         DataDeal.selectedAll(modelLi);
     },
+    chooseModel:function(e){
+        var target=$(e.target);
+        DataDeal.selectedModel(target);
+    },
     render: function () {
         let itemModel=this.state.Model.map(function(content,index){
             return(
-                <ItemModel  key={index} Model={content}/>
+                <li className="model-li" onClick={this.chooseModel} key={index} id={content.ModelID}>
+                    {content.Model}
+                    <b></b>
+                </li>
             );
         }.bind(this));
         return (
@@ -253,30 +251,5 @@ var ItemBodyRow = React.createClass({
             </Row>
         );
     }
-
 });
-
-var ItemModel = React.createClass({
-    getInitialState: function () {
-        return {
-            Model:this.props.Model
-        }
-    },
-
-    componentDidMount: function () {
-    },
-    chooseModel:function(e){
-        var target=$(e.target);
-        DataDeal.selectedModel(target);
-    },
-    render: function () {
-        return (
-            <li className="model-li" onClick={this.chooseModel}>
-                {this.props.Model}
-                <b></b>
-            </li>
-        );
-    }
-
-});
-export {Brand as default}
+export {BrandArea as default}
