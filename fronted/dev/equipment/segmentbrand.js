@@ -19,16 +19,20 @@ const TabPane = Tabs.TabPane;
 var Segment = React.createClass({
     getInitialState: function () {
         return {
-            equipList:this.props.equipList,
-            segmentList:this.props.segmentList,
-            selectedSegmentList:this.props.selectedSegmentList,
-            segItemSelectedFlag:this.props.segItemSelectedFlag,
+            equipList:[],
+            segmentList:[],
+            selectedSegmentList:[],
+            segItemSelectedFlag:[],
             searchContent:'',//搜索内容
             searchResult:[]
         }
     },
     componentDidMount:function(){
-        this.setState({equipList:this.props.equipList});
+        this.setState({
+            equipList:this.props.equipList,
+            segmentList:this.props.segmentList,
+            selectedSegmentList:this.props.selectedSegmentList,
+            segItemSelectedFlag:this.props.segItemSelectedFlag});
     },
     componentWillReceiveProps:function(nextprops){
         this.setState({

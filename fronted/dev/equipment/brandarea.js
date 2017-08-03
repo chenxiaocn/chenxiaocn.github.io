@@ -3,9 +3,7 @@
  */
 import React from  'react'
 import ReactDOM from 'react-dom'
-import SearchItem from "../common/searchItem/searchItem";
 import {Row,Col} from "antd";
-import Ajax from "../common/ajax";
 import DataDeal from "../common/datadeal.js";
 import $ from "jquery";
 import API_URL from "../common/url";
@@ -25,7 +23,7 @@ var BrandArea = React.createClass({
             brand:[],//品牌
             brandPrefixBrand:[],//品牌、首字母
             brandSelectedIntial:'',
-            equipList:this.props.equipList
+            equipList:[]
         }
     },
     componentDidMount: function () {
@@ -92,7 +90,7 @@ var BrandArea = React.createClass({
         }.bind(this));
         let segBody=this.state.brandPrefixBrand.map(function(content,index){
             return(
-                <BodyLi  key={index} brandPrefixBrand={content} chooseContent={this.chooseContent} brand={content.Brand} equipList={this.state.equipList}/>
+                <BodyLi  key={index} brandPrefixBrand={content} brandPrefix={content.BrandPrefix} chooseContent={this.chooseContent} brand={content.Brand} equipList={this.state.equipList}/>
             );
         }.bind(this));
         return (
@@ -118,18 +116,18 @@ var BodyLi = React.createClass({
             brand:'',
             brandPrefix:'',
             OEM:[],
-            equipList:this.props.equipList,
+            equipList:[],
             OEMCarList:[]
         }
     },
 
     componentDidMount: function () {
-        this.setState({equipList:this.props.equipList});
-        this.loadData(this.props.brand,this.state.equipList);
+        this.setState({equipList:this.props.equipList,brand:this.props.brand,brandPrefix:this.props.brandPrefix});
+        this.loadData(this.props.brand,this.props.equipList);
     },
 
-    loadData:function(brand,equipList){
-        var dataList=equipList;
+    loadData:function(brand,list){
+        var dataList=list;
         var OEM=[],OEMCarList=[];
         for(var i=0;i<dataList.length;i++){
             if(brand==dataList[i].Brand){
@@ -141,17 +139,10 @@ var BodyLi = React.createClass({
         this.setState({OEM:OEM,OEMCarList:OEMCarList});
     },
     componentWillReceiveProps: function (nextProps) {
-        this.setState({equipList:nextProps.equipList});
-        this.loadData(nextProps.brandPrefixBrand.Brand,nextProps.equipList);
-        this.setState({brandPrefix:nextProps.brandPrefixBrand.BrandPrefix,brand:nextProps.brandPrefixBrand.Brand});
+        this.setState({equipList:nextProps.equipList,brand:nextProps.brand,brandPrefix:nextProps.brandPrefix});
+        this.loadData(nextProps.brand,nextProps.equipList);
     },
     allChoose:function(e){
-        var BrandPrefix=$(e.target).prev()[0].innerText;
-        var chooseType='all';
-        //该级别下的所有model
-        var modelLi= $(e.target).parent().next().find('.model-li');
-        DataDeal.selectedAll(modelLi);
-        //已选条件随之变化
     },
     subSegmentChoose:function(subSegment,chooseType){
         this.props.chooseContent(subSegment,chooseType);
@@ -165,9 +156,9 @@ var BodyLi = React.createClass({
         return (
             <li>
                 <div className="item-title clearfix">
-                    <p className="pull-left"><b>{this.props.brandPrefixBrand.BrandPrefix}</b></p>
+                    <p className="pull-left"><b>{this.state.brandPrefix}</b></p>
                     <div className="all pull-left" onClick={this.allChoose}>全选</div>
-                    <div className="pull-left brand-title">{this.props.brandPrefixBrand.Brand}</div>
+                    <div className="pull-left brand-title">{this.state.brand}</div>
                 </div>
                 <div className="item-body">
                     {itemBodyRow}
@@ -181,22 +172,22 @@ var BodyLi = React.createClass({
 var ItemBodyRow = React.createClass({
     getInitialState: function () {
         return {
-            OEM:this.props.OEM,
+            OEM:[],
             Model:[],
-            OEMCarList:this.props.OEMCarList
+            OEMCarList:[]
         }
     },
 
     componentDidMount: function () {
-        this.setState({OEMCarList:this.props.OEMCarList});
-        this.loadData(this.props.OEM);
+        this.setState({OEMCarList:this.props.OEMCarList,OEM:this.props.OEM});
+        this.loadData(this.props.OEM,this.props.OEMCarList);
     },
     componentWillReceiveProps: function (nextProps) {
         this.setState({OEM:nextProps.OEM,OEMCarList:nextProps.OEMCarList});
-        this.loadData(nextProps.OEM);
+        this.loadData(nextProps.OEM,nextProps.OEMCarList);
     },
-    loadData:function(OEM){
-        var dataList=this.state.OEMCarList;
+    loadData:function(OEM,OEMCarList){
+        var dataList=OEMCarList;
         var Model=[];
         for(var i=0;i<dataList.length;i++){
             if(OEM==dataList[i].OEM){

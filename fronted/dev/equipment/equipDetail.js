@@ -2,6 +2,7 @@
  * Created by Administrator on 2017/7/31.
  */
 import React from "react";
+import ReactDOM from 'react-dom'
 import SearchItem from "../common/searchItem/searchItem";
 import Ajax from "../common/ajax";
 import store from "../../reduxFile/store";
@@ -13,12 +14,13 @@ import "./equip.less";
 
 import $ from "jquery";
 import API_URL from "../common/url";
-import {Pagination ,message ,Modal ,Menu ,Dropdown, Tabs, Radio} from "antd";
+import {Modal ,Menu ,Tabs, Radio} from "antd";
 const TabPane = Tabs.TabPane;
 
 {/*添加 选车*/}
 var EquipDetail = React.createClass({
     getInitialState: function () {
+        let searchConditions = store.getState().chooseContentConditionsState ;
         return {
             visible: false,
             selectedHZZZ:[],//单个选中的性质
@@ -39,7 +41,8 @@ var EquipDetail = React.createClass({
             segmentList: ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"],//某种性质下所有级别列表
             bodyList:["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"],//某种性质下所有车身列表
             fuelList:[ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "CNG"],//某种性质下所有燃油列表
-            carListData:[],//所有的车系数据
+            //equipList:[],//所有的车系数据
+            equipList:searchConditions.equipList === "" ? [] : searchConditions.equipList,//所有的车系数据
             allConditions:[
                 { "性质": ['自主','合资','进口']},
                 { "级别": ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"]},
@@ -58,7 +61,7 @@ var EquipDetail = React.createClass({
             //data:{content:content},
             success: function(data) {
                 var carListData=data.data.content;
-                this.setState({carListData:carListData});
+                this.setState({equipList:carListData});
             }.bind(this)
         });
     },
@@ -107,7 +110,7 @@ var EquipDetail = React.createClass({
     //条件选择
     selectedCellCondition:function(content,clickType,conditionTypeInnerText){
         this.getJsonData();
-        var dataList=this.state.carListData;
+        var dataList=this.state.equipList;
         var allConditions=this.state.allConditions;
 
         var segmentList=[],bodyList=[],fuelList=[],equipListArry=[];
@@ -186,11 +189,14 @@ var EquipDetail = React.createClass({
                 { "燃油": fuelList}
             ];
         }
+        //let equipList = {equipList : equipListArry };
+        //store.dispatch(ConditionContent(equipList));
+
+        this.setState({allConditions:allConditions,equipList:equipListArry});
         this.setState({segmentList:segmentList,bodyList:bodyList,fuelList:fuelList});
         this.setState({selectedHZZZList:selectedHZZZList,selectedSegmentList:selectedSegmentList,selectedBodyList:selectedBodyList,selectedFuelList:selectedFuelList,
             selectedSubSegmentList:selectedSubSegmentList,selectedBrandList:selectedBrandList,selectedOEMList:selectedOEMList,selectedBrandPrefixList:selectedBrandPrefixList
         });
-        this.setState({allConditions:allConditions,carListData:equipListArry});
     },
 
     changeCondition:function(type){
@@ -305,8 +311,8 @@ var EquipDetail = React.createClass({
                                     </div>
                                 </div>
                                 {/*按品牌、级别*/}
-                                <Segmentbrand chooseBrandPrefix={this.chooseBrandPrefix}  segmentList={this.state.segmentList}  equipList={this.state.carListData} selectedSegmentList={this.state.selectedSegmentList} segItemSelectedFlag={this.state.segItemSelectedFlag}
-                                               chooseContent={this.chooseContent} selectedHZZZ={this.state.selectedHZZZ} selectedFuel={this.state.selectedFuel}
+                                <Segmentbrand chooseBrandPrefix={this.chooseBrandPrefix}  segmentList={this.state.segmentList}  equipList={this.state.equipList} selectedSegmentList={this.state.selectedSegmentList} segItemSelectedFlag={this.state.segItemSelectedFlag}
+                                               chooseContent={this.chooseContent} selectedHZZZList={this.state.selectedHZZZList} selectedSegmentList={this.state.selectedSegmentList}  selectedFuelList={this.state.selectedFuelList}
                                                selectedBody={this.state.selectedBody} selectedSegment={this.state.selectedSegment}/>
                                 {/*已选条件*/}
                                 <Haschoose hasChooseList={this.state.hasChooseList}  selectedOrCancelflag={this.state.selectedOrCancelflag}/>
