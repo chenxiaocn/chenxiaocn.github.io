@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    var arry=[
+        {'性质':['自主','合资','进口']},
+        {'级别':['A','D','E']},
+        {'车身':['50','40','30']}
+    ];
+    for(var item in arry){
+        for(var item2  in arry[item]){
+            console.log(item2);
+            console.log(arry[item][item2]);
+        }
+    }
+</script>
+</body>
+</html>

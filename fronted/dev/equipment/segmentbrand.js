@@ -4,12 +4,15 @@
 import React from  'react'
 import ReactDOM from 'react-dom'
 import SearchItem from "../common/searchItem/searchItem";
-import {Row,Col,Tabs} from "antd";
+import {Row,Col,Tabs,Button} from "antd";
 import Ajax from "../common/ajax";
 import store from "../../reduxFile/store";
 import {chooseContentConditions} from "../../reduxFile/actions";
 import BrandtArea from "./brandarea.js";
 import SegmentArea from "./segarea.js";
+import BigCharts from "../common/bigCharts.js";
+import BrandPrefixNav from "../common/brandPrefixNav.js";
+import NavTitle from "../common/navTitle.js";
 import DataDeal from "../common/datadeal.js";
 import $ from "jquery";
 import API_URL from "../common/url";
@@ -24,7 +27,8 @@ var Segment = React.createClass({
             selectedSegmentList:[],
             segItemSelectedFlag:[],
             searchContent:'',//搜索内容
-            searchResult:[]
+            searchResult:[],
+            filterType:'按品牌'//按品牌还是按级别
         }
     },
     componentDidMount:function(){
@@ -57,6 +61,10 @@ var Segment = React.createClass({
             this.setState({equipList:searchResult,segmentList:segmentList});
         }
     },
+    chooseFilterType:function(e){
+        var thisInnerText=$(e.target)[0].innerText;
+        this.setState({filterType:thisInnerText});
+    },
     //获取级别
     getResultSeg:function(searchResult){
         var segList=[];
@@ -67,24 +75,39 @@ var Segment = React.createClass({
         return segList;
     },
     render:function(){
+        var filterType =this.state.filterType;
+        let navtitle;
+        switch (filterType){
+            case "按品牌":
+                navtitle=(<BrandPrefixNav equipList={this.state.equipList}/>);
+                break;
+            case "按级别":
+                navtitle=(<NavTitle/>);
+                break;
+        }
         return (
             <div className="seg-brand-body">
-                    <div className="pull-right clearfix">
-                        <SearchItem  onSearch={this.handleSearch} content={this.state.searchContent}/>
+                <div className="pull-right clearfix">
+                    <SearchItem  onSearch={this.handleSearch} content={this.state.searchContent}/>
+                </div>
+                <div>
+                    <Button onClick={this.chooseFilterType} key={1}>按品牌</Button>
+                    <Button onClick={this.chooseFilterType} key={2}>按级别</Button>
+                </div>
+                <div className="content-body">
+                    <div className="nav-title">
+                        <BigCharts/>
                     </div>
-                    <div className="pull-left">
-                        <Tabs type="card">
-                            <TabPane tab="按品牌" key="1">
-                                <BrandtArea equipList={this.state.equipList} chooseBrandPrefix={this.chooseBrandPrefix} chooseContent={this.chooseContent} selectedHZZZ={this.props.selectedHZZZ}  selectedFuel={this.props.selectedFuel} selectedBody={this.props.selectedBody} selectedSegment={this.props.selectedSegment} selectedFlag={this.props.selectedFlag}/>
-                            </TabPane>
-                            <TabPane tab="按级别" key="2">
-                                <SegmentArea  equipList={this.state.equipList} segItemSelectedFlag={this.state.segItemSelectedFlag} segmentList={this.state.segmentList} chooseContent={this.chooseContent}/>
-                            </TabPane>
-                        </Tabs>
+                    <div className="content-body-area border clearfix">
+                        {navtitle}
                     </div>
-           </div>
+                </div>
+            </div>
 
         )
     }
 });
+
+
+
 export {Segment as default}
