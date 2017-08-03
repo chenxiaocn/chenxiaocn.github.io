@@ -101,6 +101,14 @@ var Segment = React.createClass({
                     <div className="content-body-area border clearfix">
                         {navtitle}
                     </div>
+                    <Tabs type="card">
+                        <TabPane tab="按品牌" key="1">
+                            <BrandtArea  equipList={this.state.equipList} chooseBrandPrefix={this.chooseBrandPrefix} chooseContent={this.chooseContent} selectedHZZZ={this.props.selectedHZZZ}  selectedFuel={this.props.selectedFuel} selectedBody={this.props.selectedBody} selectedSegment={this.props.selectedSegment} selectedFlag={this.props.selectedFlag}/>
+                        </TabPane>
+                        <TabPane tab="按级别" key="2">
+                            <SegmentArea  equipList={this.state.equipList} segItemSelectedFlag={this.state.segItemSelectedFlag} segmentList={this.state.segmentList} chooseContent={this.chooseContent}/>
+                        </TabPane>
+                    </Tabs>
                 </div>
             </div>
 
