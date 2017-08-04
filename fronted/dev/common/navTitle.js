@@ -5,6 +5,8 @@ import React from  'react'
 import ReactDOM from 'react-dom'
 import {Row,Col} from "antd";
 import DataDeal from "./datadeal.js";
+import ContentBodyRowLeft from "./contentBodyRowLeft.js";
+import ContentBodyRowRight from "./contentBodyRowRight.js";
 import $ from "jquery";
 import API_URL from "../common/url";
 import '../equipment/equip.less'
@@ -13,42 +15,29 @@ var NavTitle = React.createClass({
     getInitialState: function () {
         return {
             equipList:[],
-            brandPrefix:[],//∆∑≈∆ ◊◊÷ƒ∏
-            brandPrefixBrand:[]// ◊◊÷ƒ∏º”∆∑≈∆√˚≥∆
+            segmentList:[]
         }
     },
     componentDidMount: function () {
         this.setState({equipList:this.props.equipList});
-        this.loadBrandPrefix(this.props.equipList);
+        this.getSegmentList(this.props.equipList);
+    },
+    getSegmentList:function(equipList){
+        var segmentList=[];
+        for(var i=0;i<equipList.length;i++){
+            segmentList.push(equipList[i].Segment);
+        }
+        segmentList = DataDeal.unique(segmentList);
+        this.setState({segmentList:segmentList});
     },
     componentWillReceiveProps:function(nextprops){
         this.setState({equipList:nextprops.equipList});
-        this.loadBrandPrefix(nextprops.equipList);
-    },
-    loadBrandPrefix:function(equipList){
-        var dataList=equipList;
-        var brandPrefix=[],brandPrefixBrand=[];
-        for(var i=0;i<dataList.length;i++){
-            brandPrefix.push(dataList[i].BrandPrefix);
-            brandPrefixBrand.push({"BrandPrefix":dataList[i].BrandPrefix,"Brand":dataList[i].Brand});
-        }
-        brandPrefix = DataDeal.unique(brandPrefix).sort();
-        // ˝◊È∂‘œÛ»•÷ÿ
-        var hash = {};
-        brandPrefixBrand = brandPrefixBrand.reduce(function(item, next) {
-            hash[next.Brand] ?'' : hash[next.Brand] = true && item.push(next);
-            return item
-        }, []);
-
-        // ˝◊È∂‘œÛ∞¥¥Û–¥◊÷ƒ∏≈≈–Ú
-        DataDeal. sortArr(brandPrefixBrand, 'BrandPrefix');
-
-        this.setState({brandPrefix:brandPrefix,brandPrefixBrand:brandPrefixBrand,equipList:equipList});
+        this.getSegmentList(nextprops.equipList);
     },
     render: function () {
-        let navTitle=this.state.brandPrefixBrand.map(function(content,index){
+        let navTitle=this.state.segmentList.map(function(content,index){
             return(
-                <BodyLi  key={index}  brandPrefix={content.BrandPrefix}  brand={content.Brand} equipList={this.state.equipList}/>
+                <BodyLi  key={index}  equipList={this.state.equipList} segment={content}/>
             );
         }.bind(this));
         return (
@@ -62,51 +51,48 @@ var NavTitle = React.createClass({
 var BodyLi = React.createClass({
     getInitialState: function () {
         return {
-            brand:'',
-            brandPrefix:'',
-            OEM:[],
+            segment:[],
             equipList:[],
-            carList:[]
+            carList:[],
+            subSegmentList:[]
         }
     },
 
     componentDidMount: function () {
-        this.setState({equipList:this.props.equipList,brand:this.props.brand,brandPrefix:this.props.brandPrefix});
-        this.loadData(this.props.brand,this.props.equipList);
+        this.setState({equipList:this.props.equipList,segment:this.props.segment});
+        this.loadData(this.props.segment,this.props.equipList);
     },
 
-    loadData:function(brand,list){
+    loadData:function(segment,list){
         var dataList=list;
-        var OEM=[],carList=[];
+        var subSegmentList=[],carList=[];
         for(var i=0;i<dataList.length;i++){
-            if(brand==dataList[i].Brand){
-                OEM.push(dataList[i].OEM);
+            if(segment==dataList[i].Segment){
+                subSegmentList.push(dataList[i].SubSegment);
                 carList.push(dataList[i]);
             }
         }
-        OEM = DataDeal.unique(OEM);
-        this.setState({OEM:OEM,carList:carList});
+        subSegmentList = DataDeal.unique(subSegmentList);
+        this.setState({subSegmentList:subSegmentList,carList:carList});
     },
     componentWillReceiveProps: function (nextProps) {
-        this.setState({equipList:nextProps.equipList,brand:nextProps.brand,brandPrefix:nextProps.brandPrefix});
-        this.loadData(nextProps.brand,nextProps.equipList);
+        this.setState({equipList:nextProps.equipList,segment:nextProps.segment});
+        this.loadData(nextProps.segment,nextProps.equipList);
     },
     render: function () {
-        let itemBodyRow=this.state.OEM.map(function(content,index){
+        let itemBodyRow=this.state.subSegmentList.map(function(content,index){
             return(
                 <Row className='brand-OEM-row' key={index}>
                     <ContentBodyRowLeft content={content}/>
-                    <ContentBodyRowRight content={this.state.carList} leftVaule={content} leftProperty="OEM"/>
+                    <ContentBodyRowRight content={this.state.carList} leftVaule={content} leftProperty="SubSegment"/>
                 </Row>
-                //  <ItemBodyRow  key={index} OEM={content}  OEMCarList={this.state.OEMCarList}/>
             );
         }.bind(this));
         return (
             <li>
                 <div className="item-title clearfix">
-                    <p className="pull-left"><b>{this.state.brandPrefix}</b></p>
-                    <div className="all pull-left">»´—°</div>
-                    <div className="pull-left brand-title">{this.state.brand}</div>
+                    <p className="pull-left"><b>{this.state.segment}</b></p>
+                    <div className="all pull-left">ÂÖ®ÈÄâ</div>
                 </div>
                 <div className="item-body">
                     {itemBodyRow}
@@ -141,7 +127,7 @@ var ItemBodyRow = React.createClass({
                 Model.push({Model:dataList[i].Model,ModelID:dataList[i].ModelID});
             }
         }
-        // ˝◊È∂‘œÛ»•÷ÿ
+        //Êï∞ÁªÑÂØπË±°ÂéªÈáç
         var hash = {};
         Model = Model.reduce(function(item, next) {
             hash[next.ModelID] ?'' : hash[next.ModelID] = true && item.push(next);
