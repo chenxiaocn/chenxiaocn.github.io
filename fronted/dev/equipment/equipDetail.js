@@ -81,8 +81,7 @@ var EquipDetail = React.createClass({
     },
     //首字母筛选品牌
     chooseBrandPrefix:function(content,clickType){
-        this.getEquipList();
-        var dataList=this.state.resultList;
+        var dataList=EquipData.getAllData();
         var equipListArry=[];
         var selectedHZZZList=this.state.selectedHZZZList;
         var selectedSegmentList=this.state.selectedSegmentList;

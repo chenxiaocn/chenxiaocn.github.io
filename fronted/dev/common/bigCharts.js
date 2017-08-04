@@ -21,6 +21,18 @@ var BigCharts = React.createClass({
     },
     componentWillReceiveProps:function(nextprops){
     },
+    chooseBrandPrefix:function(e){
+        var thisInnerText=$(e.target)[0].innerText;
+        if($(e.target).hasClass("choose-active")){
+            $(e.target).removeClass("choose-active");
+            //加载数据
+            this.props.chooseBrandPrefix(thisInnerText,'remove');
+        }else{
+            $(e.target).addClass("choose-active");
+            //加载数据
+            this.props.chooseBrandPrefix(thisInnerText,'add');
+        }
+    },
     render: function () {
         let charLi=this.state.bigCharts.map(function(content,index){
             if(content == "E"||content == "I"||content == "P"||content == "U"||content == "V"){

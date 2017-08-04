@@ -29,10 +29,18 @@ var contentBodyRowRight = React.createClass({
     componentWillReceiveProps:function(nextprops){
         this.setState({
             content:nextprops.content,
-            leftValue:nextprops.leftValue,
+            leftVaule:nextprops.leftVaule,
             leftProperty:nextprops.leftProperty
         });
-        this.loadData();
+        this.loadData(nextprops.content,nextprops.leftVaule,nextprops.leftProperty);
+    },
+    modelChoose:function(e){
+        var target=$(e.target);
+        var itemValue=target[0].innerText;
+        var itemId=target.attr('id');
+        var flag= DataDeal.selectedModel(target);//选中1，取消0
+        var ModelLiArry=[{"modeValue":itemValue,"modelId":itemId}];
+        this.props.modelChoose(ModelLiArry,flag);
     },
     loadData:function(content,leftVaule,leftProperty){
         var dataList=content;
@@ -58,7 +66,7 @@ var contentBodyRowRight = React.createClass({
     render: function () {
         let itemModel=this.state.ModelList.map(function(content,index){
             return(
-                <li className="model-li"  key={index} id={content.ModelID}>
+                <li className="model-li"  key={index} id={content.ModelID} onClick={this.modelChoose}>
                     {content.Model}
                     <b></b>
                 </li>

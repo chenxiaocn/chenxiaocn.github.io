@@ -85,7 +85,12 @@ let Datadeal = {
     },
     //"取消"或"全选"
     allOrCancel:function(segTitle,target){
-        segTitle=="取消"?target[0].innerText="全选":target[0].innerText="取消";
+        if(segTitle=="取消"){
+            target[0].innerText="全选";
+        }
+        if(segTitle=="全选"){
+            target[0].innerText="取消";
+        }
     },
     //单个车系选中
     selectedModel:function(target){

@@ -34,10 +34,13 @@ var NavTitle = React.createClass({
         this.setState({equipList:nextprops.equipList});
         this.getSegmentList(nextprops.equipList);
     },
+    chooseContent:function(ModelLiArry,flag){
+        this.props.chooseContent(ModelLiArry,flag);
+    },
     render: function () {
         let navTitle=this.state.segmentList.map(function(content,index){
             return(
-                <BodyLi  key={index}  equipList={this.state.equipList} segment={content}/>
+                <BodyLi  key={index}  equipList={this.state.equipList} segment={content} chooseContent={this.chooseContent}/>
             );
         }.bind(this));
         return (
@@ -79,20 +82,34 @@ var BodyLi = React.createClass({
         this.setState({equipList:nextProps.equipList,segment:nextProps.segment});
         this.loadData(nextProps.segment,nextProps.equipList);
     },
+    allChoose:function(e){
+        var thisInnertext=$(e.target)[0].innerText;
+        var modelLi= $(e.target).parent().next().find('.model-li');//该级别下的所有model
+        var flag=DataDeal.modelHasSelected(modelLi);//选中1，取消0
+        DataDeal.allOrCancel(thisInnertext,$(e.target));//全选或取消
+        var ModelLiArry= DataDeal.getModelLiValue(modelLi);
+        this.props.chooseContent(ModelLiArry,flag);
+    },
+    leftValueChoose:function(ModelLiArry,flag){
+        this.props.chooseContent(ModelLiArry,flag);
+    },
+    modelChoose:function(ModelLiArry,flag){
+        this.props.chooseContent(ModelLiArry,flag);
+    },
     render: function () {
         let itemBodyRow=this.state.subSegmentList.map(function(content,index){
             return(
                 <Row className='brand-OEM-row' key={index}>
-                    <ContentBodyRowLeft content={content}/>
-                    <ContentBodyRowRight content={this.state.carList} leftVaule={content} leftProperty="SubSegment"/>
+                    <ContentBodyRowLeft content={content} leftValueChoose={this.leftValueChoose}/>
+                    <ContentBodyRowRight content={this.state.carList} leftVaule={content} modelChoose={this.modelChoose} leftProperty="SubSegment"/>
                 </Row>
             );
         }.bind(this));
         return (
             <li>
                 <div className="item-title clearfix">
+                    <div className="all pull-left" onClick={this.allChoose}>全选</div>
                     <p className="pull-left"><b>{this.state.segment}</b></p>
-                    <div className="all pull-left">全选</div>
                 </div>
                 <div className="item-body">
                     {itemBodyRow}
@@ -101,61 +118,4 @@ var BodyLi = React.createClass({
         );
     }
 });
-
-var ItemBodyRow = React.createClass({
-    getInitialState: function () {
-        return {
-            OEM:[],
-            Model:[],
-            OEMCarList:[]
-        }
-    },
-
-    componentDidMount: function () {
-        this.setState({OEMCarList:this.props.OEMCarList,OEM:this.props.OEM});
-        this.loadData(this.props.OEM,this.props.OEMCarList);
-    },
-    componentWillReceiveProps: function (nextProps) {
-        this.setState({OEM:nextProps.OEM,OEMCarList:nextProps.OEMCarList});
-        this.loadData(nextProps.OEM,nextProps.OEMCarList);
-    },
-    loadData:function(OEM,OEMCarList){
-        var dataList=OEMCarList;
-        var Model=[];
-        for(var i=0;i<dataList.length;i++){
-            if(OEM==dataList[i].OEM){
-                Model.push({Model:dataList[i].Model,ModelID:dataList[i].ModelID});
-            }
-        }
-        //数组对象去重
-        var hash = {};
-        Model = Model.reduce(function(item, next) {
-            hash[next.ModelID] ?'' : hash[next.ModelID] = true && item.push(next);
-            return item
-        }, []);
-
-        this.setState({Model:Model});
-    },
-    render: function () {
-        let itemModel=this.state.Model.map(function(content,index){
-            return(
-                <li className="model-li"  key={index} id={content.ModelID}>
-                    {content.Model}
-                    <b></b>
-                </li>
-            );
-        }.bind(this));
-        return (
-            <Row className='brand-OEM-row'>
-                <Col span={2}>{this.props.OEM}</Col>
-                <Col span={10}>
-                    <ul>
-                        {itemModel}
-                    </ul>
-                </Col>
-            </Row>
-        );
-    }
-});
-
 export {NavTitle as default}

@@ -27,7 +27,7 @@ export default class SearchItem extends React.Component{
     render(){
         return(
             <div className="searchContainer">
-               <input type="text" placeholder={this.state.placeHolder} ref="search" onInput={this.handleSearch.bind(this,true)}/>
+               <input type="text" placeholder={this.state.placeHolder} ref="search" onKeyUp={this.handleSearch.bind(this,true)}/>
             </div>
         );
     }

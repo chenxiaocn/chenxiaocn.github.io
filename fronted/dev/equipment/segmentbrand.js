@@ -64,6 +64,8 @@ var Segment = React.createClass({
     chooseFilterType:function(e){
         var thisInnerText=$(e.target)[0].innerText;
         this.setState({filterType:thisInnerText});
+       $('.filter-btn-group button').removeClass('btn-active');
+        $(e.target).addClass('btn-active');
     },
     //获取级别
     getResultSeg:function(searchResult){
@@ -79,10 +81,12 @@ var Segment = React.createClass({
         let navtitle;
         switch (filterType){
             case "按品牌":
-                navtitle=(<BrandPrefixNav equipList={this.state.equipList}/>);
+                $('.nav-title').show();
+                navtitle=(<BrandPrefixNav equipList={this.state.equipList} chooseContent={this.chooseContent}/>);
                 break;
             case "按级别":
-                navtitle=(<NavTitle equipList={this.state.equipList}/>);
+                $('.nav-title').hide();
+                navtitle=(<NavTitle equipList={this.state.equipList} chooseContent={this.chooseContent}/>);
                 break;
         }
         return (
@@ -90,25 +94,17 @@ var Segment = React.createClass({
                 <div className="pull-right clearfix">
                     <SearchItem  onSearch={this.handleSearch} content={this.state.searchContent}/>
                 </div>
-                <div>
-                    <Button onClick={this.chooseFilterType} key={1}>按品牌</Button>
-                    <Button onClick={this.chooseFilterType} key={2}>按级别</Button>
+                <div className="filter-btn-group">
+                    <button className="btn-active" onClick={this.chooseFilterType} key={1}>按品牌</button>
+                    <button onClick={this.chooseFilterType} key={2}>按级别</button>
                 </div>
                 <div className="content-body">
                     <div className="nav-title">
-                        <BigCharts/>
+                        <BigCharts chooseBrandPrefix={this.chooseBrandPrefix}/>
                     </div>
                     <div className="content-body-area border clearfix">
                         {navtitle}
                     </div>
-                    <Tabs type="card">
-                        <TabPane tab="按品牌" key="1">
-                            <BrandtArea  equipList={this.state.equipList} chooseBrandPrefix={this.chooseBrandPrefix} chooseContent={this.chooseContent} selectedHZZZ={this.props.selectedHZZZ}  selectedFuel={this.props.selectedFuel} selectedBody={this.props.selectedBody} selectedSegment={this.props.selectedSegment} selectedFlag={this.props.selectedFlag}/>
-                        </TabPane>
-                        <TabPane tab="按级别" key="2">
-                            <SegmentArea  equipList={this.state.equipList} segItemSelectedFlag={this.state.segItemSelectedFlag} segmentList={this.state.segmentList} chooseContent={this.chooseContent}/>
-                        </TabPane>
-                    </Tabs>
                 </div>
             </div>
 
@@ -116,6 +112,13 @@ var Segment = React.createClass({
     }
 });
 
-
+//<Tabs type="card">
+//    <TabPane tab="按品牌" key="1">
+//        <BrandtArea  equipList={this.state.equipList} chooseBrandPrefix={this.chooseBrandPrefix} chooseContent={this.chooseContent} selectedHZZZ={this.props.selectedHZZZ}  selectedFuel={this.props.selectedFuel} selectedBody={this.props.selectedBody} selectedSegment={this.props.selectedSegment} selectedFlag={this.props.selectedFlag}/>
+//    </TabPane>
+//    <TabPane tab="按级别" key="2">
+//        <SegmentArea  equipList={this.state.equipList} segItemSelectedFlag={this.state.segItemSelectedFlag} segmentList={this.state.segmentList} chooseContent={this.chooseContent}/>
+//    </TabPane>
+//</Tabs>
 
 export {Segment as default}

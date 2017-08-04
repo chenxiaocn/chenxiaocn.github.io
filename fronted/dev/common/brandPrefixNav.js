@@ -48,10 +48,13 @@ var BrandPrefixNav = React.createClass({
 
         this.setState({brandPrefix:brandPrefix,brandPrefixBrand:brandPrefixBrand,equipList:equipList});
     },
+    chooseContent:function(ModelLiArry,flag){
+        this.props.chooseContent(ModelLiArry,flag);
+    },
     render: function () {
         let navTitle=this.state.brandPrefixBrand.map(function(content,index){
             return(
-                <BodyLi  key={index}  brandPrefix={content.BrandPrefix}  brand={content.Brand} equipList={this.state.equipList}/>
+                <BodyLi  key={index}  brandPrefix={content.BrandPrefix}  brand={content.Brand} equipList={this.state.equipList} chooseContent={this.chooseContent}/>
             );
         }.bind(this));
         return (
@@ -78,6 +81,10 @@ var BodyLi = React.createClass({
         this.loadData(this.props.brand,this.props.equipList);
     },
 
+    componentWillReceiveProps: function (nextProps) {
+        this.setState({equipList:nextProps.equipList,brand:nextProps.brand,brandPrefix:nextProps.brandPrefix});
+        this.loadData(nextProps.brand,nextProps.equipList);
+    },
     loadData:function(brand,list){
         var dataList=list;
         var OEM=[],carList=[];
@@ -90,25 +97,34 @@ var BodyLi = React.createClass({
         OEM = DataDeal.unique(OEM);
         this.setState({OEM:OEM,carList:carList});
     },
-    componentWillReceiveProps: function (nextProps) {
-        this.setState({equipList:nextProps.equipList,brand:nextProps.brand,brandPrefix:nextProps.brandPrefix});
-        this.loadData(nextProps.brand,nextProps.equipList);
+    allChoose:function(e){
+        var thisInnertext=$(e.target)[0].innerText;
+        var modelLi= $(e.target).parent().next().find('.model-li');//该级别下的所有model
+        var flag=DataDeal.modelHasSelected(modelLi);//选中1，取消0
+        DataDeal.allOrCancel(thisInnertext,$(e.target));//全选或取消
+        var ModelLiArry= DataDeal.getModelLiValue(modelLi);
+        this.props.chooseContent(ModelLiArry,flag);
+    },
+    leftValueChoose:function(ModelLiArry,flag){
+        this.props.chooseContent(ModelLiArry,flag);
+    },
+    modelChoose:function(ModelLiArry,flag){
+        this.props.chooseContent(ModelLiArry,flag);
     },
     render: function () {
         let itemBodyRow=this.state.OEM.map(function(content,index){
             return(
             <Row className='brand-OEM-row' key={index}>
-               <ContentBodyRowLeft content={content}/>
-               <ContentBodyRowRight content={this.state.carList} leftVaule={content} leftProperty="OEM"/>
+               <ContentBodyRowLeft content={content} leftValueChoose={this.leftValueChoose}/>
+               <ContentBodyRowRight content={this.state.carList} leftVaule={content} modelChoose={this.modelChoose} leftProperty="OEM"/>
             </Row>
-              //  <ItemBodyRow  key={index} OEM={content}  OEMCarList={this.state.OEMCarList}/>
             );
         }.bind(this));
         return (
             <li>
                 <div className="item-title clearfix">
                     <p className="pull-left"><b>{this.state.brandPrefix}</b></p>
-                    <div className="all pull-left">全选</div>
+                    <div className="all pull-left" onClick={this.allChoose}>全选</div>
                     <div className="pull-left brand-title">{this.state.brand}</div>
                 </div>
                 <div className="item-body">
@@ -118,61 +134,4 @@ var BodyLi = React.createClass({
         );
     }
 });
-
-var ItemBodyRow = React.createClass({
-    getInitialState: function () {
-        return {
-            OEM:[],
-            Model:[],
-            OEMCarList:[]
-        }
-    },
-
-    componentDidMount: function () {
-        this.setState({OEMCarList:this.props.OEMCarList,OEM:this.props.OEM});
-        this.loadData(this.props.OEM,this.props.OEMCarList);
-    },
-    componentWillReceiveProps: function (nextProps) {
-        this.setState({OEM:nextProps.OEM,OEMCarList:nextProps.OEMCarList});
-        this.loadData(nextProps.OEM,nextProps.OEMCarList);
-    },
-    loadData:function(OEM,OEMCarList){
-        var dataList=OEMCarList;
-        var Model=[];
-        for(var i=0;i<dataList.length;i++){
-            if(OEM==dataList[i].OEM){
-                Model.push({Model:dataList[i].Model,ModelID:dataList[i].ModelID});
-            }
-        }
-        //数组对象去重
-        var hash = {};
-        Model = Model.reduce(function(item, next) {
-            hash[next.ModelID] ?'' : hash[next.ModelID] = true && item.push(next);
-            return item
-        }, []);
-
-        this.setState({Model:Model});
-    },
-    render: function () {
-        let itemModel=this.state.Model.map(function(content,index){
-            return(
-                <li className="model-li"  key={index} id={content.ModelID}>
-                    {content.Model}
-                    <b></b>
-                </li>
-            );
-        }.bind(this));
-        return (
-            <Row className='brand-OEM-row'>
-                <Col span={2}>{this.props.OEM}</Col>
-                <Col span={10}>
-                    <ul>
-                        {itemModel}
-                    </ul>
-                </Col>
-            </Row>
-        );
-    }
-});
-
 export {BrandPrefixNav as default}
