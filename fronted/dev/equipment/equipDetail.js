@@ -195,8 +195,7 @@ var EquipDetail = React.createClass({
     },
 
     changeCondition:function(type){
-        this.getJsonData();
-        var dataList=this.state.carListData;
+        var dataList=EquipData.getAllData();
         var allConditions=this.state.allConditions;
         var segmentList=[],bodyList=[],fuelList=[],equipListArry=[];
 

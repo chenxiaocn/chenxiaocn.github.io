@@ -42,15 +42,18 @@ var ConditionContent = React.createClass({
         }
     },
     chooseNoLimit:function(e){
-        var typeInnerText=$(e.target).prev()[0].innerText;
+        var typeInnerText=$(e.target).prev()[0].innerText;//所属筛选条件
         typeInnerText=typeInnerText.substring(0,typeInnerText.length-1);
         var conditionLi=$(e.target).parent().parent().find('.condition-ul li');
-        for(var i=0;i<conditionLi.length;i++){
-            if($(conditionLi[i]).hasClass('choose-active')){
-                $(conditionLi[i]).removeClass('choose-active');
+        if(!($(e.target).hasClass('.title-choose-active'))){
+            //如，性质下所有li，自主、合资、进口
+            for(var i=0;i<conditionLi.length;i++){
+                if($(conditionLi[i]).hasClass('choose-active')){
+                    $(conditionLi[i]).removeClass('choose-active');
+                }
             }
+            this.props.chooseNoLimit(typeInnerText);
         }
-        this.props.chooseNoLimit(typeInnerText);
     },
     render:function(){
         let conditionItem=this.state.conditionContent.map(function(content,index){
