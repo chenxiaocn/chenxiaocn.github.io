@@ -140,6 +140,8 @@ let Datadeal = {
         var res=new Array();
         for(var item in dataArray){
             for(var item1 in conArray) {
+                var a=dataArray[item][type];
+                var b=conArray[item1];
                 if (dataArray[item][type] == conArray[item1]) {
                     res.push(dataArray[item]);
                     // res.push({'HZZ':dataArray[item][type],'segment':dataArray[item].segment,'body':dataArray[item].body,'fuel':dataArray[item].fuel});

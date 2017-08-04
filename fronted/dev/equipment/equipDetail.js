@@ -10,7 +10,7 @@ import ConditionContent from './conditionContent.js';
 import Segmentbrand from './segmentbrand.js';
 import Haschoose from "./hasChoose.js";
 import DataDeal from "../common/datadeal.js";
-import EquipData from "../common/equipData.js";
+import EquipData from "./equipData.js";
 import "./equip.less";
 
 import $ from "jquery";
@@ -102,13 +102,10 @@ var EquipDetail = React.createClass({
 
         this.setState({selectedHZZZList:selectedHZZZList,resultList:equipListArry,selectedHZZZ:content});
     },
-    chooseNoLimit:function(type){
-        this.changeCondition(type);
-    },
     //条件选择
     selectedCellCondition:function(content,clickType,conditionTypeInnerText){
         var dataList=EquipData.getAllData();
-        var allConditions=this.state.allConditions;
+        var allConditions=[];
 
         var segmentList=[],bodyList=[],fuelList=[],equipListArry=[];
         var selectedHZZZList=this.state.selectedHZZZList;
@@ -131,7 +128,9 @@ var EquipDetail = React.createClass({
                 case "燃油":selectedFuelList.push(content);
                     break;
             }
-        }else{
+        }
+
+        if(clickType=='remove'){
             switch (conditionTypeInnerText){
                 case "性质":  selectedHZZZList = DataDeal.removeByValue(selectedHZZZList,content);
                     break;
@@ -143,6 +142,20 @@ var EquipDetail = React.createClass({
                     break;
             }
         }
+
+        if(clickType=='noLimit'){
+            switch (conditionTypeInnerText){
+                case "性质": selectedHZZZList=[];
+                    break;
+                case "级别":selectedSegmentList=[];
+                    break;
+                case "车身":selectedBodyList=[];
+                    break;
+                case "燃油":selectedFuelList=[];
+                    break;
+            }
+        }
+
         equipListArry=DataDeal.selectedCondition(selectedHZZZList,selectedSegmentList,selectedBodyList,selectedFuelList,selectedSubSegmentList,selectedBrandList,selectedOEMList,selectedBrandPrefixList,dataList);
 
         //该条件下的车的级别、车身、燃油
@@ -188,83 +201,10 @@ var EquipDetail = React.createClass({
         }
 
         this.setState({allConditions:allConditions,resultList:equipListArry});
-        this.setState({segmentList:segmentList,bodyList:bodyList,fuelList:fuelList});
+        //this.setState({segmentList:segmentList,bodyList:bodyList,fuelList:fuelList});
         this.setState({selectedHZZZList:selectedHZZZList,selectedSegmentList:selectedSegmentList,selectedBodyList:selectedBodyList,selectedFuelList:selectedFuelList,
             selectedSubSegmentList:selectedSubSegmentList,selectedBrandList:selectedBrandList,selectedOEMList:selectedOEMList,selectedBrandPrefixList:selectedBrandPrefixList
         });
-    },
-
-    changeCondition:function(type){
-        var dataList=EquipData.getAllData();
-        var allConditions=this.state.allConditions;
-        var segmentList=[],bodyList=[],fuelList=[],equipListArry=[];
-
-        var selectedHZZZList=this.state.selectedHZZZList;
-        var selectedSegmentList=this.state.selectedSegmentList;
-        var selectedBodyList=this.state.selectedBodyList;
-        var selectedFuelList=this.state.selectedFuelList;
-        var selectedSubSegmentList=this.state.selectedSubSegmentList;
-        var selectedBrandList=this.state.selectedBrandList;
-        var selectedOEMList=this.state.selectedOEMList;
-        var selectedBrandPrefixList=this.state.selectedBrandPrefixList;
-
-        switch (type){
-            case "性质":selectedHZZZList=[];
-                break;
-            case "级别":selectedSegmentList=[];
-                break;
-            case "车身":selectedBodyList=[];
-                break;
-            case "燃油":selectedFuelList=[];
-                break;
-        }
-        equipListArry=DataDeal.selectedCondition(selectedHZZZList,selectedSegmentList,selectedBodyList,selectedFuelList,selectedSubSegmentList,selectedBrandList,selectedOEMList,selectedBrandPrefixList,dataList);
-
-        //该条件下的车的级别、车身、燃油
-        for(var j=0;j<equipListArry.length;j++){
-            segmentList.push(equipListArry[j].Segment);
-            bodyList.push(equipListArry[j].BodyType);
-            fuelList.push(equipListArry[j].Fuel);
-        }
-        segmentList = DataDeal.unique(segmentList);
-        bodyList = DataDeal.unique(bodyList);
-        fuelList = DataDeal.unique(fuelList);
-        if(type=='级别'){
-            allConditions=[
-                { "性质": ['自主','合资','进口']},
-                { "级别": ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"]},
-                { "车身": bodyList},
-                { "燃油": fuelList}
-            ];
-        }
-        if(type=='车身'){
-            allConditions=[
-                { "性质": ['自主','合资','进口']},
-                { "级别": ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"]},
-                { "车身": ["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"]},
-                { "燃油": fuelList}
-            ];
-        }
-        if(type=='燃油'){
-            allConditions=[
-                { "性质": ['自主','合资','进口']},
-                { "级别": ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"]},
-                { "车身": ["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"]},
-                { "燃油": [ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "CNG"]}
-            ];
-        }if(type=='性质'){
-            allConditions=[
-                { "性质": ['自主','合资','进口']},
-                { "级别": segmentList},
-                { "车身": bodyList},
-                { "燃油": fuelList}
-            ];
-        }
-        this.setState({segmentList:segmentList,bodyList:bodyList,fuelList:fuelList});
-        this.setState({selectedHZZZList:selectedHZZZList,selectedSegmentList:selectedSegmentList,selectedBodyList:selectedBodyList,selectedFuelList:selectedFuelList,
-            selectedSubSegmentList:selectedSubSegmentList,selectedBrandList:selectedBrandList,selectedOEMList:selectedOEMList,selectedBrandPrefixList:selectedBrandPrefixList
-        });
-        this.setState({allConditions:allConditions,resultList:equipListArry});
     },
     //选择车系
     chooseContent:function(chooseContent,flag){
@@ -276,7 +216,7 @@ var EquipDetail = React.createClass({
         let conditionLists=[], allConditions=this.state.allConditions;
         for(var item in allConditions){
             for(var item2 in allConditions[item]){
-                conditionLists.push(<ConditionContent key={item2} chooseNoLimit={this.chooseNoLimit} selectedCellCondition={this.selectedCellCondition} conditionTitle={item2} conditionContent={allConditions[item][item2]}/>
+                conditionLists.push(<ConditionContent key={item2}  selectedCellCondition={this.selectedCellCondition} conditionTitle={item2} conditionContent={allConditions[item][item2]}/>
                 );
             }
         }

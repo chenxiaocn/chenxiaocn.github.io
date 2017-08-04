@@ -12,20 +12,20 @@ import './equip.less'
 var ConditionContent = React.createClass({
     getInitialState:function(){
         return{
-            conditionTitle:this.props.conditionTitle,
-            conditionContent:this.props.conditionContent
+            conditionTitle:[],
+            conditionContent:[]
         }
     },
     componentDidMount:function(){
-        //this.setState({conditionTitle:this.props.conditionTitle,conditionContent:this.props.conditionContent});
+       this.setState({conditionTitle:this.props.conditionTitle,conditionContent:this.props.conditionContent});
     },
     componentWillReceiveProps:function(nextprops){
-        this.setState({conditionTitle:this.props.conditionTitle,conditionContent:this.props.conditionContent});
+        this.setState({conditionTitle:nextprops.conditionTitle,conditionContent:nextprops.conditionContent});
     },
     selectedCellCondition:function(e){
         var liText = $(e.target)[0].innerText;
         var conditionTypeInnerText=$(e.target).attr("data-parent");
-        $(".condition-title span").removeClass("title-choose-active");
+        $(e.target).parent().parent().parent().find('.no-limit').removeClass("title-choose-active");
 
         if($(e.target).hasClass("choose-active")){
             $(e.target).removeClass("choose-active");
@@ -42,6 +42,7 @@ var ConditionContent = React.createClass({
         }
     },
     chooseNoLimit:function(e){
+        var liText = $(e.target)[0].innerText;
         var typeInnerText=$(e.target).prev()[0].innerText;//所属筛选条件
         typeInnerText=typeInnerText.substring(0,typeInnerText.length-1);
         var conditionLi=$(e.target).parent().parent().find('.condition-ul li');
@@ -52,7 +53,7 @@ var ConditionContent = React.createClass({
                     $(conditionLi[i]).removeClass('choose-active');
                 }
             }
-            this.props.chooseNoLimit(typeInnerText);
+            this.props.selectedCellCondition(liText,'noLimit',typeInnerText);
         }
     },
     render:function(){
