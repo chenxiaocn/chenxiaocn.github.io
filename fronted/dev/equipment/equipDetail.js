@@ -105,17 +105,16 @@ var EquipDetail = React.createClass({
     //条件选择
     selectedCellCondition:function(content,clickType,conditionTypeInnerText){
         var dataList=EquipData.getAllData();
-        var allConditions=[];
+        var allConditions=[],equipListArry=[];
 
         var segmentList=[],bodyList=[],fuelList=[],equipListArry=[];
-        var selectedHZZZList=this.state.selectedHZZZList;
-        var selectedSegmentList=this.state.selectedSegmentList;
-        var selectedBodyList=this.state.selectedBodyList;
-        var selectedFuelList=this.state.selectedFuelList;
-        var selectedSubSegmentList=this.state.selectedSubSegmentList;
-        var selectedBrandList=this.state.selectedBrandList;
-        var selectedOEMList=this.state.selectedOEMList;
-        var selectedBrandPrefixList=this.state.selectedBrandPrefixList;
+
+        var initSegmentList=this.state.segmentList,initBodyList=this.state.bodyList,initFuelList=this.state.fuelList;
+
+        var selectedHZZZList=this.state.selectedHZZZList, selectedSegmentList=this.state.selectedSegmentList;
+        var selectedBodyList=this.state.selectedBodyList, selectedFuelList=this.state.selectedFuelList;
+        var selectedSubSegmentList=this.state.selectedSubSegmentList, selectedBrandList=this.state.selectedBrandList;
+        var selectedOEMList=this.state.selectedOEMList, selectedBrandPrefixList=this.state.selectedBrandPrefixList;
 
         if(clickType=='add'){
             switch (conditionTypeInnerText){
@@ -168,40 +167,29 @@ var EquipDetail = React.createClass({
         bodyList = DataDeal.unique(bodyList);
         fuelList = DataDeal.unique(fuelList);
 
-        if(conditionTypeInnerText=='级别'){
-            allConditions=[
-                { "性质": ['自主','合资','进口']},
-                { "级别": ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"]},
-                { "车身": bodyList},
-                { "燃油": fuelList}
-            ];
-        }
-        if(conditionTypeInnerText=='车身'){
-            allConditions=[
-                { "性质": ['自主','合资','进口']},
-                { "级别": ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"]},
-                { "车身": ["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"]},
-                { "燃油": fuelList}
-            ];
-        }
-        if(conditionTypeInnerText=='燃油'){
-            allConditions=[
-                { "性质": ['自主','合资','进口']},
-                { "级别": ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"]},
-                { "车身": ["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"]},
-                { "燃油": [ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "CNG"]}
-            ];
-        }if(conditionTypeInnerText=='性质'){
-            allConditions=[
-                { "性质": ['自主','合资','进口']},
-                { "级别": segmentList},
-                { "车身": bodyList},
-                { "燃油": fuelList}
-            ];
-        }
+            if(segmentList==content){
+                segmentList=initSegmentList;
+            }
+         //for(var i=0;i<bodyList.length;bodyList++){
+         //    if()
+         //}
+            if(bodyList==content){
+                segmentList=[];
+                segmentList=initSegmentList;
+                bodyList=initBodyList;
+            }
+            if(fuelList==content){
+                segmentList=[];
+                segmentList=initSegmentList;
+                bodyList=initBodyList;
+                fuelList=initFuelList;
+            }
+
+
+        allConditions=[{ "性质": ['自主','合资','进口']},{ "级别": segmentList},{ "车身": bodyList},{ "燃油": fuelList}];
 
         this.setState({allConditions:allConditions,resultList:equipListArry});
-        //this.setState({segmentList:segmentList,bodyList:bodyList,fuelList:fuelList});
+        this.setState({segmentList:segmentList,bodyList:bodyList,fuelList:fuelList});
         this.setState({selectedHZZZList:selectedHZZZList,selectedSegmentList:selectedSegmentList,selectedBodyList:selectedBodyList,selectedFuelList:selectedFuelList,
             selectedSubSegmentList:selectedSubSegmentList,selectedBrandList:selectedBrandList,selectedOEMList:selectedOEMList,selectedBrandPrefixList:selectedBrandPrefixList
         });
