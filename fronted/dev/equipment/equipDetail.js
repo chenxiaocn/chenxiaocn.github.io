@@ -10,6 +10,7 @@ import ConditionContent from './conditionContent.js';
 import Segmentbrand from './segmentbrand.js';
 import Haschoose from "./hasChoose.js";
 import DataDeal from "../common/datadeal.js";
+import EquipData from "../common/equipData.js";
 import "./equip.less";
 
 import $ from "jquery";
@@ -41,8 +42,7 @@ var EquipDetail = React.createClass({
             segmentList: ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"],//某种性质下所有级别列表
             bodyList:["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"],//某种性质下所有车身列表
             fuelList:[ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "CNG"],//某种性质下所有燃油列表
-            //equipList:[],//所有的车系数据
-            equipList:searchConditions.equipList === "" ? [] : searchConditions.equipList,//所有的车系数据
+            resultList:[],//所有的车系数据
             allConditions:[
                 { "性质": ['自主','合资','进口']},
                 { "级别": ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"]},
@@ -60,8 +60,8 @@ var EquipDetail = React.createClass({
             url: API_URL.equipment.list,
             //data:{content:content},
             success: function(data) {
-                var carListData=data.data.content;
-                this.setState({equipList:carListData});
+                var resultList=data.data.content;
+                this.setState({resultList:resultList});
             }.bind(this)
         });
     },
@@ -82,7 +82,7 @@ var EquipDetail = React.createClass({
     //首字母筛选品牌
     chooseBrandPrefix:function(content,clickType){
         this.getEquipList();
-        var dataList=this.state.equipList;
+        var dataList=this.state.resultList;
         var equipListArry=[];
         var selectedHZZZList=this.state.selectedHZZZList;
         var selectedSegmentList=this.state.selectedSegmentList;
@@ -101,16 +101,14 @@ var EquipDetail = React.createClass({
 
         equipListArry=DataDeal.selectedCondition(selectedHZZZList,selectedSegmentList,selectedBodyList,selectedFuelList,selectedSubSegmentList,selectedBrandList,selectedOEMList,selectedBrandPrefixList,dataList);
 
-        this.setState({selectedHZZZList:selectedHZZZList,equipList:equipListArry,selectedHZZZ:content,
-            characterRelatedList:equipListArry});
+        this.setState({selectedHZZZList:selectedHZZZList,resultList:equipListArry,selectedHZZZ:content});
     },
     chooseNoLimit:function(type){
         this.changeCondition(type);
     },
     //条件选择
     selectedCellCondition:function(content,clickType,conditionTypeInnerText){
-        this.getJsonData();
-        var dataList=this.state.equipList;
+        var dataList=EquipData.getAllData();
         var allConditions=this.state.allConditions;
 
         var segmentList=[],bodyList=[],fuelList=[],equipListArry=[];
@@ -189,10 +187,8 @@ var EquipDetail = React.createClass({
                 { "燃油": fuelList}
             ];
         }
-        //let equipList = {equipList : equipListArry };
-        //store.dispatch(ConditionContent(equipList));
 
-        this.setState({allConditions:allConditions,equipList:equipListArry});
+        this.setState({allConditions:allConditions,resultList:equipListArry});
         this.setState({segmentList:segmentList,bodyList:bodyList,fuelList:fuelList});
         this.setState({selectedHZZZList:selectedHZZZList,selectedSegmentList:selectedSegmentList,selectedBodyList:selectedBodyList,selectedFuelList:selectedFuelList,
             selectedSubSegmentList:selectedSubSegmentList,selectedBrandList:selectedBrandList,selectedOEMList:selectedOEMList,selectedBrandPrefixList:selectedBrandPrefixList
@@ -270,7 +266,7 @@ var EquipDetail = React.createClass({
         this.setState({selectedHZZZList:selectedHZZZList,selectedSegmentList:selectedSegmentList,selectedBodyList:selectedBodyList,selectedFuelList:selectedFuelList,
             selectedSubSegmentList:selectedSubSegmentList,selectedBrandList:selectedBrandList,selectedOEMList:selectedOEMList,selectedBrandPrefixList:selectedBrandPrefixList
         });
-        this.setState({allConditions:allConditions,carListData:equipListArry});
+        this.setState({allConditions:allConditions,resultList:equipListArry});
     },
     //选择车系
     chooseContent:function(chooseContent,flag){
@@ -311,7 +307,7 @@ var EquipDetail = React.createClass({
                                     </div>
                                 </div>
                                 {/*按品牌、级别*/}
-                                <Segmentbrand chooseBrandPrefix={this.chooseBrandPrefix}  segmentList={this.state.segmentList}  equipList={this.state.equipList} selectedSegmentList={this.state.selectedSegmentList} segItemSelectedFlag={this.state.segItemSelectedFlag}
+                                <Segmentbrand chooseBrandPrefix={this.chooseBrandPrefix}  segmentList={this.state.segmentList}  equipList={this.state.resultList} selectedSegmentList={this.state.selectedSegmentList} segItemSelectedFlag={this.state.segItemSelectedFlag}
                                                chooseContent={this.chooseContent} selectedHZZZList={this.state.selectedHZZZList} selectedSegmentList={this.state.selectedSegmentList}  selectedFuelList={this.state.selectedFuelList}
                                                selectedBody={this.state.selectedBody} selectedSegment={this.state.selectedSegment}/>
                                 {/*已选条件*/}

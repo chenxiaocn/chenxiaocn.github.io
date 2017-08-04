@@ -28,7 +28,7 @@ var Segment = React.createClass({
             segItemSelectedFlag:[],
             searchContent:'',//搜索内容
             searchResult:[],
-            filterType:'按品牌'//按品牌还是按级别
+            filterType:'按品牌'//按品牌还是按级别,
         }
     },
     componentDidMount:function(){

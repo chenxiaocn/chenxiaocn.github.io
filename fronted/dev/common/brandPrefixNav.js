@@ -147,29 +147,10 @@ var ItemBodyRow = React.createClass({
 
         this.setState({Model:Model});
     },
-    subSegmentChoose:function(e){
-        var subSegment=$(e.target)[0].innerText;
-        var chooseType='subSegment';
-        this.props.subSegmentChoose(subSegment,chooseType);
-
-        if($(e.target).hasClass('selectedSub')){
-            $(e.target).removeClass('selectedSub');
-        }
-        else{
-            $(e.target).addClass('selectedSub');
-        }
-        //该级别下的所有model
-        var modelLi= $(e.target).next().find('.model-li');
-        DataDeal.selectedAll(modelLi);
-    },
-    chooseModel:function(e){
-        var target=$(e.target);
-        DataDeal.selectedModel(target);
-    },
     render: function () {
         let itemModel=this.state.Model.map(function(content,index){
             return(
-                <li className="model-li" onClick={this.chooseModel} key={index} id={content.ModelID}>
+                <li className="model-li"  key={index} id={content.ModelID}>
                     {content.Model}
                     <b></b>
                 </li>
@@ -177,7 +158,7 @@ var ItemBodyRow = React.createClass({
         }.bind(this));
         return (
             <Row className='brand-OEM-row'>
-                <Col span={2} onClick={this.subSegmentChoose}>{this.props.OEM}</Col>
+                <Col span={2}>{this.props.OEM}</Col>
                 <Col span={10}>
                     <ul>
                         {itemModel}
