@@ -12,20 +12,18 @@ import '../equipment/equip.less'
 var contentBodyRowLeft = React.createClass({
     getInitialState: function () {
         return {
-
+            content:''
         }
     },
     componentDidMount: function () {
-
+        this.setState({content:this.props.content});
     },
     componentWillReceiveProps:function(nextprops){
+        this.setState({content:nextprops.content});
     },
     render: function () {
         return (
-            <ul>
-                <li>44</li>
-            </ul>
-
+            <Col span={2}>{this.state.content}</Col>
         );
     }
 });

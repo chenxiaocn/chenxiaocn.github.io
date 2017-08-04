@@ -6,9 +6,11 @@ import ReactDOM from 'react-dom'
 import {Row,Col} from "antd";
 import DataDeal from "./datadeal.js";
 import ContentBodyRowLeft from "./contentBodyRowLeft.js";
+import ContentBodyRowRight from "./contentBodyRowRight.js";
 import $ from "jquery";
 import API_URL from "../common/url";
 import '../equipment/equip.less'
+
 
 var BrandPrefixNav = React.createClass({
     getInitialState: function () {
@@ -67,7 +69,7 @@ var BodyLi = React.createClass({
             brandPrefix:'',
             OEM:[],
             equipList:[],
-            OEMCarList:[]
+            carList:[]
         }
     },
 
@@ -78,15 +80,15 @@ var BodyLi = React.createClass({
 
     loadData:function(brand,list){
         var dataList=list;
-        var OEM=[],OEMCarList=[];
+        var OEM=[],carList=[];
         for(var i=0;i<dataList.length;i++){
             if(brand==dataList[i].Brand){
                 OEM.push(dataList[i].OEM);
-                OEMCarList.push(dataList[i]);
+                carList.push(dataList[i]);
             }
         }
         OEM = DataDeal.unique(OEM);
-        this.setState({OEM:OEM,OEMCarList:OEMCarList});
+        this.setState({OEM:OEM,carList:carList});
     },
     componentWillReceiveProps: function (nextProps) {
         this.setState({equipList:nextProps.equipList,brand:nextProps.brand,brandPrefix:nextProps.brandPrefix});
@@ -95,7 +97,11 @@ var BodyLi = React.createClass({
     render: function () {
         let itemBodyRow=this.state.OEM.map(function(content,index){
             return(
-                <ItemBodyRow  key={index} OEM={content}  OEMCarList={this.state.OEMCarList}/>
+            <Row className='brand-OEM-row' key={index}>
+               <ContentBodyRowLeft content={content}/>
+               <ContentBodyRowRight content={this.state.carList} leftVaule={content} leftProperty="OEM"/>
+            </Row>
+              //  <ItemBodyRow  key={index} OEM={content}  OEMCarList={this.state.OEMCarList}/>
             );
         }.bind(this));
         return (

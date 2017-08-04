@@ -82,7 +82,7 @@ var Segment = React.createClass({
                 navtitle=(<BrandPrefixNav equipList={this.state.equipList}/>);
                 break;
             case "按级别":
-                navtitle=(<NavTitle/>);
+                navtitle=(<NavTitle equipList={this.state.equipList}/>);
                 break;
         }
         return (
