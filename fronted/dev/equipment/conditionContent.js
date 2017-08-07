@@ -141,6 +141,7 @@ var ConditionLi=React.createClass({
             }
 
         }else{
+            $(e.target).addClass("choose-active");
             for(var i=0;i<$('.conditonType').length;i++)
             {
                 var conditonTypeCellContent=$($('.conditonType')[i])[0].innerText;
@@ -163,8 +164,6 @@ var ConditionLi=React.createClass({
                     break;
                 }
             }
-
-            $(e.target).addClass("choose-active");
             //加载数据
             this.props.selectedCellCondition(liText,'add','子级别');
         }

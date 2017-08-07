@@ -180,32 +180,19 @@ var EquipDetail = React.createClass({
         if(clickType=='remove')
         {
             if(conditionTypeInnerText=='级别'){
-                //selectedSegmentList.length==0?segmentList=segmentList:segmentList=initSegmentList;
-                if(selectedSegmentList.length==0){
-                    segmentList=segmentList;
-                }else{
-                    segmentList=initSegmentList;
-                }
+                selectedSegmentList.length==0?segmentList=segmentList:segmentList=initSegmentList;
             }
             if(conditionTypeInnerText=='子级别'){
                 segmentList=initSegmentList;
             }
             if(conditionTypeInnerText=='车身'){
                 segmentList=initSegmentList;
-                if(selectedBodyList.length==0){
-                    bodyList=bodyList;
-                }else{
-                    bodyList=initBodyList
-                }
+                selectedBodyList.length==0?bodyList=bodyList:bodyList=initBodyList;
             }
             if(conditionTypeInnerText=='燃油'){
                 segmentList=initSegmentList;
                 bodyList=initBodyList;
-                if(selectedFuelList.length==0){
-                    fuelList=fuelList;
-                }else{
-                    fuelList=initFuelList;
-                }
+                selectedFuelList.length==0?fuelList=fuelList:fuelList=initFuelList;
             }
         }
 
