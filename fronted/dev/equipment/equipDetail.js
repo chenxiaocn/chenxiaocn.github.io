@@ -3,7 +3,6 @@
  */
 import React from "react";
 import ReactDOM from 'react-dom'
-import SearchItem from "../common/searchItem/searchItem";
 import Ajax from "../common/ajax";
 //import store from "../../reduxFile/store";
 import ConditionContent from './conditionContent.js';

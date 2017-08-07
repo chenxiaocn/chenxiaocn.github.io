@@ -4,21 +4,18 @@
 import React from  'react'
 import ReactDOM from 'react-dom'
 import SearchItem from "../common/searchItem/searchItem";
-import {Row,Col,Tabs,Button} from "antd";
-import Ajax from "../common/ajax";
-import store from "../../reduxFile/store";
-import {chooseContentConditions} from "../../reduxFile/actions";
-import BrandtArea from "./brandarea.js";
-import SegmentArea from "./segarea.js";
+import {Row,Col} from "antd";
+//import Ajax from "../common/ajax";
+//import store from "../../reduxFile/store";
+//import {chooseContentConditions} from "../../reduxFile/actions";
+//import API_URL from "../common/url";
 import BigCharts from "../common/bigCharts.js";
 import BrandPrefixNav from "../common/brandPrefixNav.js";
 import NavTitle from "../common/navTitle.js";
 import DataDeal from "../common/datadeal.js";
 import EquipData from "./equipData.js";
 import $ from "jquery";
-import API_URL from "../common/url";
 import './equip.less'
-const TabPane = Tabs.TabPane;
 
 var Segment = React.createClass({
     getInitialState: function () {
@@ -88,14 +85,4 @@ var Segment = React.createClass({
         )
     }
 });
-
-//<Tabs type="card">
-//    <TabPane tab="按品牌" key="1">
-//        <BrandtArea  equipList={this.state.equipList} chooseBrandPrefix={this.chooseBrandPrefix} chooseContent={this.chooseContent} selectedHZZZ={this.props.selectedHZZZ}  selectedFuel={this.props.selectedFuel} selectedBody={this.props.selectedBody} selectedSegment={this.props.selectedSegment} selectedFlag={this.props.selectedFlag}/>
-//    </TabPane>
-//    <TabPane tab="按级别" key="2">
-//        <SegmentArea  equipList={this.state.equipList} segItemSelectedFlag={this.state.segItemSelectedFlag} segmentList={this.state.segmentList} chooseContent={this.chooseContent}/>
-//    </TabPane>
-//</Tabs>
-
 export {Segment as default}
