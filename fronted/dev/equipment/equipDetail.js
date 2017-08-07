@@ -221,7 +221,7 @@ var EquipDetail = React.createClass({
     chooseContent:function(chooseContent,flag){
         this.setState({hasChooseList:chooseContent,selectedOrCancelflag:flag});
     },
-    submitModifyOrAddStu: function () {
+    submitModifyOrAdd: function () {
     },
     render(){
         let conditionLists=[], allConditions=this.state.allConditions;
@@ -234,12 +234,12 @@ var EquipDetail = React.createClass({
         return (
             <Modal
                 visible={this.state.visible}
-                title={'www'}
+                title={'选择车系'}
                 onCancel={this.handleCancel}
                 width={1000}
                 wrapClassName="modifyPasswordModal infoModal"
                 maskClosable={false}
-                onOk={this.submitModifyOrAddStu}>
+                onOk={this.submitModifyOrAdd}>
                 <form  id="modifyOrAddForm">
                     {/*条件选车tab*/}
                     <div className="card-container">
