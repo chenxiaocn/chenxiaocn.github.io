@@ -243,7 +243,7 @@ var EquipDetail = React.createClass({
                 <form  id="modifyOrAddForm">
                     {/*条件选车tab*/}
                     <div className="card-container">
-                        <Tabs type="card">
+                        <Tabs type="card" defaultActiveKey="2">
                             <TabPane tab="竞品组" key="1"></TabPane>
                             <TabPane tab="条件选车" key="2">
                                 {/*条件*/}
