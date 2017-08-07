@@ -1,6 +1,3 @@
-/**
- * Created by miguo on 2017/2/7.
- */
 import React from "react";
 import {Link} from "react-router";
 import { Menu, Dropdown, Icon } from 'antd';

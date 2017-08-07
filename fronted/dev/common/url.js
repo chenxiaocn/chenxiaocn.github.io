@@ -33,7 +33,7 @@ let API_URL = {
 
 if (!STATIC) {
     API_URL = {
-        login: common.url + "/api/login",
+        login: common.url + "/api/login"
     };
 }
 

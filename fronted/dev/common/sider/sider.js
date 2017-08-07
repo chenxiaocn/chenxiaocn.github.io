@@ -1,6 +1,3 @@
-/**
- * Created by miguo on 2017/2/7.
- */
 import React from "react";
 import ReactDOM from "react-dom";
 import { Menu, Icon } from 'antd';
@@ -40,9 +37,6 @@ const Sider = React.createClass({
         // if(keyArray.indexOf(e.key)!=-1){
         //     this.goBackOld();
         // }
-        if(e.key=="2"){
-            this.courseManage();
-        }
     },
     goBackOld(){
         location.href="/";
@@ -60,9 +54,6 @@ const Sider = React.createClass({
             nextOpenKeys = this.getAncestorKeys(latestCloseKey);
         }
         this.setState({ openKeys: nextOpenKeys });
-    },
-    courseManage(){
-        localStorage.setItem("courseSection",1);
     },
     getAncestorKeys(key) {
         const map = {
@@ -94,13 +85,6 @@ const Sider = React.createClass({
         }
     },
     render() {
-        let imgArr = this.state.imgArr ,
-            schoolManage = "" ;
-        if(JSON.parse(sessionStorage.rolePermission).role==='校长'){
-            schoolManage = PATH.school.detail + JSON.parse(sessionStorage.school).id ;
-        }else{
-            schoolManage = PATH.school.all ;
-        }
         return (
             <div className="left_sider" id="left_sider">
                 <Menu
@@ -111,15 +95,15 @@ const Sider = React.createClass({
                     onOpenChange={this.onOpenChange}
                     onClick={this.handleClick}
                     >
-                    <Menu.Item key="1"><Link to="/"><img className="cate_logo" src={"image/sider/i"+ imgArr[0] +".png"}/>首页</Link></Menu.Item>
+                    <Menu.Item key="1"><Link to="/"><img className="cate_logo"/>首页</Link></Menu.Item>
                     {
                       <Menu.Item key="3"><Link to={PATH.equipment.content}>
-                                <img className="cate_logo" src={"image/sider/i"+ imgArr[2] +".png"}/>产品溢出回归
+                                <img className="cate_logo"/>产品溢出回归
                             </Link></Menu.Item>
                     }
                     {
                        <Menu.Item key="4"><Link to={PATH.equipment.content}>
-                                <img className="cate_logo" src={"image/sider/i"+ imgArr[3] +".png"}/>装备查询
+                                <img className="cate_logo"/>装备查询
                        </Link></Menu.Item>
                     }
                 </Menu>

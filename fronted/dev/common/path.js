@@ -2,23 +2,6 @@ var PATH={
     index:{
         knowledge:"/knowledge"
     },
-    course:{
-        mathManage:"/course/math",
-        knowledgeManage:"/course/knowledge/",
-        exerciseLibByKnowledge:"/course/knowledge/exerciseLib/",
-        interactManage:"/course/interact/",
-        exerciseQuestionType:"/course/exerciseQuestion/",
-        entryQuestionType:"/course/entryQuestion/",
-        lineQuestionType:"/course/lineQuestion/",
-        chainBlankCreate:"/course/chainBlankCreate/"
-    },
-    school:{
-        all:"/school/content",
-        detail:"/school/detail/",
-        consult:"/school/consult/",
-        room:"/school/room/",
-        grade:"/school/grade/"
-    },
     equipment:{
         detail:"/student/detail/",
         dynamics:"/student/studyDynamics",
@@ -31,26 +14,10 @@ var PATH={
         entranceReport:"/student/entranceReport",
         entryQuestions:"/student/entryQuestions"
     },
-    schedule:{
-        content:"/schedule/content/",
-        grade:"/schedule/grade/",
-        teacher:"/schedule/teacher/",
-        day:"/schedule/day/"
-    },
     user:{
         set:"/person/set",
         admin:"/user/Content",
         other:"/user/otherContent"
-    },
-    server:{
-        error:"/server/error",
-        material:"/server/material"
-    },
-    system:{
-        errorBack:"/system/errorBack",
-        logOut:"/system/logOut",
-        optionLog:"/system/optionLog",
-        permission:"/system/permission"
     }
 };
 module.exports=PATH;
