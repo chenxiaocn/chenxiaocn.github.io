@@ -6,7 +6,7 @@ import {Link} from 'react-router'
 import $ from "jquery";
 
 import PATH from "../path";
-import {hasPermission} from "../permissions";
+//import {hasPermission} from "../permissions";
 import "./leftsider.less";
 
 if (!Array.prototype.find) {

@@ -9,20 +9,6 @@ import Ajax from "../ajax";
 import "./header.less"
 
 const onClick = function ({ key }) {
-    switch(key){
-        case "2":
-            Ajax({
-                type: 'POST',
-                url: API_URL.logout,
-                success:function(data){
-
-                }
-            });
-            sessionStorage.clear();
-            localStorage.clear();
-            location.href = "/";
-            break;
-    }
 };
 
 const menu = (
@@ -34,41 +20,19 @@ const menu = (
 
 var Header = React.createClass({
     componentDidMount: function () {
-        this.loadAvatar();
-    },
-    loadAvatar: function(){
-        if(sessionStorage.avatar){
-            this.setState({avatar: sessionStorage.avatar});
-        }else{
-            //Ajax({
-            //    type: 'GET',
-            //    url: API_URL.usercenter.showInfo,
-            //    success: function(data) {
-            //        if(data.data.avatar){
-            //            this.setState({avatar: data.data.avatar});
-            //            sessionStorage.avatar = data.data.avatar ;
-            //        }
-            //    }.bind(this)
-            //});
-        }
     },
     getInitialState: function(){
         return {
         }
     },
     render: function () {
-        let user = JSON.parse(sessionStorage.user);
-        let username = "";
-        if (user) {
-            username = common.cutString(user.username,8);
-        }
         return (
             <header className="header">
                 <div className="header_operation">
                     <Dropdown overlay={menu} trigger={['click']} placement="bottomCenter">
                         <a className="ant-dropdown-link" href="#">
                             {/*<img className="user_logo" id="header_user_logo" src={this.state.avatar} />*/}
-                            <span className="user_name">{username}</span>
+                            <span className="user_name">admin</span>
                             <Icon type="caret-down" />
                         </a>
                     </Dropdown>
