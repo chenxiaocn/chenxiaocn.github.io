@@ -109,7 +109,6 @@ var ConditionLi=React.createClass({
     },
     subSegChoose:function(e){
         let liText = $(e.target)[0].innerText;
-        let thisConditonType=$(e.target).attr('data-conditonType');
         let thisDataParent=$(e.target).attr('data-parent');
         let conditionTypeInnerText=this.state.conditionTitle;
 
@@ -175,12 +174,11 @@ var ConditionLi=React.createClass({
         let content=this.state.content;
         let equipList=EquipData.getAllData();
         let subSegList=DataDeal.getSubSegList(equipList,content);//获取该级别下的子级别
-        let conditonType=DataDeal.getId(conditionTitle);
 
         let menuItem=subSegList.map(function(content,index){
             return(
                 <Menu.Item key={index}>
-                    <p onClick={this.subSegChoose} data-parent={this.state.content} data-conditonType={conditonType}>{content}</p>
+                    <p onClick={this.subSegChoose} data-parent={this.state.content}>{content}</p>
                 </Menu.Item>
             );
         }.bind(this));
