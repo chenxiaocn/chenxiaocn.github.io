@@ -54,7 +54,6 @@ var Header = React.createClass({
     },
     getInitialState: function(){
         return {
-            avatar:'image/school/headerImg.png'
         }
     },
     render: function () {

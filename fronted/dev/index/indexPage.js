@@ -32,12 +32,8 @@ export default class IndexPage extends React.Component{
                             <Sider selectedKeys="1"/>
                         </div>
                         <div className="right_part index_page">
-                            <div className="flex_left_container">
-                               aa
-                            </div>
-                            <div className="flex_right_container">
-                             aa
-                            </div>
+                            <div className="flex_left_container"></div>
+                            <div className="flex_right_container"></div>
                         </div>
                     </div>
                 </div>
