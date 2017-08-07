@@ -47,7 +47,7 @@ var Segment = React.createClass({
     chooseFilterType:function(e){
         var thisInnerText=$(e.target)[0].innerText;
         this.setState({filterType:thisInnerText});
-        $('.filter-btn-group button').removeClass('btn-active');
+        $('.filter-btn-group div').removeClass('btn-active');
         $(e.target).addClass('btn-active');
     },
     render:function(){
@@ -69,8 +69,8 @@ var Segment = React.createClass({
                     <SearchItem  onSearch={this.handleSearch} content={this.state.searchContent}/>
                 </div>
                 <div className="filter-btn-group">
-                    <button className="btn-active" onClick={this.chooseFilterType} key={1}>按品牌</button>
-                    <button onClick={this.chooseFilterType} key={2}>按级别</button>
+                    <div className="btn-active" onClick={this.chooseFilterType} key={1}>按品牌</div>
+                    <div onClick={this.chooseFilterType} key={2}>按级别</div>
                 </div>
                 <div className="content-body">
                     <div className="nav-title">
