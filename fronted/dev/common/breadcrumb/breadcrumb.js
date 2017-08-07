@@ -1,6 +1,3 @@
-/**
- * Created by panchong on 17/2/7.
- */
 import React from "react";
 import {Link} from "react-router";
 import "./breadcrumb.less";
