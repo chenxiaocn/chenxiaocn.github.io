@@ -37,7 +37,7 @@ var BigCharts = React.createClass({
         let charLi=this.state.bigCharts.map(function(content,index){
             if(content == "E"||content == "I"||content == "P"||content == "U"||content == "V"){
                 return(
-                    <li key={index} className="disable" onClick={this.chooseBrandPrefix}>{content}</li>
+                    <li key={index} className="disable">{content}</li>
                 );
             }else{
                 return(
