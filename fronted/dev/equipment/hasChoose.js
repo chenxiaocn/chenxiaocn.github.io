@@ -29,7 +29,6 @@ var Haschoose = React.createClass({
         }
         this.setState({hasChooseList:hasChooseList,selectedOrCancelflag:nextprops.selectedOrCancelflag});
     },
-
     modelDel:function(e){
         var hasChooseList=this.state.hasChooseList;
         var thisInnerText=$(e.target).prev()[0].innerText;
