@@ -95,11 +95,8 @@ var EquipDetail = React.createClass({
     selectedCellCondition:function(content,clickType,conditionTypeInnerText){
         var dataList=EquipData.getAllData();
         var allConditions=[],equipListArry=[];
-
         var segmentList=[],bodyList=[],fuelList=[],equipListArry=[];
-
         var initSegmentList=this.state.segmentList,initBodyList=this.state.bodyList,initFuelList=this.state.fuelList;
-
         var selectedHZZZList=this.state.selectedHZZZList, selectedSegmentList=this.state.selectedSegmentList;
         var selectedBodyList=this.state.selectedBodyList, selectedFuelList=this.state.selectedFuelList;
         var selectedSubSegmentList=this.state.selectedSubSegmentList, selectedBrandList=this.state.selectedBrandList;
@@ -177,8 +174,7 @@ var EquipDetail = React.createClass({
                 fuelList=initFuelList;
             }
         }
-        if(clickType=='remove')
-        {
+        if(clickType=='remove'){
             if(conditionTypeInnerText=='级别'){
                 selectedSegmentList.length==0?segmentList=segmentList:segmentList=initSegmentList;
             }
