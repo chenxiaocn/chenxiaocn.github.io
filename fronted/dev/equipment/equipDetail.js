@@ -5,7 +5,7 @@ import React from "react";
 import ReactDOM from 'react-dom'
 import SearchItem from "../common/searchItem/searchItem";
 import Ajax from "../common/ajax";
-import store from "../../reduxFile/store";
+//import store from "../../reduxFile/store";
 import ConditionContent from './conditionContent.js';
 import Segmentbrand from './segmentbrand.js';
 import Haschoose from "./hasChoose.js";
@@ -21,28 +21,22 @@ const TabPane = Tabs.TabPane;
 {/*添加 选车*/}
 var EquipDetail = React.createClass({
     getInitialState: function () {
-        let searchConditions = store.getState().chooseContentConditionsState ;
         return {
             visible: false,
-            selectedHZZZ:[],//单个选中的性质
             selectedHZZZList:[],//选中的性质集合
-            selectedSegment:[],//选中的级别，
             selectedSegmentList:[],
-            selectedBody:[],//选中的车身，
             selectedBodyList:[],
-            selectedFuel:[],//选中的燃油，
             selectedFuelList:[],
-            hasChooseList:[],//已选级别
-            segItemSelectedFlag:0,//选中单个级别
             selectedSubSegmentList:[],
             selectedBrandList:[],
             selectedOEMList:[],
             selectedBrandPrefixList:[],
+            resultList:[],//所有的车系数据
+            hasChooseList:[],//已选级别
             selectedOrCancelflag:0,
             segmentList: ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"],//某种性质下所有级别列表
             bodyList:["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"],//某种性质下所有车身列表
             fuelList:[ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "CNG"],//某种性质下所有燃油列表
-            resultList:[],//所有的车系数据
             allConditions:[
                 { "性质": ['自主','合资','进口']},
                 { "级别": ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"]},
@@ -83,14 +77,10 @@ var EquipDetail = React.createClass({
     chooseBrandPrefix:function(content,clickType){
         var dataList=EquipData.getAllData();
         var equipListArry=[];
-        var selectedHZZZList=this.state.selectedHZZZList;
-        var selectedSegmentList=this.state.selectedSegmentList;
-        var selectedBodyList=this.state.selectedBodyList;
-        var selectedFuelList=this.state.selectedFuelList;
-        var selectedSubSegmentList=this.state.selectedSubSegmentList;
-        var selectedBrandList=this.state.selectedBrandList;
-        var selectedOEMList=this.state.selectedOEMList;
-        var selectedBrandPrefixList=this.state.selectedBrandPrefixList;
+        var selectedHZZZList=this.state.selectedHZZZList, selectedSegmentList=this.state.selectedSegmentList;
+        var selectedBodyList=this.state.selectedBodyList,selectedFuelList=this.state.selectedFuelList;
+        var selectedSubSegmentList=this.state.selectedSubSegmentList,selectedBrandList=this.state.selectedBrandList;
+        var selectedOEMList=this.state.selectedOEMList,selectedBrandPrefixList=this.state.selectedBrandPrefixList;
 
         if(clickType=='add'){
             selectedBrandPrefixList.push(content);
@@ -126,6 +116,8 @@ var EquipDetail = React.createClass({
                     break;
                 case "燃油":selectedFuelList.push(content);
                     break;
+                case "子级别":selectedSubSegmentList.push(content);
+                    break;
             }
         }
 
@@ -139,6 +131,8 @@ var EquipDetail = React.createClass({
                     break;
                 case "燃油": selectedFuelList = DataDeal.removeByValue(selectedFuelList,content);
                     break;
+                case "子级别": selectedSubSegmentList = DataDeal.removeByValue(selectedSubSegmentList,content);
+                    break;
             }
         }
 
@@ -147,10 +141,13 @@ var EquipDetail = React.createClass({
                 case "性质": selectedHZZZList=[];
                     break;
                 case "级别":selectedSegmentList=[];
+                    selectedSubSegmentList=[];
                     break;
                 case "车身":selectedBodyList=[];
                     break;
                 case "燃油":selectedFuelList=[];
+                    break;
+                case "子级别": selectedSubSegmentList =[];
                     break;
             }
         }
@@ -167,26 +164,53 @@ var EquipDetail = React.createClass({
         bodyList = DataDeal.unique(bodyList);
         fuelList = DataDeal.unique(fuelList);
 
-            if(segmentList==content){
+        if(clickType=='add'){
+            if(conditionTypeInnerText=='级别'||conditionTypeInnerText=='子级别'){
                 segmentList=initSegmentList;
             }
-         //for(var i=0;i<bodyList.length;bodyList++){
-         //    if()
-         //}
-            if(bodyList==content){
-                segmentList=[];
+            if(conditionTypeInnerText=='车身'){
                 segmentList=initSegmentList;
                 bodyList=initBodyList;
             }
-            if(fuelList==content){
-                segmentList=[];
+            if(conditionTypeInnerText=='燃油'){
                 segmentList=initSegmentList;
                 bodyList=initBodyList;
                 fuelList=initFuelList;
             }
+        }
+        if(clickType=='remove')
+        {
+            if(conditionTypeInnerText=='级别'){
+                //selectedSegmentList.length==0?segmentList=segmentList:segmentList=initSegmentList;
+                if(selectedSegmentList.length==0){
+                    segmentList=segmentList;
+                }else{
+                    segmentList=initSegmentList;
+                }
+            }
+            if(conditionTypeInnerText=='子级别'){
+                segmentList=initSegmentList;
+            }
+            if(conditionTypeInnerText=='车身'){
+                segmentList=initSegmentList;
+                if(selectedBodyList.length==0){
+                    bodyList=bodyList;
+                }else{
+                    bodyList=initBodyList
+                }
+            }
+            if(conditionTypeInnerText=='燃油'){
+                segmentList=initSegmentList;
+                bodyList=initBodyList;
+                if(selectedFuelList.length==0){
+                    fuelList=fuelList;
+                }else{
+                    fuelList=initFuelList;
+                }
+            }
+        }
 
-
-        allConditions=[{ "性质": ['自主','合资','进口']},{ "级别": segmentList},{ "车身": bodyList},{ "燃油": fuelList}];
+        allConditions=[{ "性质": ['自主','合资','进口']},{ "级别": DataDeal.unique(segmentList)},{ "车身": bodyList},{ "燃油": fuelList}];
 
         this.setState({allConditions:allConditions,resultList:equipListArry});
         this.setState({segmentList:segmentList,bodyList:bodyList,fuelList:fuelList});
@@ -221,9 +245,7 @@ var EquipDetail = React.createClass({
                     {/*条件选车tab*/}
                     <div className="card-container">
                         <Tabs type="card">
-                            <TabPane tab="竞品组" key="1">
-                            </TabPane>
-
+                            <TabPane tab="竞品组" key="1"></TabPane>
                             <TabPane tab="条件选车" key="2">
                                 {/*条件*/}
                                 <div className="card-content">
@@ -233,9 +255,7 @@ var EquipDetail = React.createClass({
                                     </div>
                                 </div>
                                 {/*按品牌、级别*/}
-                                <Segmentbrand chooseBrandPrefix={this.chooseBrandPrefix}  segmentList={this.state.segmentList}  equipList={this.state.resultList} selectedSegmentList={this.state.selectedSegmentList} segItemSelectedFlag={this.state.segItemSelectedFlag}
-                                               chooseContent={this.chooseContent} selectedHZZZList={this.state.selectedHZZZList} selectedSegmentList={this.state.selectedSegmentList}  selectedFuelList={this.state.selectedFuelList}
-                                               selectedBody={this.state.selectedBody} selectedSegment={this.state.selectedSegment}/>
+                                <Segmentbrand chooseBrandPrefix={this.chooseBrandPrefix}   equipList={this.state.resultList} chooseContent={this.chooseContent}/>
                                 {/*已选条件*/}
                                 <Haschoose hasChooseList={this.state.hasChooseList}  selectedOrCancelflag={this.state.selectedOrCancelflag}/>
                             </TabPane>

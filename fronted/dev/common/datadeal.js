@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from "jquery";
 import Ajax from "../common/ajax";
 import API_URL from "../common/url";
+
 let Datadeal = {
     //数组去重
     unique:function(arr){
@@ -161,31 +162,42 @@ let Datadeal = {
             }
         }
     },
-
-    //查询条件
-    getConditions:function(){
-        var conditionKey= ['性质','级别','车身','燃油'];
-        var conditionValue=[['自主','合资','进口'],["A","A0","A00", "B","BUS", "C" , "D", "Pickup"],["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"],[ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "汽油/CNG"]];
-        var conditions=[conditionKey,conditionValue];
-        return conditions;
-    },
     //模糊查询
     fuzzySearch:function(list,keyWord){
         var arr = [];
-        for(var item in list){
-            for(var key in list[item]){
-                if((list[item][key].indexOf(keyWord))>=0){
-                    arr.push(list[item]);
-                }
+        for(var i=0;i<list.length;i++){
+                if((list[i].Model.indexOf(keyWord))>=0){
+                    arr.push(list[i]);
             }
         }
-        //数组对象去重
-        var hash = {};
-        arr = arr.reduce(function(item, next) {
-            hash[next.ModelID] ?'' : hash[next.ModelID] = true && item.push(next);
-            return item;
-        }, []);
+        return arr;
+    },
 
+    //获取指定级别下的子级别
+    getSubSegList:function(list,seg){
+        var subSegList=[];
+        for(var i=0;i<list.length;i++){
+            if(list[i].Segment == seg){
+                subSegList.push(list[i].SubSegment);
+            }
+        }
+        subSegList=this.unique(subSegList);
+        return subSegList;
+    },
+
+    //指定类
+    getId:function(content){
+        var arr='';
+        switch (content){
+            case "性质":arr='HZZType';
+                break;
+            case "级别":arr='segType';
+                break;
+            case "车身":arr='bodyType';
+                break;
+            case "燃油":arr='fuelype';
+                break;
+        }
         return arr;
     }
 };

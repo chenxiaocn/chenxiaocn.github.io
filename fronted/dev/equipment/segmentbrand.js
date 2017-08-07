@@ -14,6 +14,7 @@ import BigCharts from "../common/bigCharts.js";
 import BrandPrefixNav from "../common/brandPrefixNav.js";
 import NavTitle from "../common/navTitle.js";
 import DataDeal from "../common/datadeal.js";
+import EquipData from "./equipData.js";
 import $ from "jquery";
 import API_URL from "../common/url";
 import './equip.less'
@@ -23,28 +24,16 @@ var Segment = React.createClass({
     getInitialState: function () {
         return {
             equipList:[],
-            segmentList:[],
-            selectedSegmentList:[],
-            segItemSelectedFlag:[],
             searchContent:'',//搜索内容
             searchResult:[],
             filterType:'按品牌'//按品牌还是按级别,
         }
     },
     componentDidMount:function(){
-        this.setState({
-            equipList:this.props.equipList,
-            segmentList:this.props.segmentList,
-            selectedSegmentList:this.props.selectedSegmentList,
-            segItemSelectedFlag:this.props.segItemSelectedFlag});
+        this.setState({equipList:this.props.equipList});
     },
     componentWillReceiveProps:function(nextprops){
-        this.setState({
-            equipList:nextprops.equipList,
-            segmentList:nextprops.segmentList,
-            selectedSegmentList:nextprops.selectedSegmentList,
-            segItemSelectedFlag:nextprops.segItemSelectedFlag
-        });
+        this.setState({equipList:nextprops.equipList});
     },
     chooseContent:function(chooseContent,flag){
         this.props.chooseContent(chooseContent,flag);
@@ -53,28 +42,16 @@ var Segment = React.createClass({
         this.props.chooseBrandPrefix(content,clickType);
     },
     handleSearch:function(searchContent, status){
-        this.setState({searchContent: searchContent});
-        if (status) {
-            let conditions = {searchContent : searchContent};
-            var searchResult=DataDeal.fuzzySearch(this.state.equipList,searchContent);
-            var segmentList=this.getResultSeg(searchResult);
-            this.setState({equipList:searchResult,segmentList:segmentList});
-        }
+        var equipList=[], searchResult=[];
+        searchContent==''? equipList=EquipData.getAllData(): equipList=this.state.equipList;
+         searchResult=DataDeal.fuzzySearch(equipList,searchContent);
+        this.setState({searchContent: searchContent,equipList:searchResult});
     },
     chooseFilterType:function(e){
         var thisInnerText=$(e.target)[0].innerText;
         this.setState({filterType:thisInnerText});
-       $('.filter-btn-group button').removeClass('btn-active');
+        $('.filter-btn-group button').removeClass('btn-active');
         $(e.target).addClass('btn-active');
-    },
-    //获取级别
-    getResultSeg:function(searchResult){
-        var segList=[];
-        for(var i=0;i<searchResult.length;i++){
-            segList.push(searchResult[i].Segment);
-        }
-        segList=DataDeal.unique(segList);
-        return segList;
     },
     render:function(){
         var filterType =this.state.filterType;
