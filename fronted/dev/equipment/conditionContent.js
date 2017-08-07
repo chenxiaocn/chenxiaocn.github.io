@@ -112,24 +112,12 @@ var ConditionLi=React.createClass({
         let thisConditonType=$(e.target).attr('data-conditonType');
         let thisDataParent=$(e.target).attr('data-parent');
         let conditionTypeInnerText=this.state.conditionTitle;
-        //“不限”添样式
-        for(var i=0;i<$('.conditonType').length;i++)
-        {
-            var conditonTypeCellContent=$($('.conditonType')[i])[0].innerText;
-            conditonTypeCellContent=conditonTypeCellContent.substring(0,conditonTypeCellContent.length-1);
-            if(conditonTypeCellContent==conditionTypeInnerText){
-                $($('.conditonType')[i]).next().removeClass("title-choose-active");
-                break;
-            }
-        }
 
         if($(e.target).hasClass("choose-active")){
             $(e.target).removeClass("choose-active");
-            let itemSelected=$(e.target).parent().find('.ant-dropdown-menu-item-selected');
+            let itemSelected=$(e.target).parent().parent().find('.choose-active');
             //加载数据
             this.props.selectedCellCondition(liText,'remove','子级别');
-
-            //“不限”添样式
 
             for(var i=0;i<$('.conditonType').length;i++)
             {
@@ -145,7 +133,7 @@ var ConditionLi=React.createClass({
                           }
                         }
                     }
-                    var segItem=$($('.conditonType')[i]).parent().next().find('choose-active');
+                    var segItem=$($('.conditonType')[i]).parent().next().find('.choose-active');
                     if(segItem.length==0){
                         $($('.conditonType')[i]).next().addClass("title-choose-active");
                     }
@@ -159,6 +147,11 @@ var ConditionLi=React.createClass({
                 var conditonTypeCellContent=$($('.conditonType')[i])[0].innerText;
                 conditonTypeCellContent=conditonTypeCellContent.substring(0,conditonTypeCellContent.length-1);
                 if(conditonTypeCellContent==conditionTypeInnerText){
+                    //“不限”添样式
+                    if( $($('.conditonType')[i]).next().hasClass("title-choose-active")){
+                        $($('.conditonType')[i]).next().removeClass("title-choose-active");
+                    }
+
                    var segLi=$($('.conditonType')[i]).parent().next().find('li');
                     for(var j=0;j<segLi.length;j++){
                         var segLiId=$(segLi[j]).attr('id');
@@ -200,7 +193,7 @@ var ConditionLi=React.createClass({
 
         if(conditionTitle=="级别"){
             return(
-                <Dropdown overlay={menu}>
+                <Dropdown overlay={menu} placement="bottomCenter">
                     <li className="ant-dropdown-link" id={this.state.content} onClick={this.selectedCellCondition}>
                         {this.state.content}
                     </li>
