@@ -66,7 +66,7 @@ var Segment = React.createClass({
         return (
             <div className="seg-brand-body">
                 <div className="pull-right clearfix">
-                    <SearchItem  onSearch={this.handleSearch} content={this.state.searchContent}/>
+                    <SearchItem  onSearch={this.handleSearch} content={this.state.searchContent} placeHolder="请输入查找内容"/>
                 </div>
                 <div className="filter-btn-group">
                     <div className="btn-active" onClick={this.chooseFilterType} key={1}>按品牌</div>
