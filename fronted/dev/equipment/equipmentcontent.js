@@ -2,14 +2,14 @@
  * Created by Administrator on 2017/7/25.
  */
 import React from "react";
-// import {Link} from "react-router";
-
+import {Link} from "react-router";
 import Header from "../common/header/header";
 import Sider from "../common/sider/sider";
-// import Ajax from "../common/ajax";
 import EquipDetail from "./equipDetail.js"
-
-import {Modal} from "antd";
+import Calendar from "../common/calendar.js"
+import {Modal,Icon} from "antd";
+import './equip.less';
+import '../../css/calendar.less';
 
 export default class EquipContent extends React.Component {
     render() {
@@ -49,11 +49,22 @@ var Content = React.createClass({
     },
     render: function () {
         return (
-            <div className="knowledgerank_page consult_page">
-                <div className="operation_banner">
-                </div>
+            <div className="consult_page time_contain">
+                <div className="operation_banner clearfix time">
+                    <div>
+                        <div className="pull-left cal-title">sop</div>
+                        <div className="pull-left pa_date">
+                            <input className="border js-input_time" type="text" placeholder="2017"/>
+                            <Icon type="calendar"/>
+                        </div>
+                    </div>
+                    <div className="cam-calendar-wrapper">
+                        <Calendar />
+                    </div>
 
-                <div className="knowledgerank_content">
+                </div>
+                <br/>
+                <div className="outer_content">
                     <div className="clearfix">
                         <div className="pull-left">
                             <ToolBar selectedIds={this.state.selectedIds} onRefresh={this.handleRefresh}
