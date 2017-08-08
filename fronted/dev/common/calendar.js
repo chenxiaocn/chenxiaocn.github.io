@@ -11,17 +11,28 @@ import '../../css/calendar.less';
 var Calendar = React.createClass({
     getInitialState: function () {
         return {
+            dateType:'',
+            beginDate:'',
+            endDate:'',
+            dateRangeEndbled:'',
+            single:''
         }
     },
     componentDidMount: function () {
+        this.setState({dateType:this.props.dateType,beginDate:this.props.beginDate,endDate:this.props.endDate,
+            dateRangeEndbled:this.props.dateRangeEndbled,single:this.props.single});
     },
     componentWillReceiveProps:function(nextprops){
+        this.setState({dateType:nextprops.dateType,beginDate:nextprops.beginDate,endDate:nextprops.endDate,
+            dateRangeEndbled:nextprops.dateRangeEndbled,single:nextprops.single
+        });
     },
     render: function () {
         return (
             <div className="cam-calendar">
                 <div className="cam-calendar-pointer"></div>
                 <div className="cam-calendar-list clearfix">
+
                     <div className="cam-calendar-s cam-calendar-type-month cam-calendar-1" id="cam-calendar-1">
                         <div className="cam-calendar-s-title">
                             <i className="icon-prev-ctrl cam-calendar-ctrl-prev"></i>
