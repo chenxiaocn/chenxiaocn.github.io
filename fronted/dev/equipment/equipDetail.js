@@ -33,15 +33,11 @@ var EquipDetail = React.createClass({
             resultList:[],//所有的车系数据
             hasChooseList:[],//已选级别
             selectedOrCancelflag:0,
-            segmentList: ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"],//某种性质下所有级别列表
-            bodyList:["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"],//某种性质下所有车身列表
-            fuelList:[ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "CNG"],//某种性质下所有燃油列表
-            allConditions:[
-                { "性质": ['自主','合资','进口']},
-                { "级别": ["A","A0","A00", "B","BUS", "C" , "D", "Pickup"]},
-                { "车身": ["NB","HB","SUV", "MPV","CROSS", "SW" , "C0", "CA", "BUS", "Pickup"]},
-                { "燃油": [ "汽油","BEV","混合动力", "插电混合动力","柴油", "汽油/CNG" , "CNG"]}
-            ]
+            HZZZList:[],
+            segmentList: [],//某种性质下所有级别列表
+            bodyList:[],//某种性质下所有车身列表
+            fuelList:[],//某种性质下所有燃油列表
+            allConditions:[]
         }
     },
     componentDidMount: function () {
@@ -53,10 +49,18 @@ var EquipDetail = React.createClass({
             url: API_URL.equipment.list,
             //data:{content:content},
             success: function(data) {
-                var resultList=data.data.content;
+                let resultList=data.data.content;
                 let conditions = {equipList : resultList };
-                store.dispatch(allEquipJsonData(conditions));
-                this.setState({resultList:resultList});
+                store.dispatch(allEquipJsonData(conditions));//存到store
+
+                //获取所有性质、级别、车身、燃油列表
+                let HZZZList=DataDeal.getConditionList(resultList,'HZZZ');
+                let segmentList=DataDeal.getConditionList(resultList,'Segment');
+                let bodyList=DataDeal.getConditionList(resultList,'BodyType');
+                let fuelList=DataDeal.getConditionList(resultList,'Fuel');
+                let allConditions=[{ "性质":HZZZList},{"级别":segmentList},{"车身":bodyList},{"燃油":fuelList}];
+
+                this.setState({resultList:resultList,allConditions:allConditions,HZZZList:HZZZList,segmentList:segmentList,bodyList:bodyList,fuelList:fuelList});
             }.bind(this)
         });
     },
@@ -196,7 +200,7 @@ var EquipDetail = React.createClass({
             }
         }
 
-        allConditions=[{ "性质": ['自主','合资','进口']},{ "级别": DataDeal.unique(segmentList)},{ "车身": bodyList},{ "燃油": fuelList}];
+        allConditions=[{ "性质": this.state.HZZZList},{ "级别": DataDeal.unique(segmentList)},{ "车身": bodyList},{ "燃油": fuelList}];
 
         this.setState({allConditions:allConditions,resultList:equipListArry});
         this.setState({segmentList:segmentList,bodyList:bodyList,fuelList:fuelList});

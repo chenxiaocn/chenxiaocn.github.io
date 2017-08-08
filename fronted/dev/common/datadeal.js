@@ -139,11 +139,8 @@ let Datadeal = {
         var res=new Array();
         for(var item in dataArray){
             for(var item1 in conArray) {
-                var a=dataArray[item][type];
-                var b=conArray[item1];
                 if (dataArray[item][type] == conArray[item1]) {
                     res.push(dataArray[item]);
-                    // res.push({'HZZ':dataArray[item][type],'segment':dataArray[item].segment,'body':dataArray[item].body,'fuel':dataArray[item].fuel});
                 }
             }
         }
@@ -164,8 +161,8 @@ let Datadeal = {
     fuzzySearch:function(list,keyWord){
         var arr = [];
         for(var i=0;i<list.length;i++){
-                if((list[i].Model.indexOf(keyWord))>=0){
-                    arr.push(list[i]);
+            if((list[i].Model.indexOf(keyWord))>=0){
+                arr.push(list[i]);
             }
         }
         return arr;
@@ -196,6 +193,19 @@ let Datadeal = {
             case "燃油":arr='fuelype';
                 break;
         }
+        return arr;
+    },
+    //获取各种查询条件列表
+    getConditionList:function(list,keyWord){
+        var arr=[];
+        for(var item in list){
+            for(var key in list[item]){
+                if(key==keyWord){
+                    arr.push(list[item][key]);
+                }
+            }
+        }
+        arr=this.unique(arr);
         return arr;
     }
 };
