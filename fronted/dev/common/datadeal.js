@@ -207,6 +207,12 @@ let Datadeal = {
         }
         arr=this.unique(arr);
         return arr;
+    },
+
+    //添加或删除类
+    addOrDelClass:function(selectedFlag,target,className){
+        //true:添加类，false:删除类
+        selectedFlag==true?target.addClass(className):target.removeClass(className);
     }
 };
 module.exports=Datadeal;

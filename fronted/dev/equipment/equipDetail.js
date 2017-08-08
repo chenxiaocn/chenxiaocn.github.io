@@ -33,10 +33,10 @@ var EquipDetail = React.createClass({
             resultList:[],//所有的车系数据
             hasChooseList:[],//已选级别
             selectedOrCancelflag:0,
-            HZZZList:[],
-            segmentList: [],//某种性质下所有级别列表
-            bodyList:[],//某种性质下所有车身列表
-            fuelList:[],//某种性质下所有燃油列表
+            HZZZList:[],//所有性质列表
+            segmentList: [],//所有级别列表
+            bodyList:[],//所有车身列表
+            fuelList:[],//所有燃油列表
             allConditions:[]
         }
     },
