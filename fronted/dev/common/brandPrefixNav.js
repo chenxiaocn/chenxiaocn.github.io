@@ -3,12 +3,11 @@
  */
 import React from  'react'
 import ReactDOM from 'react-dom'
-import {Row,Col} from "antd";
+import {Row} from "antd";
 import DataDeal from "./datadeal.js";
 import ContentBodyRowLeft from "./contentBodyRowLeft.js";
 import ContentBodyRowRight from "./contentBodyRowRight.js";
 import $ from "jquery";
-import API_URL from "../common/url";
 import '../equipment/equip.less'
 
 

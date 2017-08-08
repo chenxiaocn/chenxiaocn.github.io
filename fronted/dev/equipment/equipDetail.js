@@ -4,12 +4,12 @@
 import React from "react";
 import ReactDOM from 'react-dom'
 import Ajax from "../common/ajax";
-//import store from "../../reduxFile/store";
+import store from "../../reduxFile/store";
+import {allEquipJsonData} from "../../reduxFile/actions";
 import ConditionContent from './conditionContent.js';
 import Segmentbrand from './segmentbrand.js';
 import Haschoose from "./hasChoose.js";
 import DataDeal from "../common/datadeal.js";
-import EquipData from "./equipData.js";
 import "./equip.less";
 
 import $ from "jquery";
@@ -54,6 +54,8 @@ var EquipDetail = React.createClass({
             //data:{content:content},
             success: function(data) {
                 var resultList=data.data.content;
+                let conditions = {equipList : resultList };
+                store.dispatch(allEquipJsonData(conditions));
                 this.setState({resultList:resultList});
             }.bind(this)
         });
@@ -74,7 +76,8 @@ var EquipDetail = React.createClass({
     },
     //首字母筛选品牌
     chooseBrandPrefix:function(content,clickType){
-        var dataList=EquipData.getAllData();
+        let equipListConditions = store.getState().allEquipJsonDataState ;
+        var dataList=equipListConditions.equipList;
         var equipListArry=[];
         var selectedHZZZList=this.state.selectedHZZZList, selectedSegmentList=this.state.selectedSegmentList;
         var selectedBodyList=this.state.selectedBodyList,selectedFuelList=this.state.selectedFuelList;
@@ -93,7 +96,8 @@ var EquipDetail = React.createClass({
     },
     //条件选择
     selectedCellCondition:function(content,clickType,conditionTypeInnerText){
-        var dataList=EquipData.getAllData();
+        let equipListConditions = store.getState().allEquipJsonDataState ;
+        var dataList=equipListConditions.equipList;
         var allConditions=[],equipListArry=[];
         var segmentList=[],bodyList=[],fuelList=[],equipListArry=[];
         var initSegmentList=this.state.segmentList,initBodyList=this.state.bodyList,initFuelList=this.state.fuelList;

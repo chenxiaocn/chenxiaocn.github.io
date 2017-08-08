@@ -3,12 +3,11 @@
  */
 import React from  'react'
 import ReactDOM from 'react-dom'
-import { Menu, Dropdown, Icon } from 'antd';
 import $ from "jquery";
-import Ajax from "../common/ajax";
-import API_URL from "../common/url";
 import DataDeal from "../common/datadeal.js";
-import EquipData from "./equipData.js";
+import store from "../../reduxFile/store";
+import {allEquipJsonData} from "../../reduxFile/actions";
+import { Menu, Dropdown, Icon } from 'antd';
 import './equip.less'
 
 var ConditionContent = React.createClass({
@@ -171,7 +170,8 @@ var ConditionLi=React.createClass({
     render: function () {
         let conditionTitle=this.state.conditionTitle;
         let content=this.state.content;
-        let equipList=EquipData.getAllData();
+        let equipListConditions = store.getState().allEquipJsonDataState ;
+        let equipList=equipListConditions.equipList;
         let subSegList=DataDeal.getSubSegList(equipList,content);//获取该级别下的子级别
 
         let menuItem=subSegList.map(function(content,index){

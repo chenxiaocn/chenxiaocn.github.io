@@ -4,8 +4,6 @@
 import React from  'react'
 import ReactDOM from 'react-dom'
 import {Row,Col,Icon} from "antd";
-import Ajax from "../common/ajax";
-import API_URL from "../common/url";
 import DataDeal from "../common/datadeal.js";
 import $ from "jquery";
 import './equip.less'

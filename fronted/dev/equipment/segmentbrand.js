@@ -4,16 +4,12 @@
 import React from  'react'
 import ReactDOM from 'react-dom'
 import SearchItem from "../common/searchItem/searchItem";
-import {Row,Col} from "antd";
-//import Ajax from "../common/ajax";
-//import store from "../../reduxFile/store";
-//import {chooseContentConditions} from "../../reduxFile/actions";
-//import API_URL from "../common/url";
+import store from "../../reduxFile/store";
+import {allEquipJsonData} from "../../reduxFile/actions";
 import BigCharts from "../common/bigCharts.js";
 import BrandPrefixNav from "../common/brandPrefixNav.js";
 import NavTitle from "../common/navTitle.js";
 import DataDeal from "../common/datadeal.js";
-import EquipData from "./equipData.js";
 import $ from "jquery";
 import './equip.less'
 
@@ -40,7 +36,8 @@ var Segment = React.createClass({
     },
     handleSearch:function(searchContent, status){
         var equipList=[], searchResult=[];
-        searchContent==''? equipList=EquipData.getAllData(): equipList=this.state.equipList;
+        let equipListConditions = store.getState().allEquipJsonDataState ;
+        searchContent==''? equipList=equipListConditions.equipList: equipList=this.state.equipList;
          searchResult=DataDeal.fuzzySearch(equipList,searchContent);
         this.setState({searchContent: searchContent,equipList:searchResult});
     },

@@ -1,8 +1,6 @@
 import React from  'react';
 import ReactDOM from 'react-dom';
 import $ from "jquery";
-import Ajax from "../common/ajax";
-import API_URL from "../common/url";
 
 let Datadeal = {
     //数组去重
