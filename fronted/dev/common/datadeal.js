@@ -1,6 +1,7 @@
 import React from  'react';
 import ReactDOM from 'react-dom';
 import $ from "jquery";
+import EquipDetail from "../equipment/equipDetail.js";
 
 let Datadeal = {
     //数组去重
@@ -214,5 +215,10 @@ let Datadeal = {
         //true:添加类，false:删除类
         selectedFlag==true?target.addClass(className):target.removeClass(className);
     }
+    //添加或删除类
+    //deal:function(liText,clickType,conditionTypeInnerText){
+    //    //true:添加类，false:删除类
+    //    EquipDetail.selectedCellCondition(liText,clickType,conditionTypeInnerText);
+    //}
 };
 module.exports=Datadeal;

@@ -91,6 +91,7 @@ var ConditionLi=React.createClass({
         }else{
             this.props.selectedCellCondition(liText,'remove',conditionTypeInnerText);
         }
+
         //“不限”添样式
         for(var i=0;i<$('.conditonType').length;i++)
         {
@@ -102,8 +103,6 @@ var ConditionLi=React.createClass({
             }
         }
 
-
-
         if($(e.target).parent().find('.choose-active').length==0){
             $(e.target).parent().parent().parent().find('.no-limit').addClass("title-choose-active");
         }
@@ -111,12 +110,14 @@ var ConditionLi=React.createClass({
         this.setState({selectedFlag:selectedFlag});
     },
     subSegChoose:function(e){
+        var selectedFlag=!(this.state.selectedFlag);
         let liText = $(e.target)[0].innerText;
         let thisDataParent=$(e.target).attr('data-parent');
         let conditionTypeInnerText=this.state.conditionTitle;
 
-        if($(e.target).hasClass("choose-active")){
-            $(e.target).removeClass("choose-active");
+        DataDeal.addOrDelClass(selectedFlag,$(e.target),'choose-active');
+
+        if(!selectedFlag){
             let itemSelected=$(e.target).parent().parent().find('.choose-active');
             //加载数据
             this.props.selectedCellCondition(liText,'remove','子级别');
@@ -142,9 +143,7 @@ var ConditionLi=React.createClass({
                     break;
                 }
             }
-
         }else{
-            $(e.target).addClass("choose-active");
             for(var i=0;i<$('.conditonType').length;i++)
             {
                 var conditonTypeCellContent=$($('.conditonType')[i])[0].innerText;
@@ -167,9 +166,9 @@ var ConditionLi=React.createClass({
                     break;
                 }
             }
-            //加载数据
             this.props.selectedCellCondition(liText,'add','子级别');
         }
+        this.setState({selectedFlag:selectedFlag});
     },
     render: function () {
         let conditionTitle=this.state.conditionTitle;
