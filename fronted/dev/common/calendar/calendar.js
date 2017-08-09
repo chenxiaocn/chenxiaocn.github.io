@@ -11,6 +11,11 @@ import './calendar.less';
 var Calendar = React.createClass({
     getInitialState: function () {
         return {
+            dateType:'',
+            beginDate:'',
+            endDate:'',
+            dateRangeEndbled:'',
+            single:'',
             curYear:'',
             curMonth:'',
             curQuarter:'',
@@ -18,9 +23,14 @@ var Calendar = React.createClass({
         }
     },
     componentDidMount: function () {
+        this.setState({dateType:this.props.dateType,beginDate:this.props.beginDate,endDate:this.props.endDate,
+            dateRangeEndbled:this.props.dateRangeEndbled,single:this.props.single});
         this.getCurrentTime();
     },
     componentWillReceiveProps:function(nextprops){
+        this.setState({dateType:nextprops.dateType,beginDate:nextprops.beginDate,endDate:nextprops.endDate,
+            dateRangeEndbled:nextprops.dateRangeEndbled,single:nextprops.single
+        });
         //this.getCurrentTime();
     },
     getCurrentTime:function(){
@@ -37,7 +47,7 @@ var Calendar = React.createClass({
         switch (dateType){
             case "year":break;
             case "month":
-                calendarBody=(<CalendarMonth curYear={this.state.curYear} curMonth={this.state.curMonth} beginDate={this.props.beginDate} endDate={this.props.endDate} dateRangeEndbled={this.props.dateRangeEndbled} single={this.props.single}/>);
+                calendarBody=(<CalendarMonth curYear={this.state.curYear} curMonth={this.state.curMonth} beginDate={this.state.beginDate} endDate={this.state.endDate} dateRangeEndbled={this.state.dateRangeEndbled} single={this.state.single}/>);
                 break;
             case "quarter ":break;
             case "week":break;
