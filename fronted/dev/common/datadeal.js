@@ -226,6 +226,35 @@ let Datadeal = {
             arr.push(i+1);
         }
         return arr;
+    },
+    //获取时间段里所有月份
+    getDateRangeList:function(beginDate,endDate){
+        var dateArry =[];
+        var mCount = 0;
+        var beginYear=parseInt(beginDate.substring(0,4));//截取开始年份
+        var endYear=parseInt(endDate.substring(0,4));//截取开始年份
+        var beginMonth=parseInt(beginDate.substring(beginDate.length-2));//截取开始月份
+        var endMonth=parseInt(endDate.substring(endDate.length-2));//截取结束月份
+
+        if(beginYear<endYear){
+            mCount = (endYear - beginYear) * 12 + endMonth - beginMonth+1;
+        }else{
+            mCount = endMonth - beginMonth+1;
+        }
+        if (mCount > 0) {
+            for (var i = 0; i < mCount; i++) {
+                if (beginMonth < 12) {
+                    dateArry[i] = beginYear.toString() + (beginMonth>9 ? beginMonth.toString() : "0" + beginMonth.toString());
+                    beginMonth += 1;
+                } else {
+                    dateArry[i] = beginYear.toString() + (beginMonth > 9 ? beginMonth.toString() : "0" + beginMonth.toString());
+                    beginMonth = 1;
+                    beginYear += 1;
+                }
+            }
+        }
+        return  dateArry;
     }
+
 };
 module.exports=Datadeal;
