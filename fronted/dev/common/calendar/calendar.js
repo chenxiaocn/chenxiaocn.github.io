@@ -57,6 +57,24 @@ var Calendar = React.createClass({
             <div className="cam-calendar">
                 <div className="cam-calendar-pointer"></div>
                 {calendarBody}
+                <div>
+                    <div className="cam-addBtn">
+                        <a href="">添加</a>
+                    </div>
+                    <div className="cam-selected">
+                        <a href="javascript:">
+                            <span>201601~201607</span>
+                            <b></b>
+                        </a>
+                        <a href="javascript:;">
+                            <span>201610</span>
+                            <b></b></a>
+                    </div>
+                </div>
+                <div className="cam-calendar-bottom">
+                    <a className="btn-calendar" data-id="cam-sure">确定</a>
+                    <a className="btn-calendar" data-id="cam-cancel">取消</a>
+                </div>
             </div>
         );
     }

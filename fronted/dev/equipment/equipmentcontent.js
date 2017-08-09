@@ -59,7 +59,7 @@ var Content = React.createClass({
                         </div>
                     </div>
                     <div className="cam-calendar-wrapper">
-                        <Calendar dateType="month" beginDate="201510" endDate="201603" dateRangeEndbled="true" single="false"/>
+                        <Calendar dateType="month" beginDate="201402" endDate="201603" dateRangeEndbled="true" single="false"/>
                     </div>
 
                 </div>
