@@ -214,11 +214,18 @@ let Datadeal = {
     addOrDelClass:function(selectedFlag,target,className){
         //true:添加类，false:删除类
         selectedFlag==true?target.addClass(className):target.removeClass(className);
-    }
+    },
     //添加或删除类
     //deal:function(liText,clickType,conditionTypeInnerText){
     //    //true:添加类，false:删除类
     //    EquipDetail.selectedCellCondition(liText,clickType,conditionTypeInnerText);
     //}
+    circleValue:function(value){
+        var arr=[];
+        for(var i=0;i<value;i++){
+            arr.push(i+1);
+        }
+        return arr;
+    }
 };
 module.exports=Datadeal;

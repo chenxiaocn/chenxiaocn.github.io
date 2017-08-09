@@ -6,10 +6,10 @@ import {Link} from "react-router";
 import Header from "../common/header/header";
 import Sider from "../common/sider/sider";
 import EquipDetail from "./equipDetail.js"
-import Calendar from "../common/calendar.js"
+import Calendar from "../common/calendar/calendar.js"
 import {Modal,Icon} from "antd";
 import './equip.less';
-import '../../css/calendar.less';
+import '../common/calendar/calendar.less';
 
 export default class EquipContent extends React.Component {
     render() {
