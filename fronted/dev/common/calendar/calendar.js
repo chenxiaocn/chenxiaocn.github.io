@@ -72,13 +72,16 @@ var CalendarMonth = React.createClass({
             dateRangeEndbled:'',
             single:'',
             curYear:'',
-            curMonth:''
+            curMonth:'',
+            yearList:[]
         }
     },
     componentDidMount: function () {
+        let curYear=this.props.curYear;
+        let yearList=[curYear-2,curYear-1,curYear];
         this.setState({dateType:this.props.dateType,beginDate:this.props.beginDate,endDate:this.props.endDate,
             dateRangeEndbled:this.props.dateRangeEndbled,single:this.props.single,
-            curYear:this.props.curYear,curMonth:this.props.curMonth
+            curYear:this.props.curYear,curMonth:this.props.curMonth,yearList:yearList
         });
     },
     componentWillReceiveProps:function(nextprops){
@@ -87,23 +90,37 @@ var CalendarMonth = React.createClass({
             curYear:nextprops.curYear,curMonth:nextprops.curMonth
         });
     },
+    ctrPrevNext:function(e){
+        var thisCtrYear=parseInt($(e.target).next().attr('value'));
+        let yearList=[thisCtrYear-1,thisCtrYear,thisCtrYear+1];
+        this.setState({yearList:yearList});
+    },
     render: function () {
-        let curYear=this.state.curYear;
-        let yearList=[curYear-2,curYear-1,curYear];
+        let yearList=this.state.yearList;
         let monthList=Datadeal.circleValue(12);
 
-        let TwelveMonth=monthList.map(function(content,index){
-            return(
-                <li value="201501" className="clickable" key={index}>{content}月</li>
-            );
-        });
-
         let calendarTypeMonth=yearList.map(function(content,index){
+            let CalendarCtrlI;
+            switch (index){
+                case 0:
+                    CalendarCtrlI=(<i className="icon-prev-ctrl cam-calendar-ctrl-prev" onClick={this.ctrPrevNext}></i>);
+                    break;
+                case 2:
+                    CalendarCtrlI=(<i className="icon-next-ctrl cam-calendar-ctrl-next" onClick={this.ctrPrevNext}></i>);
+                    break;
+            }
+
+            let TwelveMonth=monthList.map(function(monthContent,index){
+                return(
+                    <li value={monthContent} className="clickable" key={index}>{monthContent}月</li>
+                );
+            });
+
             return(
                 <div key={index} className="cam-calendar-s cam-calendar-type-month cam-calendar-1" id="cam-calendar-1">
                     <div className="cam-calendar-s-title">
-                        <i className="icon-prev-ctrl cam-calendar-ctrl-prev"></i>
-                        <div className="cam-calendar-year">{content}年</div>
+                        {CalendarCtrlI}
+                        <div className="cam-calendar-year" value={content}>{content}年</div>
                     </div>
                     <ul>
                         {TwelveMonth}
