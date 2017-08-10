@@ -19,23 +19,32 @@ var CalendarMonth = React.createClass({
             curMonth:'',
             yearList:[],
             dateRangeList:[],
-            selectedList:[]
+            selectedList:[],
+            selectedRange:[]
         }
     },
     componentDidMount: function () {
         this.getYearList(this.props.endDate,this.props.curYear);
         var dateRangeList=DataDeal.getDateRangeList(this.props.beginDate,this.props.endDate);
-        this.setState({dateType:this.props.dateType,beginDate:this.props.beginDate,endDate:this.props.endDate,
+        let selectedRange=DataDeal.getSelectedRangeArr(this.props.selectedList,'month');//选中范围数组
+
+        this.setState({
+            dateType:this.props.dateType,beginDate:this.props.beginDate,endDate:this.props.endDate,
             dateRangeEndbled:this.props.dateRangeEndbled,single:this.props.single,
-            curYear:this.props.curYear,curMonth:this.props.curMonth,dateRangeList:dateRangeList,selectedList:this.props.selectedList
+            curYear:this.props.curYear,curMonth:this.props.curMonth,dateRangeList:dateRangeList,
+            selectedRange:selectedRange,selectedList:this.props.selectedList
         });
     },
     componentWillReceiveProps:function(nextprops){
         this.getYearList(nextprops.endDate,nextprops.curYear);
-        var dateRangeList=DataDeal.getDateRangeList(this.props.beginDate,this.props.endDate);
-        this.setState({dateType:nextprops.dateType,beginDate:nextprops.beginDate,endDate:nextprops.endDate,
+        var dateRangeList=DataDeal.getDateRangeList(nextprops.beginDate,nextprops.endDate);//可选范围数组
+        let selectedRange=DataDeal.getSelectedRangeArr(nextprops.selectedList,'month');//选中范围数组
+
+        this.setState({
+            dateType:nextprops.dateType,beginDate:nextprops.beginDate,endDate:nextprops.endDate,
             dateRangeEndbled:nextprops.dateRangeEndbled,single:nextprops.single,
-            curYear:nextprops.curYear,curMonth:nextprops.curMonth,dateRangeList:dateRangeList,selectedList:nextprops.selectedList
+            curYear:nextprops.curYear,curMonth:nextprops.curMonth,dateRangeList:dateRangeList,
+            selectedRange:selectedRange,selectedList:nextprops.selectedList
         });
 
     },
@@ -71,7 +80,7 @@ var CalendarMonth = React.createClass({
                         {CalendarCtrlI}
                         <div className="cam-calendar-year" value={content}>{content}年</div>
                     </div>
-                    <TwelveMonth  year={content} dateRangeList={this.state.dateRangeList} selectedList={this.state.selectedList}/>
+                    <TwelveMonth  year={content} dateRangeList={this.state.dateRangeList} selectedRange={this.state.selectedRange} selectedList={this.state.selectedList}/>
                 </div>
             );
         }.bind(this));
@@ -88,64 +97,46 @@ var TwelveMonth = React.createClass({
         return {
             year:'',
             dateRangeList:[],
-            selectedList:[],
-            monthLi:[]
+            selectedRange:[],
+            monthList:[],
+            selectedList:[]
         }
     },
     componentDidMount: function () {
-        let monthList=DataDeal.circleValue(12);
-        let year=(this.props.year).toString();
-        let dateRangeList=this.props.dateRangeList;
-        let selectedList=this.props.selectedList;
-
-        let selectedRange=DataDeal.getSelectedRangeArr(selectedList,'month');//选中范围数组
-        let clickAbleMonthList=this.getData(year,monthList,dateRangeList);//可选月份
-        let clickUnableMonthList=DataDeal.sortMinus(clickAbleMonthList,monthList);//不可选月份
-        let clickAbleActiveList=this.getData(year,clickAbleMonthList,selectedRange);//可选中被选中月份
-        let clickAbleUnctiveList=DataDeal.sortMinus(clickAbleActiveList,clickAbleMonthList);//可选中不被选中月份
-        let monthLi=[clickAbleActiveList,clickAbleUnctiveList,clickUnableMonthList];
-
-        this.setState({year:this.props.year,dateRangeList:this.props.dateRangeList,selectedList:this.props.selectedList,monthLi:monthLi});
+        this.setState({
+            year:this.props.year,dateRangeList:this.props.dateRangeList,
+            selectedRange:this.props.selectedRange,selectedList:this.props.selectedList
+        });
 
     },
     componentWillReceiveProps:function(nextprops){
+        this.setState({
+            year:nextprops.year,dateRangeList:nextprops.dateRangeList,
+            selectedRange:nextprops.selectedRange,selectedList:nextprops.selectedList
+        });
     },
-    getData:function(year,monthList,dateRangeList){
-        let clickAbleMonthList=[];
-        for(var i=0;i<monthList.length;i++){
-            let monthValue,clickAbleMonthItem;
-            monthList[i]<10?monthValue='0'+ monthList[i].toString():monthValue=monthList[i].toString();
-            let liValue=year+monthValue;
 
-            for(var j=0;j<dateRangeList.length;j++){
-                if(liValue==dateRangeList[j]){
-                    clickAbleMonthItem=monthList[i];
-                    break;
-                }
-            }
-            if(clickAbleMonthItem){
-                clickAbleMonthList.push(clickAbleMonthItem);
-            }
-        }
-        return clickAbleMonthList;
-    },
     render: function () {
         let monthLi=[];
+        let year=this.state.year,dateRangeList=this.state.dateRangeList, selectedRange=this.state.selectedRange;
         let monthList=DataDeal.circleValue(12);
-        let year=(this.props.year).toString();
-        let dateRangeList=this.props.dateRangeList;
-        let selectedList=this.props.selectedList;
-
 
         for(var i=0;i<monthList.length;i++){
             let monthValue;
             monthList[i]<10?monthValue='0'+ monthList[i].toString():monthValue=monthList[i].toString();
             let liValue=year+monthValue;
+            let monthLiItem=(<li value={liValue} className="clickunable"  key={i}>{monthList[i]}月</li>);
 
-            let monthLiItem=(<li value={liValue} className="clickunable" key={i}>{monthList[i]}月</li>);
-
+            //是否在可选范围
             for(var j=0;j<dateRangeList.length;j++){
                 if(liValue==dateRangeList[j]){
+                    monthLiItem=(<li value={liValue} className="clickable" key={i+j}>{monthList[i]}月</li>);
+                    break;
+                }
+            }
+            //是否在选中范围
+            for(var k=0;k<selectedRange.length;k++){
+                if(liValue==selectedRange[k]){
                     monthLiItem=(<li value={liValue} className="clickable active" key={i+j}>{monthList[i]}月</li>);
                     break;
                 }
@@ -155,7 +146,6 @@ var TwelveMonth = React.createClass({
 
         return(
             <ul>
-         
                 {monthLi}
             </ul>
         );
