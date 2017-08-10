@@ -35,7 +35,7 @@ var Content = React.createClass({
     getInitialState: function () {
         return {
             addOrModifyModalVisible:false,
-            selectedCalendarDate:['201402~201406','201505']
+            selectedCalendarDate:['201403~201501','201505']
         }
     },
     componentDidMount: function () {

@@ -250,7 +250,7 @@ let Datadeal = {
         var dateArry =[];
         var mCount = 0;
         var beginYear=parseInt(beginDate.substring(0,4));//截取开始年份
-        var endYear=parseInt(endDate.substring(0,4));//截取开始年份
+        var endYear=parseInt(endDate.substring(0,4));//截取结束年份
         var beginMonth=parseInt(beginDate.substring(beginDate.length-2));//截取开始月份
         var endMonth=parseInt(endDate.substring(endDate.length-2));//截取结束月份
 
@@ -272,6 +272,27 @@ let Datadeal = {
             }
         }
         return  dateArry;
+    },
+
+    //获取选中时间段数组列表
+    getSelectedRangeArr:function(selectedList,dataType){
+        let selectedArr=[];
+        for(var j=0;j<selectedList.length;j++){
+            let selectedRangeItem=selectedList[j];
+            //长度大于6是个区间范围
+            if(selectedList[j].length>6){
+                var start=selectedRangeItem.split("~")[0];
+                var end=selectedRangeItem.split("~")[1];
+                if(dataType=='month'){
+                    selectedRangeItem=this.getDateRangeList(start,end);
+                }
+                selectedRangeItem=selectedRangeItem.join(',');
+            }
+            selectedArr=selectedArr+selectedRangeItem+',';
+        }
+        selectedArr=selectedArr.substring(0,selectedArr.length-1);
+        selectedArr=selectedArr.split(',');
+        return selectedArr;
     }
 
 };

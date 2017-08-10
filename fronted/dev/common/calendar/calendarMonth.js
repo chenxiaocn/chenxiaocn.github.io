@@ -86,6 +86,10 @@ var CalendarMonth = React.createClass({
 var TwelveMonth = React.createClass({
     getInitialState: function () {
         return {
+            year:'',
+            dateRangeList:[],
+            selectedList:[],
+            monthLi:[]
         }
     },
     componentDidMount: function () {
@@ -93,11 +97,20 @@ var TwelveMonth = React.createClass({
         let year=(this.props.year).toString();
         let dateRangeList=this.props.dateRangeList;
         let selectedList=this.props.selectedList;
-        var clickAbleMonthList=this.getClickAble(year,monthList,dateRangeList);
-        var clickUnableMonthList=DataDeal.sortMinus(clickAbleMonthList,monthList);
+
+        let selectedRange=DataDeal.getSelectedRangeArr(selectedList,'month');//选中范围数组
+        let clickAbleMonthList=this.getData(year,monthList,dateRangeList);//可选月份
+        let clickUnableMonthList=DataDeal.sortMinus(clickAbleMonthList,monthList);//不可选月份
+        let clickAbleActiveList=this.getData(year,clickAbleMonthList,selectedRange);//可选中被选中月份
+        let clickAbleUnctiveList=DataDeal.sortMinus(clickAbleActiveList,clickAbleMonthList);//可选中不被选中月份
+        let monthLi=[clickAbleActiveList,clickAbleUnctiveList,clickUnableMonthList];
+
+        this.setState({year:this.props.year,dateRangeList:this.props.dateRangeList,selectedList:this.props.selectedList,monthLi:monthLi});
 
     },
-    getClickAble:function(year,monthList,dateRangeList){
+    componentWillReceiveProps:function(nextprops){
+    },
+    getData:function(year,monthList,dateRangeList){
         let clickAbleMonthList=[];
         for(var i=0;i<monthList.length;i++){
             let monthValue,clickAbleMonthItem;
@@ -110,14 +123,11 @@ var TwelveMonth = React.createClass({
                     break;
                 }
             }
-
             if(clickAbleMonthItem){
                 clickAbleMonthList.push(clickAbleMonthItem);
             }
         }
         return clickAbleMonthList;
-    },
-    componentWillReceiveProps:function(nextprops){
     },
     render: function () {
         let monthLi=[];
@@ -145,6 +155,7 @@ var TwelveMonth = React.createClass({
 
         return(
             <ul>
+         
                 {monthLi}
             </ul>
         );
