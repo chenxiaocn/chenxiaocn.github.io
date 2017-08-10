@@ -49,6 +49,9 @@ var Calendar = React.createClass({
         selectedList=DataDeal.removeByValue(selectedList,content);
         this.setState({selectedList:selectedList});
     },
+    calendarConfirm:function(){
+        console.log(this.state.selectedList);
+    },
     render: function () {
         let dateType=this.state.dateType;
         let calendarBody;
@@ -66,7 +69,7 @@ var Calendar = React.createClass({
                 <div className="cam-calendar-pointer"></div>
                 {calendarBody}
                 {this.props.add=='true'?<CalendarAdd  selectedList={this.state.selectedList} delSelected={this.delSelected}/>:''}
-                <CalendarConfirm />
+                <CalendarConfirm  selectedList={this.state.selectedList} calendarConfirm={this.calendarConfirm}/>
             </div>
         );
     }

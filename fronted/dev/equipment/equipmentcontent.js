@@ -49,13 +49,16 @@ var Content = React.createClass({
         this.setState({addOrModifyModalVisible:false});
     },
     render: function () {
+        let selectedCalendarDate=this.state.selectedCalendarDate;
+        selectedCalendarDate=selectedCalendarDate.join(',');
+        selectedCalendarDate=selectedCalendarDate.substring(0,selectedCalendarDate.length-1);
         return (
             <div className="consult_page time_contain">
                 <div className="operation_banner clearfix time">
                     <div>
                         <div className="pull-left cal-title">sop</div>
                         <div className="pull-left pa_date">
-                            <input className="border js-input_time" type="text" placeholder="2017"/>
+                            <input className="border js-input_time" type="text" placeholder={selectedCalendarDate}/>
                             <Icon type="calendar"/>
                         </div>
                     </div>

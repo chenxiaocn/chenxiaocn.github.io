@@ -104,7 +104,8 @@ var TwelveMonth = React.createClass({
             dateRangeList:[],
             selectedRange:[],
             monthList:[],
-            selectedList:[]
+            selectedList:[],
+            selectedFlag:true
         }
     },
     componentDidMount: function () {
@@ -120,6 +121,11 @@ var TwelveMonth = React.createClass({
             selectedRange:nextprops.selectedRange,selectedList:nextprops.selectedList
         });
     },
+    addOrDel:function(e){
+        let  selectedFlag=!(this.state.selectedFlag),target=$(e.target),className='active';
+        DataDeal.addOrDelClass(selectedFlag,target,className);
+        this.setState({selectedFlag:selectedFlag});
+    },
 
     render: function () {
         let monthLi=[];
@@ -130,7 +136,7 @@ var TwelveMonth = React.createClass({
             let monthValue;
             monthList[i]<10?monthValue='0'+ monthList[i].toString():monthValue=monthList[i].toString();
             let liValue=year+monthValue;
-            let monthLiItem=(<li value={liValue} className="clickunable"  key={i}>{monthList[i]}月</li>);
+            let monthLiItem=(<li value={liValue} className="clickunable"  key={i}  onClick={this.addOrDel}>{monthList[i]}月</li>);
 
             //是否在可选范围
             for(var j=0;j<dateRangeList.length;j++){
@@ -142,7 +148,7 @@ var TwelveMonth = React.createClass({
             //是否在选中范围
             for(var k=0;k<selectedRange.length;k++){
                 if(liValue==selectedRange[k]){
-                    monthLiItem=(<li value={liValue} className="clickable active" key={i+j}>{monthList[i]}月</li>);
+                    monthLiItem=(<li value={liValue} className="clickable active" key={i+j} onClick={this.addOrDel}>{monthList[i]}月</li>);
                     break;
                 }
             }
