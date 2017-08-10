@@ -49,6 +49,24 @@ let Datadeal = {
         }
         return arr1;
     },
+
+    //数组相减
+    sortMinus:function(b,c){
+        var a = {};
+        for(let i = 0;i< b.length; i++){
+            if(!a[b[i]]){
+                a[b[i]] = true;
+            }
+        }
+
+        for(let i = 0;i< c.length; i++){
+            if(a[c[i]]){
+                c.splice(i,1);   /*从一个数组中第i位移除一个或多个元素*/
+                i--;
+            }
+        }
+        return c;
+    },
     //大写字母
     generateBig:function(){
         var ch_big = 'A';

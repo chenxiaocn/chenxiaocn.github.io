@@ -89,6 +89,33 @@ var TwelveMonth = React.createClass({
         }
     },
     componentDidMount: function () {
+        let monthList=DataDeal.circleValue(12);
+        let year=(this.props.year).toString();
+        let dateRangeList=this.props.dateRangeList;
+        let selectedList=this.props.selectedList;
+        var clickAbleMonthList=this.getClickAble(year,monthList,dateRangeList);
+        var clickUnableMonthList=DataDeal.sortMinus(clickAbleMonthList,monthList);
+
+    },
+    getClickAble:function(year,monthList,dateRangeList){
+        let clickAbleMonthList=[];
+        for(var i=0;i<monthList.length;i++){
+            let monthValue,clickAbleMonthItem;
+            monthList[i]<10?monthValue='0'+ monthList[i].toString():monthValue=monthList[i].toString();
+            let liValue=year+monthValue;
+
+            for(var j=0;j<dateRangeList.length;j++){
+                if(liValue==dateRangeList[j]){
+                    clickAbleMonthItem=monthList[i];
+                    break;
+                }
+            }
+
+            if(clickAbleMonthItem){
+                clickAbleMonthList.push(clickAbleMonthItem);
+            }
+        }
+        return clickAbleMonthList;
     },
     componentWillReceiveProps:function(nextprops){
     },
@@ -98,6 +125,7 @@ var TwelveMonth = React.createClass({
         let year=(this.props.year).toString();
         let dateRangeList=this.props.dateRangeList;
         let selectedList=this.props.selectedList;
+
 
         for(var i=0;i<monthList.length;i++){
             let monthValue;
