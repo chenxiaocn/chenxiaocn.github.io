@@ -24,9 +24,12 @@ var CalendarMonth = React.createClass({
         }
     },
     componentDidMount: function () {
+        let selectedRange;
         this.getYearList(this.props.endDate,this.props.curYear);
         var dateRangeList=DataDeal.getDateRangeList(this.props.beginDate,this.props.endDate);
-        let selectedRange=DataDeal.getSelectedRangeArr(this.props.selectedList,'month');//选中范围数组
+        if(this.props.selectedList.length>0){//选中范围数组
+            selectedRange=DataDeal.getSelectedRangeArr(this.props.selectedList,'month');
+        }
 
         this.setState({
             dateType:this.props.dateType,beginDate:this.props.beginDate,endDate:this.props.endDate,
@@ -36,10 +39,12 @@ var CalendarMonth = React.createClass({
         });
     },
     componentWillReceiveProps:function(nextprops){
+        let selectedRange=[];
         this.getYearList(nextprops.endDate,nextprops.curYear);
         var dateRangeList=DataDeal.getDateRangeList(nextprops.beginDate,nextprops.endDate);//可选范围数组
-        let selectedRange=DataDeal.getSelectedRangeArr(nextprops.selectedList,'month');//选中范围数组
-
+        if(nextprops.selectedList.length>0){
+            selectedRange=DataDeal.getSelectedRangeArr(nextprops.selectedList,'month');//选中范围数组
+        }
         this.setState({
             dateType:nextprops.dateType,beginDate:nextprops.beginDate,endDate:nextprops.endDate,
             dateRangeEndbled:nextprops.dateRangeEndbled,single:nextprops.single,

@@ -20,10 +20,8 @@ var CalendarAdd = React.createClass({
         this.setState({selectedList:nextprops.selectedList});
     },
     delSelected:function(e){
-        var delSelected=$(e.target).prev()[0].innerText;
-        let selectedList=this.state.selectedList;
-        selectedList=DataDeal.removeByValue(selectedList,delSelected);
-        this.setState({selectedList:selectedList});
+        let delSelectedInner=$(e.target).prev()[0].innerText;
+        this.props.delSelected(delSelectedInner);
     },
     render: function () {
         let camSelected=this.state.selectedList.map(function(content,index){

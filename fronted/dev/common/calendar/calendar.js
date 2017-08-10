@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom'
 import CalendarMonth from "./calendarMonth.js";
 import CalendarAdd from "./calendarAdd.js";
 import CalendarConfirm from "./calendarConfirm.js";
-import Datadeal from "../datadeal.js";
+import DataDeal from "../datadeal.js";
 import $ from "jquery";
 import './calendar.less';
 
@@ -44,6 +44,11 @@ var Calendar = React.createClass({
         var day = date.getDate();
         this.setState({curYear:year,curMonth:month,curQuarter:quarter,curDay:day});
     },
+    delSelected:function(content){
+        let selectedList=this.state.selectedList;
+        selectedList=DataDeal.removeByValue(selectedList,content);
+        this.setState({selectedList:selectedList});
+    },
     render: function () {
         let dateType=this.state.dateType;
         let calendarBody;
@@ -60,7 +65,7 @@ var Calendar = React.createClass({
             <div className="cam-calendar">
                 <div className="cam-calendar-pointer"></div>
                 {calendarBody}
-                {this.props.add=='true'?<CalendarAdd  selectedList={this.state.selectedList}/>:''}
+                {this.props.add=='true'?<CalendarAdd  selectedList={this.state.selectedList} delSelected={this.delSelected}/>:''}
                 <CalendarConfirm />
             </div>
         );
