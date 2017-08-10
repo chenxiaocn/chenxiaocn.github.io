@@ -18,7 +18,8 @@ var CalendarMonth = React.createClass({
             curYear:'',
             curMonth:'',
             yearList:[],
-            dateRangeList:[]
+            dateRangeList:[],
+            selectedList:[]
         }
     },
     componentDidMount: function () {
@@ -26,7 +27,7 @@ var CalendarMonth = React.createClass({
         var dateRangeList=DataDeal.getDateRangeList(this.props.beginDate,this.props.endDate);
         this.setState({dateType:this.props.dateType,beginDate:this.props.beginDate,endDate:this.props.endDate,
             dateRangeEndbled:this.props.dateRangeEndbled,single:this.props.single,
-            curYear:this.props.curYear,curMonth:this.props.curMonth,dateRangeList:dateRangeList
+            curYear:this.props.curYear,curMonth:this.props.curMonth,dateRangeList:dateRangeList,selectedList:this.props.selectedList
         });
     },
     componentWillReceiveProps:function(nextprops){
@@ -34,7 +35,7 @@ var CalendarMonth = React.createClass({
         var dateRangeList=DataDeal.getDateRangeList(this.props.beginDate,this.props.endDate);
         this.setState({dateType:nextprops.dateType,beginDate:nextprops.beginDate,endDate:nextprops.endDate,
             dateRangeEndbled:nextprops.dateRangeEndbled,single:nextprops.single,
-            curYear:nextprops.curYear,curMonth:nextprops.curMonth,dateRangeList:dateRangeList
+            curYear:nextprops.curYear,curMonth:nextprops.curMonth,dateRangeList:dateRangeList,selectedList:nextprops.selectedList
         });
 
     },
@@ -70,7 +71,7 @@ var CalendarMonth = React.createClass({
                         {CalendarCtrlI}
                         <div className="cam-calendar-year" value={content}>{content}年</div>
                     </div>
-                    <TwelveMonth  year={content} dateRangeList={this.state.dateRangeList}/>
+                    <TwelveMonth  year={content} dateRangeList={this.state.dateRangeList} selectedList={this.state.selectedList}/>
                 </div>
             );
         }.bind(this));
@@ -96,13 +97,14 @@ var TwelveMonth = React.createClass({
         let monthList=DataDeal.circleValue(12);
         let year=(this.props.year).toString();
         let dateRangeList=this.props.dateRangeList;
+        let selectedList=this.props.selectedList;
 
         for(var i=0;i<monthList.length;i++){
             let monthValue;
             monthList[i]<10?monthValue='0'+ monthList[i].toString():monthValue=monthList[i].toString();
             let liValue=year+monthValue;
 
-            let monthLiItem=(<li value={liValue} className="clickable" key={i}>{monthList[i]}月</li>);
+            let monthLiItem=(<li value={liValue} className="clickunable" key={i}>{monthList[i]}月</li>);
 
             for(var j=0;j<dateRangeList.length;j++){
                 if(liValue==dateRangeList[j]){

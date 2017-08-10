@@ -10,12 +10,14 @@ import './calendar.less';
 var CalendarAdd = React.createClass({
     getInitialState: function () {
         return {
-            selectedList:['201601~201607','201610']
+            selectedList:[]
         }
     },
     componentDidMount: function () {
+        this.setState({selectedList:this.props.selectedList});
     },
     componentWillReceiveProps:function(nextprops){
+        this.setState({selectedList:nextprops.selectedList});
     },
     delSelected:function(e){
         var delSelected=$(e.target).prev()[0].innerText;

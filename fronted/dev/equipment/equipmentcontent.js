@@ -34,7 +34,8 @@ export default class EquipContent extends React.Component {
 var Content = React.createClass({
     getInitialState: function () {
         return {
-            addOrModifyModalVisible:false
+            addOrModifyModalVisible:false,
+            selectedCalendarDate:['201402~201406','201505']
         }
     },
     componentDidMount: function () {
@@ -59,7 +60,7 @@ var Content = React.createClass({
                         </div>
                     </div>
                     <div className="cam-calendar-wrapper">
-                        <Calendar dateType="month" beginDate="201402" endDate="201603" dateRangeEndbled="true" single="false" add='true'/>
+                        <Calendar dateType="month" beginDate="201402" endDate="201603" dateRangeEndbled="true" single="false" add='true' selectedCalendarDate={this.state.selectedCalendarDate}/>
                     </div>
 
                 </div>

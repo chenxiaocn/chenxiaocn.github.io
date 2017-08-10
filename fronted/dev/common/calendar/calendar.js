@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom'
 import CalendarMonth from "./calendarMonth.js";
 import CalendarAdd from "./calendarAdd.js";
 import CalendarConfirm from "./calendarConfirm.js";
-//import Datadeal from "../datadeal.js";
+import Datadeal from "../datadeal.js";
 import $ from "jquery";
 import './calendar.less';
 
@@ -21,17 +21,18 @@ var Calendar = React.createClass({
             curYear:'',
             curMonth:'',
             curQuarter:'',
-            curDay:''
+            curDay:'',
+            selectedList:[]
         }
     },
     componentDidMount: function () {
-        this.setState({dateType:this.props.dateType,beginDate:this.props.beginDate,endDate:this.props.endDate,
-            dateRangeEndbled:this.props.dateRangeEndbled,single:this.props.single});
         this.getCurrentTime();
+        this.setState({dateType:this.props.dateType,beginDate:this.props.beginDate,endDate:this.props.endDate,
+            dateRangeEndbled:this.props.dateRangeEndbled,single:this.props.single,selectedList:this.props.selectedCalendarDate});
     },
     componentWillReceiveProps:function(nextprops){
         this.setState({dateType:nextprops.dateType,beginDate:nextprops.beginDate,endDate:nextprops.endDate,
-            dateRangeEndbled:nextprops.dateRangeEndbled,single:nextprops.single
+            dateRangeEndbled:nextprops.dateRangeEndbled,single:nextprops.single,selectedList:nextprops.selectedCalendarDate
         });
         //this.getCurrentTime();
     },
@@ -49,7 +50,7 @@ var Calendar = React.createClass({
         switch (dateType){
             case "year":break;
             case "month":
-                calendarBody=(<CalendarMonth curYear={this.state.curYear} curMonth={this.state.curMonth} beginDate={this.state.beginDate} endDate={this.state.endDate} dateRangeEndbled={this.state.dateRangeEndbled} single={this.state.single}/>);
+                calendarBody=(<CalendarMonth selectedList={this.state.selectedList} curYear={this.state.curYear} curMonth={this.state.curMonth} beginDate={this.state.beginDate} endDate={this.state.endDate} dateRangeEndbled={this.state.dateRangeEndbled} single={this.state.single}/>);
                 break;
             case "quarter ":break;
             case "week":break;
@@ -59,7 +60,7 @@ var Calendar = React.createClass({
             <div className="cam-calendar">
                 <div className="cam-calendar-pointer"></div>
                 {calendarBody}
-                {this.props.add=='true'?<CalendarAdd />:''}
+                {this.props.add=='true'?<CalendarAdd  selectedList={this.state.selectedList}/>:''}
                 <CalendarConfirm />
             </div>
         );
