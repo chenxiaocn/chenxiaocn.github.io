@@ -71,6 +71,9 @@ var CalendarMonth = React.createClass({
     addOrDel:function(thisMonth,singSelectFlag){
         this.props.addOrDel(thisMonth,singSelectFlag);
     },
+    changeSelectList:function(dataRange){
+        this.props.changeSelectList(dataRange);
+    },
     render: function () {
         let calendarTypeMonth=this.state.yearList.map(function(content,index){
             let CalendarCtrlI;
@@ -89,7 +92,7 @@ var CalendarMonth = React.createClass({
                         <div className="cam-calendar-year" value={content}>{content}年</div>
                     </div>
                     <TwelveMonth  year={content}dateRangeEndbled={this.state.dateRangeEndbled} single={this.state.single} dateRangeList={this.state.dateRangeList}
-                                  selectedRange={this.state.selectedRange} selectedList={this.state.selectedList} addOrDel={this.addOrDel}/>
+                                  selectedRange={this.state.selectedRange} selectedList={this.state.selectedList} addOrDel={this.addOrDel} changeSelectList={this.changeSelectList}/>
                 </div>
             );
         }.bind(this));
@@ -108,7 +111,8 @@ var TwelveMonth = React.createClass({
             dateRangeList:[],
             selectedRange:[],
             monthList:[],
-            selectedList:[]
+            selectedList:[],
+            firstClick:false
         }
     },
     componentDidMount: function () {
@@ -126,10 +130,59 @@ var TwelveMonth = React.createClass({
     },
     addOrDel:function(e){
         let thisMonth=$(e.target).attr('value');
+        let thisIndex=$(e.target).index();
         let dateRangeEndbled=this.props.dateRangeEndbled;
         let single=this.props.single;
         if(dateRangeEndbled){
+            if($(e.target).hasClass('active')){
+                let firstClick=!(this.state.firstClick);
+                if(firstClick){
+                    $(e.target).parent().find('li').removeClass('active');
+                    $(e.target).addClass('active rangFlagFirstClick');
+                }else{
+                    $(e.target).removeClass('active');
+                }
+                this.setState({firstClick:firstClick});
+            }
+            else{
+                $(e.target).addClass('active rangFlagFirstClick');
+            }
 
+            let allLi=$(e.target).parent().find('li');
+            let beginClickDate='',beginClickDateFlag=false,beginDateIndex;
+
+            for(let i=0;i<allLi.length;i++){
+                if(!(i==thisIndex)){
+                    if($(allLi[i]).hasClass('rangFlagFirstClick')){
+                        beginClickDate=$(allLi[i]).attr('value');
+                        beginClickDateFlag=true;
+                        beginDateIndex=[i];
+                        break;
+                    }
+                }
+            }
+
+            let tmpBegin,tmpEnd,tmpBeginDate,tmpEndDate;
+            if(beginClickDateFlag){
+                if(beginDateIndex>thisIndex){
+                    tmpBegin=thisIndex;
+                    tmpEnd=beginDateIndex;
+                    tmpBeginDate=thisMonth;
+                    tmpEndDate=beginClickDate;
+                }else{
+                    tmpBegin=parseInt(beginDateIndex);
+                    tmpEnd=parseInt(thisIndex);
+                    tmpBeginDate=beginClickDate;
+                    tmpEndDate=thisMonth;
+                }
+
+                for(let j=tmpBegin+1;j<tmpEnd;j++){
+                    $(allLi[j]).addClass('active');
+                }
+                allLi.removeClass('rangFlagFirstClick');
+                let dataRange=tmpBeginDate+'~'+tmpEndDate;
+                this.props.changeSelectList(dataRange);
+            }
         }
         if(single){
             var singSelectFlag;
@@ -144,7 +197,11 @@ var TwelveMonth = React.createClass({
             this.props.addOrDel(thisMonth,singSelectFlag);
         }
     },
-
+    dblClick:function(e){
+         let thisMonth=$(e.target).attr('value');
+         let selectedList=this.state.selectedList;
+         $(e.target).parent().find('li').removeClass('active');
+    },
     render: function () {
         let monthLi=[];
         let year=this.state.year,dateRangeList=this.state.dateRangeList, selectedRange=this.state.selectedRange;
@@ -165,7 +222,12 @@ var TwelveMonth = React.createClass({
             //是否在选中范围
             for(var k=0;k<selectedRange.length;k++){
                 if(liValue==selectedRange[k]){
-                    monthLiItem=(<li value={liValue} className="clickable active" key={i+j} onClick={this.addOrDel}>{monthList[i]}月</li>);
+                    if(this.props.dateRangeEndbled){
+                        monthLiItem=(<li value={liValue} className="clickable active dateRangeEndbled" key={i+j} onClick={this.addOrDel} onDoubleClick={this.dblClick}>{monthList[i]}月</li>);
+                    }
+                    if(this.props.single){
+                        monthLiItem=(<li value={liValue} className="clickable active" key={i+j} onClick={this.addOrDel}>{monthList[i]}月</li>);
+                    }
                     break;
                 }
             }

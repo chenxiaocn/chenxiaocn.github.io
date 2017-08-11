@@ -23,6 +23,9 @@ var CalendarAdd = React.createClass({
         let delSelectedInner=$(e.target).prev()[0].innerText;
         this.props.delSelected(delSelectedInner);
     },
+    addSelected:function(){
+        this.props.addSelected();
+    },
     render: function () {
         let camSelected=this.state.selectedList.map(function(content,index){
             return(
@@ -36,7 +39,7 @@ var CalendarAdd = React.createClass({
         return (
             <div>
                 <div className="cam-addBtn">
-                    <a href="">添加</a>
+                    <a href="javascript:void(0)" onClick={this.addSelected}>添加</a>
                 </div>
                 <div className="cam-selected">
                     {camSelected}

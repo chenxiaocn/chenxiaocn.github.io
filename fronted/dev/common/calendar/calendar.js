@@ -22,16 +22,18 @@ var Calendar = React.createClass({
             curMonth:'',
             curQuarter:'',
             curDay:'',
-            selectedList:[]
+            addType:true,
+            selectedList:[],
+            tmpSelectedList:[]
         }
     },
     componentDidMount: function () {
         this.getCurrentTime();
-        this.setState({dateType:this.props.dateType,beginDate:this.props.beginDate,endDate:this.props.endDate,
+        this.setState({dateType:this.props.dateType,beginDate:this.props.beginDate,endDate:this.props.endDate,addType:this.props.addType,
             dateRangeEndbled:this.props.dateRangeEndbled,single:this.props.single,selectedList:this.props.selectedCalendarDate});
     },
     componentWillReceiveProps:function(nextprops){
-        this.setState({dateType:nextprops.dateType,beginDate:nextprops.beginDate,endDate:nextprops.endDate,
+        this.setState({dateType:nextprops.dateType,beginDate:nextprops.beginDate,endDate:nextprops.endDate,addType:nextprops.addType,
             dateRangeEndbled:nextprops.dateRangeEndbled,single:nextprops.single,selectedList:nextprops.selectedCalendarDate
         });
         //this.getCurrentTime();
@@ -61,6 +63,23 @@ var Calendar = React.createClass({
         }
         this.setState({selectedList:selectedList});
     },
+    changeSelectList:function(dataRange){
+        let selectedList=this.state.selectedList;
+        let addType=this.state.addType;
+        let tmpSelectedList=dataRange;
+        if(addType){
+            this.setState({tmpSelectedList:tmpSelectedList});
+        }else{
+            selectedList.push(dataRange);
+        }
+        this.setState({selectedList:selectedList});
+    },
+    addSelected:function(){
+        let selectedList=this.state.selectedList;
+        let tmpSelectedList=this.state.tmpSelectedList;
+        selectedList.push(tmpSelectedList);
+        this.setState({selectedList:selectedList});
+    },
     render: function () {
         let dateType=this.state.dateType;
         let calendarBody;
@@ -68,7 +87,7 @@ var Calendar = React.createClass({
             case "year":break;
             case "month":
                 calendarBody=(<CalendarMonth selectedList={this.state.selectedList} curYear={this.state.curYear} curMonth={this.state.curMonth} beginDate={this.state.beginDate} endDate={this.state.endDate}
-                                             dateRangeEndbled={this.state.dateRangeEndbled} single={this.state.single} addOrDel={this.addOrDel}/>);
+                                             dateRangeEndbled={this.state.dateRangeEndbled} single={this.state.single} addOrDel={this.addOrDel} changeSelectList={this.changeSelectList}/>);
                 break;
             case "quarter ":break;
             case "week":break;
@@ -78,7 +97,7 @@ var Calendar = React.createClass({
             <div className="cam-calendar">
                 <div className="cam-calendar-pointer"></div>
                 {calendarBody}
-                {this.props.add=='true'?<CalendarAdd  selectedList={this.state.selectedList} delSelected={this.delSelected}/>:''}
+                {this.props.addType?<CalendarAdd  selectedList={this.state.selectedList} delSelected={this.delSelected} addSelected={this.addSelected}/>:''}
                 <CalendarConfirm  selectedList={this.state.selectedList} calendarConfirm={this.calendarConfirm}/>
             </div>
         );
