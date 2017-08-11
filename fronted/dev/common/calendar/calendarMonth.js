@@ -68,9 +68,6 @@ var CalendarMonth = React.createClass({
         let yearList=[thisCtrYear-1,thisCtrYear,thisCtrYear+1];
         this.setState({yearList:yearList});
     },
-    addOrDel:function(thisMonth,singSelectFlag){
-        this.props.addOrDel(thisMonth,singSelectFlag);
-    },
     changeSelectList:function(dataRange){
         this.props.changeSelectList(dataRange);
     },
@@ -92,7 +89,7 @@ var CalendarMonth = React.createClass({
                         <div className="cam-calendar-year" value={content}>{content}年</div>
                     </div>
                     <TwelveMonth  year={content}dateRangeEndbled={this.state.dateRangeEndbled} single={this.state.single} dateRangeList={this.state.dateRangeList}
-                                  selectedRange={this.state.selectedRange} selectedList={this.state.selectedList} addOrDel={this.addOrDel} changeSelectList={this.changeSelectList}/>
+                                  selectedRange={this.state.selectedRange} selectedList={this.state.selectedList}  changeSelectList={this.changeSelectList}/>
                 </div>
             );
         }.bind(this));
@@ -193,8 +190,7 @@ var TwelveMonth = React.createClass({
                 singSelectFlag=true;
                 $(e.target).addClass('active');
             }
-            //DataDeal.addOrDelClass(singSelectFlag,$(e.target),'active');
-            this.props.addOrDel(thisMonth,singSelectFlag);
+            this.props.changeSelectList(thisMonth);
         }
     },
     dblClick:function(e){

@@ -35,13 +35,14 @@ var Content = React.createClass({
     getInitialState: function () {
         return {
             addOrModifyModalVisible:false,
-            selectedCalendarDate:['201403~201404','201406~201408'],
+            //selectedCalendarDate:['201403~201404','201406~201408'],
             dateType:'month',
-            //selectedCalendarDate:['201403','201501'],
+            selectedCalendarDate:['201403','201501'],
             beginDate:'201402',
             endDate:'201603',
-            dateRangeEndbled:true,
-            single:false,
+            dateRangeEndbled:false,
+            //single:false,
+            single:true,
             addType:true
         }
     },
@@ -54,6 +55,9 @@ var Content = React.createClass({
     },
     cancelModal:function(){
         this.setState({addOrModifyModalVisible:false});
+    },
+    calendarConfirm:function(selectedCalendarDate){
+        this.setState({selectedCalendarDate:selectedCalendarDate});
     },
     render: function () {
         let selectedCalendarDate=this.state.selectedCalendarDate;
@@ -74,7 +78,7 @@ var Content = React.createClass({
                     </div>
                     <div className="cam-calendar-wrapper">
                         <Calendar dateType={this.state.dateType} beginDate={this.state.beginDate} endDate={this.state.endDate} dateRangeEndbled={this.state.dateRangeEndbled}
-                                  single={this.state.single} addType={this.state.addType} selectedCalendarDate={this.state.selectedCalendarDate}/>
+                                  single={this.state.single} addType={this.state.addType} selectedCalendarDate={this.state.selectedCalendarDate} calendarConfirm={this.calendarConfirm}/>
                     </div>
 
                 </div>
