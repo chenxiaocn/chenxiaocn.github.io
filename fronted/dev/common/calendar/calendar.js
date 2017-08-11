@@ -4,6 +4,7 @@
 import React from  'react'
 import ReactDOM from 'react-dom'
 import CalendarMonth from "./calendarMonth.js";
+import CalendarYear from "./calendarYear.js";
 import CalendarAdd from "./calendarAdd.js";
 import CalendarConfirm from "./calendarConfirm.js";
 import DataDeal from "../datadeal.js";
@@ -78,7 +79,9 @@ var Calendar = React.createClass({
         let dateType=this.state.dateType;
         let calendarBody;
         switch (dateType){
-            case "year":break;
+            case "year":calendarBody=(<CalendarYear selectedList={this.state.selectedList} curYear={this.state.curYear} curMonth={this.state.curMonth} beginDate={this.state.beginDate} endDate={this.state.endDate}
+                                                     dateRangeEndbled={this.state.dateRangeEndbled} single={this.state.single}  changeSelectList={this.changeSelectList}/>);
+                break;
             case "month":
                 calendarBody=(<CalendarMonth selectedList={this.state.selectedList} curYear={this.state.curYear} curMonth={this.state.curMonth} beginDate={this.state.beginDate} endDate={this.state.endDate}
                                              dateRangeEndbled={this.state.dateRangeEndbled} single={this.state.single}  changeSelectList={this.changeSelectList}/>);
