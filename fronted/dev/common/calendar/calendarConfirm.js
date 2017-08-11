@@ -22,11 +22,14 @@ var CalendarConfirm = React.createClass({
     calendarConfirm:function(){
         this.props.calendarConfirm();
     },
+    cancelCalendar:function(){
+        this.props.cancelCalendar();
+    },
     render: function () {
         return (
             <div className="cam-calendar-bottom">
                 <a className="btn-calendar" data-id="cam-sure" onClick={this.calendarConfirm}>确定</a>
-                <a className="btn-calendar" data-id="cam-cancel">取消</a>
+                <a className="btn-calendar" data-id="cam-cancel" onClick={this.cancelCalendar}>取消</a>
             </div>
         );
     }

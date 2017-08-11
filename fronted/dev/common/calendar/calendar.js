@@ -54,6 +54,9 @@ var Calendar = React.createClass({
     calendarConfirm:function(){
         this.props.calendarConfirm(this.state.selectedList);
     },
+    cancelCalendar:function(){
+        this.props.cancelCalendar();
+    },
     changeSelectList:function(dataRange){
         let selectedList=this.state.selectedList;
         let addType=this.state.addType;
@@ -85,11 +88,13 @@ var Calendar = React.createClass({
             case "day":break;
         }
         return (
-            <div className="cam-calendar">
-                <div className="cam-calendar-pointer"></div>
-                {calendarBody}
-                {this.props.addType?<CalendarAdd  selectedList={this.state.selectedList} delSelected={this.delSelected} addSelected={this.addSelected}/>:''}
-                <CalendarConfirm  selectedList={this.state.selectedList} calendarConfirm={this.calendarConfirm}/>
+            <div className="cam-calendar-wrapper">
+                <div className="cam-calendar">
+                    <div className="cam-calendar-pointer"></div>
+                    {calendarBody}
+                    {this.props.addType?<CalendarAdd  selectedList={this.state.selectedList} delSelected={this.delSelected} addSelected={this.addSelected}/>:''}
+                    <CalendarConfirm  selectedList={this.state.selectedList} calendarConfirm={this.calendarConfirm} cancelCalendar={this.cancelCalendar}/>
+                </div>
             </div>
         );
     }

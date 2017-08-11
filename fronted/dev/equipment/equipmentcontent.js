@@ -35,6 +35,7 @@ var Content = React.createClass({
     getInitialState: function () {
         return {
             addOrModifyModalVisible:false,
+            calendarModal:false,
             //selectedCalendarDate:['201403~201404','201406~201408'],
             dateType:'month',
             selectedCalendarDate:['201403','201501'],
@@ -59,6 +60,13 @@ var Content = React.createClass({
     calendarConfirm:function(selectedCalendarDate){
         this.setState({selectedCalendarDate:selectedCalendarDate});
     },
+    addCalendarModal:function(){
+        let calendarModal=!(this.state.calendarModal);
+        this.setState({calendarModal:calendarModal});
+    },
+    cancelCalendar:function(){
+        this.setState({calendarModal:false});
+    },
     render: function () {
         let selectedCalendarDate=this.state.selectedCalendarDate;
         selectedCalendarDate=selectedCalendarDate.join(',');
@@ -71,16 +79,15 @@ var Content = React.createClass({
                 <div className="operation_banner clearfix time">
                     <div>
                         <div className="pull-left cal-title">sop</div>
-                        <div className="pull-left pa_date">
+                        <div className="pull-left pa_date" onClick={this.addCalendarModal}>
                             <input className="border js-input_time" type="text" placeholder={selectedCalendarDate}/>
                             <Icon type="calendar"/>
                         </div>
                     </div>
-                    <div className="cam-calendar-wrapper">
-                        <Calendar dateType={this.state.dateType} beginDate={this.state.beginDate} endDate={this.state.endDate} dateRangeEndbled={this.state.dateRangeEndbled}
-                                  single={this.state.single} addType={this.state.addType} selectedCalendarDate={this.state.selectedCalendarDate} calendarConfirm={this.calendarConfirm}/>
-                    </div>
-
+                    {this.state.calendarModal?<Calendar  dateType={this.state.dateType} beginDate={this.state.beginDate} endDate={this.state.endDate}
+                                                         dateRangeEndbled={this.state.dateRangeEndbled} single={this.state.single}
+                                                         addType={this.state.addType} selectedCalendarDate={this.state.selectedCalendarDate}
+                                                         calendarConfirm={this.calendarConfirm} cancelCalendar={this.cancelCalendar}/>:''}
                 </div>
                 <br/>
                 <div className="outer_content">
