@@ -52,13 +52,23 @@ var Calendar = React.createClass({
     calendarConfirm:function(){
         console.log(this.state.selectedList);
     },
+    addOrDel:function(thisMonth,singSelectFlag){
+        let selectedList=this.state.selectedList;
+        if(singSelectFlag){
+            selectedList.push(thisMonth);
+        }else{
+            selectedList=DataDeal.removeByValue(selectedList,thisMonth);
+        }
+        this.setState({selectedList:selectedList});
+    },
     render: function () {
         let dateType=this.state.dateType;
         let calendarBody;
         switch (dateType){
             case "year":break;
             case "month":
-                calendarBody=(<CalendarMonth selectedList={this.state.selectedList} curYear={this.state.curYear} curMonth={this.state.curMonth} beginDate={this.state.beginDate} endDate={this.state.endDate} dateRangeEndbled={this.state.dateRangeEndbled} single={this.state.single}/>);
+                calendarBody=(<CalendarMonth selectedList={this.state.selectedList} curYear={this.state.curYear} curMonth={this.state.curMonth} beginDate={this.state.beginDate} endDate={this.state.endDate}
+                                             dateRangeEndbled={this.state.dateRangeEndbled} single={this.state.single} addOrDel={this.addOrDel}/>);
                 break;
             case "quarter ":break;
             case "week":break;

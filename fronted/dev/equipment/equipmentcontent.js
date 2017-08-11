@@ -35,7 +35,13 @@ var Content = React.createClass({
     getInitialState: function () {
         return {
             addOrModifyModalVisible:false,
-            selectedCalendarDate:['201403~201501','201505']
+            //selectedCalendarDate:['201403~201501']
+            dateType:'month',
+            selectedCalendarDate:['201403','201501'],
+            beginDate:'201402',
+            endDate:'201603',
+            dateRangeEndbled:false,
+            single:true
         }
     },
     componentDidMount: function () {
@@ -51,7 +57,10 @@ var Content = React.createClass({
     render: function () {
         let selectedCalendarDate=this.state.selectedCalendarDate;
         selectedCalendarDate=selectedCalendarDate.join(',');
-        selectedCalendarDate=selectedCalendarDate.substring(0,selectedCalendarDate.length-1);
+        if(this.state.dateRangeEndbled){
+            selectedCalendarDate=selectedCalendarDate.substring(0,selectedCalendarDate.length-1);
+        }
+
         return (
             <div className="consult_page time_contain">
                 <div className="operation_banner clearfix time">
@@ -63,7 +72,8 @@ var Content = React.createClass({
                         </div>
                     </div>
                     <div className="cam-calendar-wrapper">
-                        <Calendar dateType="month" beginDate="201402" endDate="201603" dateRangeEndbled="true" single="false" add='true' selectedCalendarDate={this.state.selectedCalendarDate}/>
+                        <Calendar dateType={this.state.dateType} beginDate={this.state.beginDate} endDate={this.state.endDate} dateRangeEndbled={this.state.dateRangeEndbled}
+                                  single={this.state.single} add='true' selectedCalendarDate={this.state.selectedCalendarDate}/>
                     </div>
 
                 </div>

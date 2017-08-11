@@ -68,6 +68,9 @@ var CalendarMonth = React.createClass({
         let yearList=[thisCtrYear-1,thisCtrYear,thisCtrYear+1];
         this.setState({yearList:yearList});
     },
+    addOrDel:function(thisMonth,singSelectFlag){
+        this.props.addOrDel(thisMonth,singSelectFlag);
+    },
     render: function () {
         let calendarTypeMonth=this.state.yearList.map(function(content,index){
             let CalendarCtrlI;
@@ -85,7 +88,8 @@ var CalendarMonth = React.createClass({
                         {CalendarCtrlI}
                         <div className="cam-calendar-year" value={content}>{content}年</div>
                     </div>
-                    <TwelveMonth  year={content} dateRangeList={this.state.dateRangeList} selectedRange={this.state.selectedRange} selectedList={this.state.selectedList}/>
+                    <TwelveMonth  year={content}dateRangeEndbled={this.state.dateRangeEndbled} single={this.state.single} dateRangeList={this.state.dateRangeList}
+                                  selectedRange={this.state.selectedRange} selectedList={this.state.selectedList} addOrDel={this.addOrDel}/>
                 </div>
             );
         }.bind(this));
@@ -104,8 +108,7 @@ var TwelveMonth = React.createClass({
             dateRangeList:[],
             selectedRange:[],
             monthList:[],
-            selectedList:[],
-            selectedFlag:true
+            selectedList:[]
         }
     },
     componentDidMount: function () {
@@ -122,9 +125,24 @@ var TwelveMonth = React.createClass({
         });
     },
     addOrDel:function(e){
-        let  selectedFlag=!(this.state.selectedFlag),target=$(e.target),className='active';
-        DataDeal.addOrDelClass(selectedFlag,target,className);
-        this.setState({selectedFlag:selectedFlag});
+        let thisMonth=$(e.target).attr('value');
+        let dateRangeEndbled=this.props.dateRangeEndbled;
+        let single=this.props.single;
+        if(dateRangeEndbled){
+
+        }
+        if(single){
+            var singSelectFlag;
+            if($(e.target).hasClass('active')){
+                singSelectFlag=false;
+                $(e.target).removeClass('active');
+            }else{
+                singSelectFlag=true;
+                $(e.target).addClass('active');
+            }
+            //DataDeal.addOrDelClass(singSelectFlag,$(e.target),'active');
+            this.props.addOrDel(thisMonth,singSelectFlag);
+        }
     },
 
     render: function () {
@@ -136,12 +154,11 @@ var TwelveMonth = React.createClass({
             let monthValue;
             monthList[i]<10?monthValue='0'+ monthList[i].toString():monthValue=monthList[i].toString();
             let liValue=year+monthValue;
-            let monthLiItem=(<li value={liValue} className="clickunable"  key={i}  onClick={this.addOrDel}>{monthList[i]}月</li>);
-
+            let monthLiItem=(<li value={liValue} className="clickunable"  key={i}>{monthList[i]}月</li>);
             //是否在可选范围
             for(var j=0;j<dateRangeList.length;j++){
                 if(liValue==dateRangeList[j]){
-                    monthLiItem=(<li value={liValue} className="clickable" key={i+j}>{monthList[i]}月</li>);
+                    monthLiItem=(<li value={liValue} className="clickable" key={i+j} onClick={this.addOrDel}>{monthList[i]}月</li>);
                     break;
                 }
             }
