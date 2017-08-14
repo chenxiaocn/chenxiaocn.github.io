@@ -38,7 +38,7 @@ var TableContent = React.createClass({
     componentWillReceiveProps:function(nextprops){
     },
     addOrEdit:function(){
-        this.setState({});
+        this.setState({addOrEditModalVisible:true});
     },
     del:function(){
         this.setState({delModalVisible:true});
@@ -110,7 +110,7 @@ var TableContent = React.createClass({
                 {/*列表*/}
                 <Table  bordered columns={columns} dataSource={data}/>
                 {/*编辑或修改*/}
-                <EditTable/>
+                <EditTable cancelModal={this.cancelModal} refresh={this.handleRefresh} addOrEditModalVisible={this.state.addOrEditModalVisible} selectedId={this.state.selectedId}/>
                 {/*删除*/}
                 <DelTable cancelModal={this.cancelModal} refresh={this.handleRefresh} delModalVisible={this.state.delModalVisible} selectedId={this.state.selectedId}/>
             </div>
