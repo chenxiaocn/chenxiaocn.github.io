@@ -5,6 +5,7 @@ import React from  'react'
 import ReactDOM from 'react-dom'
 import CalendarMonth from "./calendarMonth.js";
 import CalendarYear from "./calendarYear.js";
+import CalendarQuarter from "./calendarQuarter.js";
 import CalendarAdd from "./calendarAdd.js";
 import CalendarConfirm from "./calendarConfirm.js";
 import DataDeal from "../datadeal.js";
@@ -37,7 +38,6 @@ var Calendar = React.createClass({
         this.setState({dateType:nextprops.dateType,beginDate:nextprops.beginDate,endDate:nextprops.endDate,addType:nextprops.addType,
             dateRangeEndbled:nextprops.dateRangeEndbled,single:nextprops.single,selectedList:nextprops.selectedCalendarDate
         });
-        //this.getCurrentTime();
     },
     getCurrentTime:function(){
         var date=new Date;
@@ -66,8 +66,8 @@ var Calendar = React.createClass({
             this.setState({tmpSelectedList:tmpSelectedList});
         }else{
             selectedList.push(dataRange);
+            this.setState({selectedList:selectedList});
         }
-        this.setState({selectedList:selectedList});
     },
     addSelected:function(){
         let selectedList=this.state.selectedList;
@@ -86,7 +86,10 @@ var Calendar = React.createClass({
                 calendarBody=(<CalendarMonth selectedList={this.state.selectedList} curYear={this.state.curYear} curMonth={this.state.curMonth} beginDate={this.state.beginDate} endDate={this.state.endDate}
                                              dateRangeEndbled={this.state.dateRangeEndbled} single={this.state.single}  changeSelectList={this.changeSelectList}/>);
                 break;
-            case "quarter ":break;
+            case "quarter":
+                calendarBody=(<CalendarQuarter selectedList={this.state.selectedList} curYear={this.state.curYear} curMonth={this.state.curMonth} beginDate={this.state.beginDate} endDate={this.state.endDate}
+                                             dateRangeEndbled={this.state.dateRangeEndbled} single={this.state.single}  changeSelectList={this.changeSelectList}/>);
+                break;
             case "week":break;
             case "day":break;
         }

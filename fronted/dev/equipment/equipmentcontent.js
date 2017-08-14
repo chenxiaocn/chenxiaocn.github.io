@@ -36,14 +36,14 @@ var Content = React.createClass({
         return {
             addOrModifyModalVisible:false,
             calendarModal:false,
-            //selectedCalendarDate:['201403~201404','201406~201408'],
-            dateType:'year',
-            selectedCalendarDate:['2013~2015','2016'],
-            beginDate:'2011',
-            endDate:'2017',
-            dateRangeEndbled:false,
+            dateType:'quarter',
+            //selectedCalendarDate:['2011~2013','2014~2016'],
+            selectedCalendarDate:['201501~201503'],
+            beginDate:'201302',
+            endDate:'201703',
+            dateRangeEndbled:true,
             //single:false,
-            single:true,
+            single:false,
             addType:true
         }
     },
@@ -71,7 +71,9 @@ var Content = React.createClass({
         let selectedCalendarDate=this.state.selectedCalendarDate;
         selectedCalendarDate=selectedCalendarDate.join(',');
         if(this.state.dateRangeEndbled){
-            selectedCalendarDate=selectedCalendarDate.substring(0,selectedCalendarDate.length-1);
+            if(!(this.state.dateType=='quarter')){
+                selectedCalendarDate=selectedCalendarDate.substring(0,selectedCalendarDate.length-1);
+            }
         }
 
         return (

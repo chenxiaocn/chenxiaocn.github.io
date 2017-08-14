@@ -273,6 +273,41 @@ let Datadeal = {
         }
         return  dateArry;
     },
+    //获取时间段里所有季度
+    getQuarterRange:function(beginDate,endDate){
+        var dateArry =[];
+        var mCount = 0;
+        var beginYear=parseInt(beginDate.substring(0,4));//截取开始年份
+        var endYear=parseInt(endDate.substring(0,4));//截取结束年份
+        var beginQuarter=parseInt(beginDate.substring(beginDate.length-1));//截取开始月份
+        var endQuarter=parseInt(endDate.substring(endDate.length-1));//截取结束月份
+
+        if(beginYear<endYear){
+            mCount = (endYear - beginYear) * 4 + endQuarter - beginQuarter+1;
+        }else{
+            mCount = endQuarter - beginQuarter+1;
+        }
+        if (mCount > 0) {
+            for (var i = 0; i < mCount; i++) {
+                if (beginQuarter <4) {
+                    dateArry[i] = beginYear.toString() + ("0" + beginQuarter.toString());
+                    beginQuarter += 1;
+                } else {
+                    dateArry[i] = beginYear.toString() + ("0" + beginQuarter.toString());
+                    beginQuarter = 1;
+                    beginYear += 1;
+                }
+            }
+        }
+        return  dateArry;
+    },
+    getRange:function(begin,end){
+        let dateRangeList=[];
+        for(let i=parseInt(begin);i<=parseInt(end);i++){
+            dateRangeList.push(i);
+        }
+        return dateRangeList;
+    },
 
     //获取选中时间段数组列表
     getSelectedRangeArr:function(selectedList,dataType){
@@ -285,6 +320,12 @@ let Datadeal = {
                 var end=selectedRangeItem.split("~")[1];
                 if(dataType=='month'){
                     selectedRangeItem=this.getDateRangeList(start,end);
+                }
+                if(dataType=='year'){
+                    selectedRangeItem=this.getRange(start,end);
+                }
+                if(dataType=='quarter'){
+                    selectedRangeItem=this.getQuarterRange(start,end);
                 }
                 selectedRangeItem=selectedRangeItem.join(',');
             }
