@@ -7,6 +7,7 @@ import Header from "../common/header/header";
 import Sider from "../common/sider/sider";
 import EquipDetail from "./equipDetail.js"
 import Calendar from "../common/calendar/calendar.js"
+import TableContent from "../common/table/tableContent.js"
 import {Modal,Icon} from "antd";
 import './equip.less';
 import '../common/calendar/calendar.less';
@@ -78,9 +79,9 @@ var Content = React.createClass({
                 selectedCalendarDate=selectedCalendarDate.substring(0,selectedCalendarDate.length-1);
             }
         }
-
         return (
             <div className="consult_page time_contain">
+                {/*日历*/}
                 <div className="operation_banner clearfix time">
                     <div>
                         <div className="pull-left cal-title">sop</div>
@@ -104,6 +105,8 @@ var Content = React.createClass({
                     </div>
                     {/*选择车系*/}
                     <EquipDetail cancelModal={this.cancelModal} refresh={this.handleRefresh} addOrModifyModalVisible={this.state.addOrModifyModalVisible}/>
+                    {/*表格列表*/}
+                    <TableContent/>
                 </div>
             </div>
         );
