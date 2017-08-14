@@ -37,8 +37,13 @@ var TableContent = React.createClass({
     },
     componentWillReceiveProps:function(nextprops){
     },
-    addOrEdit:function(){
+    addOrEdit:function(e,index){
         this.setState({addOrEditModalVisible:true});
+        let thisRowIndex=$(e.target).parent().parent().index();
+        let thisRecord=(this.state.tableList)[thisRowIndex];
+        let selectedId=thisRecord.id;
+
+        this.setState({selectedId:selectedId});
     },
     del:function(){
         this.setState({delModalVisible:true});
@@ -50,6 +55,7 @@ var TableContent = React.createClass({
         this.setState({addOrEditModalVisible:false,delModalVisible:false});
     },
     render: function () {
+        let tableList=this.state.tableList;
         //表格
         let columns = [
             { title: '用户名', width:70, dataIndex: 'name', key: '0'},
@@ -75,13 +81,13 @@ var TableContent = React.createClass({
              render: () => <a href="javascript:void(0);" onClick={this.addOrEdit}>编辑</a>
             },
             {title: '',
-             key: '17',
+             key: 'del',
              width: 50,
              render: () => <a href="javascript:void(0);" onClick={this.del}>删除</a>
             }
         ];
 
-        let tableList=this.state.tableList;
+
         let data = [];
         for (let i = 0; i < tableList.length; i++) {
             data.push({
