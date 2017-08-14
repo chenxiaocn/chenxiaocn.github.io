@@ -64,7 +64,7 @@ var CalendarYear = React.createClass({
     render: function () {
         return (
             <div className="cam-calendar-list clearfix">
-                <div className="cam-calendar-s cam-calendar-type-month cam-calendar-1" id="cam-calendar-1">
+                <div className="cam-calendar-s cam-calendar-type-year cam-calendar-1" id="cam-calendar-1">
                     <div className="cam-calendar-s-title">
                         <i className="icon-prev-ctrl cam-calendar-ctrl-prev" onClick={this.ctrPrevNext}></i>
                         <div className="cam-calendar-year">年</div>
