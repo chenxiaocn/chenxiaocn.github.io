@@ -16,6 +16,9 @@ let API_URL = {
     equipment: {
         list: "/data/equip/equiplist.json"
     },
+    table:{
+        list: "/data/table/tableList.json"
+    },
     index:{
         question:'/data/index/questiondistribut.json',
         course:'/data/index/courselist.json',
