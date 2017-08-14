@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom'
 import DataDeal from "../datadeal.js";
 import Ajax from "../ajax.js";
 import API_URL from "../url.js";
+import EditTable from "./editTable.js";
 import $ from "jquery";
 import {Modal,Icon,Table} from "antd";
 import './table.less';
@@ -32,6 +33,12 @@ var TableContent = React.createClass({
     },
     componentWillReceiveProps:function(nextprops){
     },
+    addOrEdit:function(){
+        alert('a');
+    },
+    del:function(){
+
+    },
     render: function () {
         //表格
         let columns = [
@@ -55,14 +62,12 @@ var TableContent = React.createClass({
             {title: '',
              key: 'edit',
              width: 50,
-             render: (
-                 
-             ) => <a href="#">编辑</a>
+             render: () => <a href="javascript:void(0);" onClick={this.addOrEdit}>编辑</a>
             },
             {title: '',
              key: '17',
              width: 50,
-             render: () => <a href="#">删除</a>
+             render: () => <a href="javascript:void(0);" onClick={this.del}>删除</a>
             }
         ];
 
