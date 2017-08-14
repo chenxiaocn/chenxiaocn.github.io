@@ -7,6 +7,7 @@ import DataDeal from "../datadeal.js";
 import Ajax from "../ajax.js";
 import API_URL from "../url.js";
 import EditTable from "./editTable.js";
+import DelTable from "./delTable.js";
 import $ from "jquery";
 import {Modal,Icon,Table} from "antd";
 import './table.less';
@@ -14,7 +15,10 @@ import './table.less';
 var TableContent = React.createClass({
     getInitialState: function () {
         return {
-            tableList:[]
+            tableList:[],
+            addOrEditModalVisible:false,
+            delModalVisible:false,
+            selectedId:''
         }
     },
     componentDidMount: function () {
@@ -34,10 +38,16 @@ var TableContent = React.createClass({
     componentWillReceiveProps:function(nextprops){
     },
     addOrEdit:function(){
-        alert('a');
+        this.setState({});
     },
     del:function(){
-
+        this.setState({delModalVisible:true});
+    },
+    handleRefresh:function(){
+        this.getTableList();
+    },
+    cancelModal:function(){
+        this.setState({addOrEditModalVisible:false,delModalVisible:false});
     },
     render: function () {
         //表格
@@ -73,7 +83,6 @@ var TableContent = React.createClass({
 
         let tableList=this.state.tableList;
         let data = [];
-
         for (let i = 0; i < tableList.length; i++) {
             data.push({
                 key: i,
@@ -98,7 +107,12 @@ var TableContent = React.createClass({
         }
         return (
             <div className="table-list">
+                {/*列表*/}
                 <Table  bordered columns={columns} dataSource={data}/>
+                {/*编辑或修改*/}
+                <EditTable/>
+                {/*删除*/}
+                <DelTable cancelModal={this.cancelModal} refresh={this.handleRefresh} delModalVisible={this.state.delModalVisible} selectedId={this.state.selectedId}/>
             </div>
         );
     }
