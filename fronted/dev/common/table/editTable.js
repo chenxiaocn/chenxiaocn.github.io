@@ -3,8 +3,10 @@
  */
 import React from "react";
 import ReactDOM from 'react-dom'
-//import ConditionContent from './conditionContent.js';
 import {Modal ,Button,Row, Col,Input,Checkbox,Select} from "antd";
+import InputComponent from'./inputComponent.js';
+import SelectComponent from'./selectComponent.js';
+import CheckboxComponent from'./checkboxComponent.js';
 const Option = Select.Option;
 import $ from "jquery";
 import './table.less';
@@ -32,9 +34,7 @@ var EditTable = React.createClass({
         this.setState({visible: false});
         this.props.cancelModal();
     },
-    handleChange: function(e) {
-        let thisName=e.target.name;
-        let value=e.target.value;
+    handleChange: function(thisName,value) {
         this.setState({[thisName]:value});
     },
     componentWillReceiveProps: function (nextProps) {
@@ -63,7 +63,7 @@ var EditTable = React.createClass({
         }
     },
     submitModifyOrAdd: function () {
-       let data= $(".addOrEdit").serialize();
+        let data= $(".addOrEdit").serialize();
         data= decodeURIComponent(data,true);//解决序列化中文乱码
         data=this.dealSubData(data,'innerUser');//内部用户、是否启用
         data=this.dealSubData(data,'reStart');//内部用户、是否启用
@@ -98,89 +98,29 @@ var EditTable = React.createClass({
             ]}
                 >
                 <form className="addOrEdit">
-                   <div>
-                       <Row>
-                           <Col span={3}>用户名</Col>
-                           <Col span={7}>
-                               <Input type="text" name="name" value={this.state.name}  onChange={this.handleChange}/>
-                           </Col>
-                       </Row>
-                       <Row>
-                           <Col span={3}>密码</Col>
-                           <Col span={7}>
-                               <Input type="password" name="password" value={this.state.password} onChange={this.handleChange}/>
-                           </Col>
-                       </Row>
-                       <Row>
-                           <Col span={3}>内部用户</Col>
-                           <Col span={7} className="lineHeight30">
-                             <Checkbox name="innerUser"  checked={this.state.innerUserchecked} onChange={this.handleChangeCheckbox} value={this.state.innerUserchecked==true?"是":"否"}>{this.state.innerUserchecked==true?"是":"否"}</Checkbox>
-                           </Col>
-                       </Row>
-                       <Row>
-                           <Col span={3}>是否启用</Col>
-                           <Col span={7} className="lineHeight30">
-                               <Checkbox  name="reStart" checked={this.state.reStartchecked} onChange={this.handleChangeCheckbox}>{this.state.reStartchecked==true?"是":"否"}</Checkbox>
-                           </Col>
-                       </Row>
-                       <Row>
-                           <Col span={3}>邮箱</Col>
-                           <Col span={7}>
-                               <Input type="text" name="email" value={this.state.email} onChange={this.handleChange}/>
-                           </Col>
-                       </Row>
-                       <Row>
-                           <Col span={3}>真实姓名</Col>
-                           <Col span={7}>
-                               <Input type="text" name="realName" value={this.state.realName} onChange={this.handleChange}/>
-                           </Col>
-                       </Row>
-                       <Row>
-                           <Col span={3}>性别</Col>
-                           <Col span={7}>
-                               <select name="sex" value={this.state.sex}  onChange={this.handleChange}>
-                                   <option value="男">男</option>
-                                   <option value="女">女</option>
-                               </select>
-                           </Col>
-                       </Row>
-                       <Row>
-                           <Col span={3}>电话</Col>
-                           <Col span={7}>
-                               <Input type="text" name="tel" value={this.state.tel}  onChange={this.handleChange}/>
-                           </Col>
-                       </Row>
-                       <Row>
-                           <Col span={3}>公司名称</Col>
-                           <Col span={7}>
-                               <Input type="text" name="company" value={this.state.company} onChange={this.handleChange}/>
-                           </Col>
-                       </Row>
-                       <Row>
-                           <Col span={3}>有效期</Col>
-                           <Col span={7}>
-                               <Input type="text" name="period" value={this.state.period} onChange={this.handleChange}/>
-                           </Col>
-                       </Row>
-                       <Row>
-                           <Col span={3}>用户分类</Col>
-                           <Col span={7}>
-                               <select name="userClass" value={this.state.userClass}  onChange={this.handleChange}>
-                                   <option value="产品组自定义分类">产品组自定义分类</option>
-                                   <option value="无锡推荐字段分类">无锡推荐字段分类</option>
-                               </select>
-                           </Col>
-                       </Row>
-                       <Row>
-                           <Col span={3}>角色</Col>
-                           <Col span={7}>
-                               <select name="role" value={this.state.role}  onChange={this.handleChange}>
-                                   <option value="研究中心角色">研究中心角色</option>
-                                   <option value="steve角色">steve角色</option>
-                               </select>
-                           </Col>
-                       </Row>
-                   </div>
+                    <InputComponent title="用户名" name="name"  value={this.state.name} handleChange={this.handleChange}/>
+                    <InputComponent title="密码" name="password"  value={this.state.password} handleChange={this.handleChange}/>
+               
+                    <Row>
+                        <Col span={3}>内部用户</Col>
+                        <Col span={7} className="lineHeight30">
+                            <Checkbox name="innerUser"  checkedType='innerUserchecked' checked={this.state.innerUserchecked} onChange={this.handleChangeCheckbox} value={this.state.innerUserchecked==true?"是":"否"}>{this.state.innerUserchecked==true?"是":"否"}</Checkbox>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={3}>是否启用</Col>
+                        <Col span={7} className="lineHeight30">
+                            <Checkbox  name="reStart" checked={this.state.reStartchecked} onChange={this.handleChangeCheckbox}>{this.state.reStartchecked==true?"是":"否"}</Checkbox>
+                        </Col>
+                    </Row>
+                    <InputComponent title="邮箱" name="email"  value={this.state.email} handleChange={this.handleChange}/>
+                    <InputComponent title="真实姓名" name="realName"  value={this.state.realName} handleChange={this.handleChange}/>
+                    <SelectComponent title="性别" name="sex"  value={this.state.role} optionList={["男","女"]} handleChange={this.handleChange}/>
+                    <InputComponent title="电话" name="tel"  value={this.state.tel} handleChange={this.handleChange}/>
+                    <InputComponent title="公司名称" name="company"  value={this.state.company} handleChange={this.handleChange}/>
+                    <InputComponent title="有效期" name="period"  value={this.state.period} handleChange={this.handleChange}/>
+                    <SelectComponent title="用户分类" name="userClass"  value={this.state.userClass} optionList={["产品组自定义分类","无锡推荐字段分类"]} handleChange={this.handleChange}/>
+                    <SelectComponent title="角色" name="role"  value={this.state.role} optionList={["研究中心角色","steve角色"]} handleChange={this.handleChange}/>
                 </form>
             </Modal>
         )
