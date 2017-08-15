@@ -2,6 +2,7 @@
  * Created by Administrator on 2017/8/14.
  */
 import React from "react";
+import ReactDOM from 'react-dom'
 //import ConditionContent from './conditionContent.js';
 import {Modal ,Button,Row, Col,Input,Checkbox,Select} from "antd";
 const Option = Select.Option;
@@ -31,8 +32,10 @@ var EditTable = React.createClass({
         this.setState({visible: false});
         this.props.cancelModal();
     },
-    handleChange: function(event) {
-        this.setState({name: event.target.value});
+    handleChange: function(e) {
+        let thisName=e.target.name;
+        let value=e.target.value;
+        this.setState({[thisName]:value});
     },
     componentWillReceiveProps: function (nextProps) {
         if (nextProps.addOrEditModalVisible) {
@@ -41,33 +44,40 @@ var EditTable = React.createClass({
                 email:nextProps.selectedDetail.email,realName:nextProps.selectedDetail.realName,
                 sex:nextProps.selectedDetail.sex,tel:nextProps.selectedDetail.tel,
                 company:nextProps.selectedDetail.company,period:nextProps.selectedDetail.period,
-                userClass:nextProps.selectedDetail.userClass,role:nextProps.selectedDetail.role});
+                userClass:nextProps.selectedDetail.userClass,role:nextProps.selectedDetail.role
+            });
+        }
+        if(nextProps.selectedDetail.innerUser=="是"){
+            this.setState({innerUserchecked:true});
+        }else{
+            this.setState({innerUserchecked:false});
         }
     },
-    //handleChange:function(e){
-    //    let value = (e.target.value + "").trim();
-    //
-    //},
-    handleChangeCheckbox:function(){
-        this.setState({ innerUserchecked: !this.state.innerUserchecked });
-    },
-    handleChangeCheckbox1:function(){
-        this.setState({ reStartchecked: !this.state.reStartchecked });
-    },
-    onChange:function(e){
-        //let value = (e.target.value + "").trim();
+    handleChangeCheckbox:function(e){
+        let thisName=e.target.name;
+        if(thisName=="innerUser"){
+            this.setState({ innerUserchecked: !this.state.innerUserchecked });
+        }
+        if(thisName=="reStart"){
+            this.setState({ reStartchecked:!this.state.reStartchecked });
+        }
     },
     submitModifyOrAdd: function () {
-       var data= $(".addOrEdit").serialize();
+       let data= $(".addOrEdit").serialize();
         data= decodeURIComponent(data,true);//解决序列化中文乱码
-        //内部用户
-        if(data.indexOf('innerUser')==-1){
-            data+='&innerUser=否';
-        }else{
-            data=data.replace('innerUser=on','innerUser=是');
-        }
-
+        data=this.dealSubData(data,'innerUser');//内部用户、是否启用
+        data=this.dealSubData(data,'reStart');//内部用户、是否启用
         console.log(data);
+    },
+    dealSubData:function(data,str){
+        if(data.indexOf(str)==-1){
+            data+='&'+str+'=否';
+        }else{
+            let beStr=str+'=on';
+            let reStr=str+'=是';
+            data=data.replace(beStr,reStr);
+        }
+        return data;
     },
     render(){
         //let
@@ -104,13 +114,13 @@ var EditTable = React.createClass({
                        <Row>
                            <Col span={3}>内部用户</Col>
                            <Col span={7} className="lineHeight30">
-                             <Checkbox name="innerUser"  checked={this.state.selectedDetail.innerUser=="是"?this.state.innerUserchecked:!(this.state.innerUserchecked)} onChange={this.handleChangeCheckbox} value={this.state.innerUserchecked==true?"是":"否"}>{this.state.innerUserchecked==true?"是":"否"}</Checkbox>
+                             <Checkbox name="innerUser"  checked={this.state.innerUserchecked} onChange={this.handleChangeCheckbox} value={this.state.innerUserchecked==true?"是":"否"}>{this.state.innerUserchecked==true?"是":"否"}</Checkbox>
                            </Col>
                        </Row>
                        <Row>
                            <Col span={3}>是否启用</Col>
-                           <Col span={7} className="lineHeight30" onChange={this.handleChangeCheckbox1}>
-                               <Checkbox  name="reStart" checked={this.state.reStartchecked}>{this.state.reStartchecked==true?"是":"否"}</Checkbox>
+                           <Col span={7} className="lineHeight30">
+                               <Checkbox  name="reStart" checked={this.state.reStartchecked} onChange={this.handleChangeCheckbox}>{this.state.reStartchecked==true?"是":"否"}</Checkbox>
                            </Col>
                        </Row>
                        <Row>
