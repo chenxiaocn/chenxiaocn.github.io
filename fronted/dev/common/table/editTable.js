@@ -2,8 +2,6 @@
  * Created by Administrator on 2017/8/14.
  */
 import React from "react";
-import ReactDOM from 'react-dom'
-//import store from "../../reduxFile/store";
 //import ConditionContent from './conditionContent.js';
 import {Modal ,Button,Row, Col,Input,Checkbox,Select} from "antd";
 const Option = Select.Option;
@@ -16,22 +14,40 @@ var EditTable = React.createClass({
             visible:false,
             selectedDetail:[],
             innerUserchecked: true,
-            reStartchecked: false
+            reStartchecked: false,
+            name: '',
+            password:'',
+            email:'',
+            realName:'',
+            sex:'',
+            tel:'',
+            company:'',
+            period:'',
+            userClass:'',
+            role:''
         }
     },
     handleCancel:function() {
         this.setState({visible: false});
         this.props.cancelModal();
     },
+    handleChange: function(event) {
+        this.setState({name: event.target.value});
+    },
     componentWillReceiveProps: function (nextProps) {
         if (nextProps.addOrEditModalVisible) {
-            this.setState({visible: true,selectedDetail:nextProps.selectedDetail});
+            this.setState({visible: true,selectedDetail:nextProps.selectedDetail,
+                name:nextProps.selectedDetail.name,password:nextProps.selectedDetail.password,
+                email:nextProps.selectedDetail.email,realName:nextProps.selectedDetail.realName,
+                sex:nextProps.selectedDetail.sex,tel:nextProps.selectedDetail.tel,
+                company:nextProps.selectedDetail.company,period:nextProps.selectedDetail.period,
+                userClass:nextProps.selectedDetail.userClass,role:nextProps.selectedDetail.role});
         }
     },
-    handleChange:function(e){
-        let value = (e.target.value + "").trim();
-
-    },
+    //handleChange:function(e){
+    //    let value = (e.target.value + "").trim();
+    //
+    //},
     handleChangeCheckbox:function(){
         this.setState({ innerUserchecked: !this.state.innerUserchecked });
     },
@@ -54,7 +70,7 @@ var EditTable = React.createClass({
         console.log(data);
     },
     render(){
-        let selectedDetail=this.state.selectedDetail;
+        //let
         return (
             <Modal
                 visible={this.state.visible}
@@ -76,19 +92,19 @@ var EditTable = React.createClass({
                        <Row>
                            <Col span={3}>用户名</Col>
                            <Col span={7}>
-                               <Input type="text" name="name" value={selectedDetail.name} onChange={this.handleChange}/>
+                               <Input type="text" name="name" value={this.state.name}  onChange={this.handleChange}/>
                            </Col>
                        </Row>
                        <Row>
                            <Col span={3}>密码</Col>
                            <Col span={7}>
-                               <Input type="text" name="password" value={selectedDetail.password} onChange={this.handleChange}/>
+                               <Input type="password" name="password" value={this.state.password} onChange={this.handleChange}/>
                            </Col>
                        </Row>
                        <Row>
                            <Col span={3}>内部用户</Col>
                            <Col span={7} className="lineHeight30">
-                             <Checkbox name="innerUser"  checked={selectedDetail.innerUser=="是"?this.state.innerUserchecked:!(this.state.innerUserchecked)} onChange={this.handleChangeCheckbox} value={this.state.innerUserchecked==true?"是":"否"}>{this.state.innerUserchecked==true?"是":"否"}</Checkbox>
+                             <Checkbox name="innerUser"  checked={this.selectedDetail.innerUser=="是"?this.state.innerUserchecked:!(this.state.innerUserchecked)} onChange={this.handleChangeCheckbox} value={this.state.innerUserchecked==true?"是":"否"}>{this.state.innerUserchecked==true?"是":"否"}</Checkbox>
                            </Col>
                        </Row>
                        <Row>
@@ -100,19 +116,19 @@ var EditTable = React.createClass({
                        <Row>
                            <Col span={3}>邮箱</Col>
                            <Col span={7}>
-                               <Input type="text" name="email" value={selectedDetail.email} onChange={this.handleChange}/>
+                               <Input type="text" name="email" value={this.state.email} onChange={this.handleChange}/>
                            </Col>
                        </Row>
                        <Row>
                            <Col span={3}>真实姓名</Col>
                            <Col span={7}>
-                               <Input type="text" name="realName" value={selectedDetail.realName} onChange={this.handleChange}/>
+                               <Input type="text" name="realName" value={this.state..realName} onChange={this.handleChange}/>
                            </Col>
                        </Row>
                        <Row>
                            <Col span={3}>性别</Col>
                            <Col span={7}>
-                               <select name="sex" value={selectedDetail.sex}  onChange={this.handleChange}>
+                               <select name="sex" value={this.state.sex}  onChange={this.handleChange}>
                                    <option value="男">男</option>
                                    <option value="女">女</option>
                                </select>
@@ -121,25 +137,25 @@ var EditTable = React.createClass({
                        <Row>
                            <Col span={3}>电话</Col>
                            <Col span={7}>
-                               <Input type="text" name="tel" value={selectedDetail.tel}  onChange={this.handleChange}/>
+                               <Input type="text" name="tel" value={this.state..tel}  onChange={this.handleChange}/>
                            </Col>
                        </Row>
                        <Row>
                            <Col span={3}>公司名称</Col>
                            <Col span={7}>
-                               <Input type="text" name="company" value={selectedDetail.company} onChange={this.handleChange}/>
+                               <Input type="text" name="company" value={this.state..company} onChange={this.handleChange}/>
                            </Col>
                        </Row>
                        <Row>
                            <Col span={3}>有效期</Col>
                            <Col span={7}>
-                               <Input type="text" name="period" value={selectedDetail.period} onChange={this.handleChange}/>
+                               <Input type="text" name="period" value={this.state..period} onChange={this.handleChange}/>
                            </Col>
                        </Row>
                        <Row>
                            <Col span={3}>用户分类</Col>
                            <Col span={7}>
-                               <select name="userClass" value={selectedDetail.userClass}  onChange={this.handleChange}>
+                               <select name="userClass" value={this.state..userClass}  onChange={this.handleChange}>
                                    <option value="产品组自定义分类">产品组自定义分类</option>
                                    <option value="无锡推荐字段分类">无锡推荐字段分类</option>
                                </select>
@@ -148,7 +164,7 @@ var EditTable = React.createClass({
                        <Row>
                            <Col span={3}>角色</Col>
                            <Col span={7}>
-                               <select name="role" value={selectedDetail.role}  onChange={this.handleChange}>
+                               <select name="role" value={this.state..role}  onChange={this.handleChange}>
                                    <option value="研究中心角色">研究中心角色</option>
                                    <option value="steve角色">steve角色</option>
                                </select>
