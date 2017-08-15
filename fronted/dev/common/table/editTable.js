@@ -104,7 +104,7 @@ var EditTable = React.createClass({
                        <Row>
                            <Col span={3}>内部用户</Col>
                            <Col span={7} className="lineHeight30">
-                             <Checkbox name="innerUser"  checked={this.selectedDetail.innerUser=="是"?this.state.innerUserchecked:!(this.state.innerUserchecked)} onChange={this.handleChangeCheckbox} value={this.state.innerUserchecked==true?"是":"否"}>{this.state.innerUserchecked==true?"是":"否"}</Checkbox>
+                             <Checkbox name="innerUser"  checked={this.state.selectedDetail.innerUser=="是"?this.state.innerUserchecked:!(this.state.innerUserchecked)} onChange={this.handleChangeCheckbox} value={this.state.innerUserchecked==true?"是":"否"}>{this.state.innerUserchecked==true?"是":"否"}</Checkbox>
                            </Col>
                        </Row>
                        <Row>
@@ -122,7 +122,7 @@ var EditTable = React.createClass({
                        <Row>
                            <Col span={3}>真实姓名</Col>
                            <Col span={7}>
-                               <Input type="text" name="realName" value={this.state..realName} onChange={this.handleChange}/>
+                               <Input type="text" name="realName" value={this.state.realName} onChange={this.handleChange}/>
                            </Col>
                        </Row>
                        <Row>
@@ -137,25 +137,25 @@ var EditTable = React.createClass({
                        <Row>
                            <Col span={3}>电话</Col>
                            <Col span={7}>
-                               <Input type="text" name="tel" value={this.state..tel}  onChange={this.handleChange}/>
+                               <Input type="text" name="tel" value={this.state.tel}  onChange={this.handleChange}/>
                            </Col>
                        </Row>
                        <Row>
                            <Col span={3}>公司名称</Col>
                            <Col span={7}>
-                               <Input type="text" name="company" value={this.state..company} onChange={this.handleChange}/>
+                               <Input type="text" name="company" value={this.state.company} onChange={this.handleChange}/>
                            </Col>
                        </Row>
                        <Row>
                            <Col span={3}>有效期</Col>
                            <Col span={7}>
-                               <Input type="text" name="period" value={this.state..period} onChange={this.handleChange}/>
+                               <Input type="text" name="period" value={this.state.period} onChange={this.handleChange}/>
                            </Col>
                        </Row>
                        <Row>
                            <Col span={3}>用户分类</Col>
                            <Col span={7}>
-                               <select name="userClass" value={this.state..userClass}  onChange={this.handleChange}>
+                               <select name="userClass" value={this.state.userClass}  onChange={this.handleChange}>
                                    <option value="产品组自定义分类">产品组自定义分类</option>
                                    <option value="无锡推荐字段分类">无锡推荐字段分类</option>
                                </select>
@@ -164,7 +164,7 @@ var EditTable = React.createClass({
                        <Row>
                            <Col span={3}>角色</Col>
                            <Col span={7}>
-                               <select name="role" value={this.state..role}  onChange={this.handleChange}>
+                               <select name="role" value={this.state.role}  onChange={this.handleChange}>
                                    <option value="研究中心角色">研究中心角色</option>
                                    <option value="steve角色">steve角色</option>
                                </select>
