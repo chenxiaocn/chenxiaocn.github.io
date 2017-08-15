@@ -49,13 +49,6 @@ let Validation = {
             return false;
         }
         return true;
-    },
-    knowledgeCode:function(obj){
-        obj = this.trim(obj);
-        if(!(/^N[0-9]{2}X[0-9]{2}Z[0-9]{2}-[0-9]{1}$/.test(obj))){
-            return false;
-        }
-        return true;
     }
 };
 module.exports=Validation;
