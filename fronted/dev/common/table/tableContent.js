@@ -18,7 +18,8 @@ var TableContent = React.createClass({
             tableList:[],
             addOrEditModalVisible:false,
             delModalVisible:false,
-            selectedId:''
+            selectedId:'',
+            selectedDetail:[]
         }
     },
     componentDidMount: function () {
@@ -42,8 +43,7 @@ var TableContent = React.createClass({
         let thisRowIndex=$(e.target).parent().parent().index();
         let thisRecord=(this.state.tableList)[thisRowIndex];
         let selectedId=thisRecord.id;
-
-        this.setState({selectedId:selectedId});
+        this.setState({selectedId:selectedId,selectedDetail:thisRecord});
     },
     del:function(){
         this.setState({delModalVisible:true});
@@ -52,7 +52,7 @@ var TableContent = React.createClass({
         this.getTableList();
     },
     cancelModal:function(){
-        this.setState({addOrEditModalVisible:false,delModalVisible:false});
+        this.setState({addOrEditModalVisible:false,delModalVisible:false,selectedDetail:[],selectedId:''});
     },
     render: function () {
         let tableList=this.state.tableList;
@@ -65,28 +65,43 @@ var TableContent = React.createClass({
             { title: '有效期',  width:70,dataIndex: 'period', key: '4'},
             { title: '用户分类',  width:100,dataIndex: 'userClass', key: '5'},
             { title: '角色',  width:80,dataIndex: 'role', key: '6'},
-            { title: '价格时间',width:50, dataIndex: 'priceDate', key: '7'},
-            { title: '价格城市', width:50,dataIndex: 'priceCity', key: '8'},
-            { title: 'Mix权限',width:50, dataIndex: 'MixPerm', key: '9' },
-            { title: 'Mix数据源',width:50, dataIndex: 'MixDataSource', key: '10' },
-            { title: '页面参数',width:50, dataIndex: 'pagePara', key: '11' },
-            { title: '装备权限',width:50, dataIndex: 'equipPerm', key: '12' },
-            { title: '数据源权限',width:50, dataIndex: 'dataSourcePerm', key: '13' },
-            { title: '细分市场',width:50, dataIndex: 'segmentMarket', key: '14' },
-            { title: '大区', width:50,dataIndex: 'bigArea', key: '15' },
-            { title: '本品', width:50,dataIndex: 'zinc', key: '16' },
-            {title: '',
-             key: 'edit',
-             width: 50,
+            { title: '价格时间',width:50, dataIndex: 'priceDate', key: '7',
+                render: () => <a href="javascript:void(0);">设置</a>
+            },
+            { title: '价格城市', width:50,dataIndex: 'priceCity', key: '8',
+                render: () => <a href="javascript:void(0);">设置</a>
+            },
+            { title: 'Mix权限',width:50, dataIndex: 'MixPerm', key: '9' ,
+                render: () => <a href="javascript:void(0);">设置</a>
+            },
+            { title: 'Mix数据源',width:50, dataIndex: 'MixDataSource', key: '10',
+                render: () => <a href="javascript:void(0);">设置</a>
+            },
+            { title: '页面参数',width:50, dataIndex: 'pagePara', key: '11',
+                render: () => <a href="javascript:void(0);">设置</a>
+            },
+            { title: '装备权限',width:50, dataIndex: 'equipPerm', key: '12',
+                render: () => <a href="javascript:void(0);">设置</a>
+            },
+            { title: '数据源权限',width:50, dataIndex: 'dataSourcePerm', key: '13',
+                render: () => <a href="javascript:void(0);">设置</a>
+            },
+            { title: '细分市场',width:50, dataIndex: 'segmentMarket', key: '14',
+                render: () => <a href="javascript:void(0);">设置</a>
+            },
+            { title: '大区', width:50,dataIndex: 'bigArea', key: '15',
+                render: () => <a href="javascript:void(0);">设置</a>
+            },
+            { title: '本品', width:50,dataIndex: 'zinc', key: '16',
+                render: () => <a href="javascript:void(0);">设置</a>
+            },
+            {title: '',key: 'edit',width: 50,
              render: () => <a href="javascript:void(0);" onClick={this.addOrEdit}>编辑</a>
             },
-            {title: '',
-             key: 'del',
-             width: 50,
+            {title: '',key: 'del',width: 50,
              render: () => <a href="javascript:void(0);" onClick={this.del}>删除</a>
             }
         ];
-
 
         let data = [];
         for (let i = 0; i < tableList.length; i++) {
@@ -98,17 +113,7 @@ var TableContent = React.createClass({
                 createDate:tableList[i].createDate,
                 period:tableList[i].period,
                 userClass:tableList[i].userClass,
-                role:tableList[i].role,
-                priceDate:tableList[i].priceDate,
-                priceCity:tableList[i].priceCity,
-                MixPerm:tableList[i].MixPerm,
-                MixDataSource:tableList[i].MixDataSource,
-                pagePara:tableList[i].pagePara,
-                equipPerm:tableList[i].equipPerm,
-                dataSourcePerm:tableList[i].dataSourcePerm,
-                segmentMarket: tableList[i].segmentMarket,
-                bigArea: tableList[i].bigArea,
-                zinc: tableList[i].zinc
+                role:tableList[i].role
             });
         }
         return (
@@ -116,7 +121,8 @@ var TableContent = React.createClass({
                 {/*列表*/}
                 <Table  bordered columns={columns} dataSource={data}/>
                 {/*编辑或修改*/}
-                <EditTable cancelModal={this.cancelModal} refresh={this.handleRefresh} addOrEditModalVisible={this.state.addOrEditModalVisible} selectedId={this.state.selectedId}/>
+                <EditTable cancelModal={this.cancelModal} refresh={this.handleRefresh} addOrEditModalVisible={this.state.addOrEditModalVisible}
+                           selectedId={this.state.selectedId} selectedDetail={this.state.selectedDetail}/>
                 {/*删除*/}
                 <DelTable cancelModal={this.cancelModal} refresh={this.handleRefresh} delModalVisible={this.state.delModalVisible} selectedId={this.state.selectedId}/>
             </div>
