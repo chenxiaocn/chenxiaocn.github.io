@@ -53,8 +53,7 @@ var EditTable = React.createClass({
             this.setState({innerUserchecked:false});
         }
     },
-    handleChangeCheckbox:function(e){
-        let thisName=e.target.name;
+    handleChangeCheckbox:function(thisName){
         if(thisName=="innerUser"){
             this.setState({ innerUserchecked: !this.state.innerUserchecked });
         }
@@ -93,26 +92,15 @@ var EditTable = React.createClass({
                 footer={[
                 <Button key="back" size="large" onClick={this.handleCancel}>取消</Button>,
                 <Button key="submit" type="primary" size="large"  onClick={this.submitModifyOrAdd}>
-                   保存fff
+                   保存
                 </Button>
             ]}
                 >
                 <form className="addOrEdit">
                     <InputComponent title="用户名" name="name"  value={this.state.name} handleChange={this.handleChange}/>
                     <InputComponent title="密码" name="password"  value={this.state.password} handleChange={this.handleChange}/>
-               
-                    <Row>
-                        <Col span={3}>内部用户</Col>
-                        <Col span={7} className="lineHeight30">
-                            <Checkbox name="innerUser"  checkedType='innerUserchecked' checked={this.state.innerUserchecked} onChange={this.handleChangeCheckbox} value={this.state.innerUserchecked==true?"是":"否"}>{this.state.innerUserchecked==true?"是":"否"}</Checkbox>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={3}>是否启用</Col>
-                        <Col span={7} className="lineHeight30">
-                            <Checkbox  name="reStart" checked={this.state.reStartchecked} onChange={this.handleChangeCheckbox}>{this.state.reStartchecked==true?"是":"否"}</Checkbox>
-                        </Col>
-                    </Row>
+                    <CheckboxComponent title="内部用户" name="innerUser"  checked={this.state.innerUserchecked} handleChangeCheckbox={this.handleChangeCheckbox}/>
+                    <CheckboxComponent title="是否启用" name="reStart"  checked={this.state.reStartchecked} handleChangeCheckbox={this.handleChangeCheckbox}/>
                     <InputComponent title="邮箱" name="email"  value={this.state.email} handleChange={this.handleChange}/>
                     <InputComponent title="真实姓名" name="realName"  value={this.state.realName} handleChange={this.handleChange}/>
                     <SelectComponent title="性别" name="sex"  value={this.state.role} optionList={["男","女"]} handleChange={this.handleChange}/>
@@ -126,6 +114,7 @@ var EditTable = React.createClass({
         )
     }
 });
+
 
 
 
