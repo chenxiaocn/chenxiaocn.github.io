@@ -3,15 +3,15 @@
  */
 import React from  'react'
 import ReactDOM from 'react-dom'
-import SearchItem from "../common/searchItem/searchItem";
-import store from "../../reduxFile/store";
-import {allEquipJsonData} from "../../reduxFile/actions";
-import BigCharts from "../common/bigCharts.js";
-import BrandPrefixNav from "../common/brandPrefixNav.js";
-import NavTitle from "../common/navTitle.js";
-import DataDeal from "../common/datadeal.js";
+import SearchItem from "../../common/searchItem/searchItem";
+import store from "../../../reduxFile/store";
+import {allEquipJsonData} from "../../../reduxFile/actions";
+import BigCharts from "../../common/bigCharts.js";
+import BrandPrefixNav from "./brandPrefixNav.js";
+import NavTitle from "./navTitle.js";
+import DataDeal from "../../common/datadeal.js";
 import $ from "jquery";
-import './equip.less'
+import './../equip.less'
 
 var Segment = React.createClass({
     getInitialState: function () {

@@ -4,9 +4,9 @@
 import React from  'react'
 import ReactDOM from 'react-dom'
 import {Col} from "antd";
-import DataDeal from "./datadeal.js";
+import DataDeal from "./../../common/datadeal.js";
 import $ from "jquery";
-import '../equipment/equip.less'
+import '../equip.less'
 
 var contentBodyRowLeft = React.createClass({
     getInitialState: function () {

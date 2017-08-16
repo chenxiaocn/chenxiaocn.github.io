@@ -4,11 +4,11 @@
 import React from  'react'
 import ReactDOM from 'react-dom'
 import {Row} from "antd";
-import DataDeal from "./datadeal.js";
+import DataDeal from "./../../common/datadeal.js";
 import ContentBodyRowLeft from "./contentBodyRowLeft.js";
 import ContentBodyRowRight from "./contentBodyRowRight.js";
 import $ from "jquery";
-import '../equipment/equip.less'
+import '../equip.less'
 
 var NavTitle = React.createClass({
     getInitialState: function () {

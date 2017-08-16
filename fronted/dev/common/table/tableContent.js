@@ -59,15 +59,13 @@ var TableContent = React.createClass({
         this.setState({addOrEditModalVisible:true,selectedId:'',selectedDetail:[]});
     },
 
-
-
 ///////表格排序
-handleChange:function(pagination, filters, sorter){
-    //console.log('Various parameters', pagination, filters, sorter);
-    this.setState({
-        filteredInfo: filters,sortedInfo: sorter
-    });
-},
+    handleChange:function(pagination, filters, sorter){
+        //console.log('Various parameters', pagination, filters, sorter);
+        this.setState({
+            filteredInfo: filters,sortedInfo: sorter
+        });
+    },
 
     render: function () {
         let { sortedInfo, filteredInfo } = this.state;
@@ -136,10 +134,10 @@ handleChange:function(pagination, filters, sorter){
                 render: () => <a href="javascript:void(0);">设置</a>
             },
             {title: '',key: 'edit',width: 50,
-             render: () => <a href="javascript:void(0);" onClick={this.addOrEdit}>编辑</a>
+                render: () => <a href="javascript:void(0);" onClick={this.addOrEdit}>编辑</a>
             },
             {title: '',key: 'del',width: 50,
-             render: () => <a href="javascript:void(0);" onClick={this.del}>删除</a>
+                render: () => <a href="javascript:void(0);" onClick={this.del}>删除</a>
             }
         ];
         for (let i = 0; i < tableList.length; i++) {
@@ -154,7 +152,6 @@ handleChange:function(pagination, filters, sorter){
                 role:tableList[i].role
             });
         }
-
         return (
             <div className="table-list">
                 <div onClick={this.addTest}>新增</div>

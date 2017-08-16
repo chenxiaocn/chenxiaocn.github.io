@@ -4,11 +4,11 @@
 import React from  'react'
 import ReactDOM from 'react-dom'
 import $ from "jquery";
-import DataDeal from "../common/datadeal.js";
-import store from "../../reduxFile/store";
-import {allEquipJsonData} from "../../reduxFile/actions";
+import DataDeal from "../../common/datadeal.js";
+import store from "../../../reduxFile/store";
+import {allEquipJsonData} from "../../../reduxFile/actions";
 import { Menu, Dropdown, Icon } from 'antd';
-import './equip.less'
+import './../equip.less'
 
 var ConditionContent = React.createClass({
     getInitialState:function(){

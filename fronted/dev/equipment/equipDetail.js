@@ -6,9 +6,10 @@ import ReactDOM from 'react-dom'
 import Ajax from "../common/ajax";
 import store from "../../reduxFile/store";
 import {allEquipJsonData} from "../../reduxFile/actions";
-import ConditionContent from './conditionContent.js';
-import Segmentbrand from './segmentbrand.js';
+import ConditionContent from './fileds/conditionContent.js';
+import Segmentbrand from './fileds/segmentbrand.js';
 import Haschoose from "./hasChoose.js";
+import CompareContent from "./compare/compareContent.js";
 import DataDeal from "../common/datadeal.js";
 import "./equip.less";
 
@@ -37,7 +38,8 @@ var EquipDetail = React.createClass({
             segmentList: [],//所有级别列表
             bodyList:[],//所有车身列表
             fuelList:[],//所有燃油列表
-            allConditions:[]
+            allConditions:[],
+            CompareChoosedList:[]//竞品组已选条件
         }
     },
     componentDidMount: function () {
@@ -234,8 +236,10 @@ var EquipDetail = React.createClass({
                 <form  id="modifyOrAddForm">
                     {/*条件选车tab*/}
                     <div className="card-container">
-                        <Tabs type="card" defaultActiveKey="2">
-                            <TabPane tab="竞品组" key="1"></TabPane>
+                        <Tabs type="card" defaultActiveKey="1">
+                            <TabPane tab="竞品组" key="1">
+                                <CompareContent />
+                           </TabPane>
                             <TabPane tab="条件选车" key="2">
                                 {/*条件*/}
                                 <div className="card-content">
@@ -243,12 +247,12 @@ var EquipDetail = React.createClass({
                                         {/*查询条件(性质、级别、车身、燃油)*/}
                                         {conditionLists}
                                     </div>
+                                    {/*按品牌、级别*/}
+                                    <Segmentbrand chooseBrandPrefix={this.chooseBrandPrefix}   equipList={this.state.resultList} chooseContent={this.chooseContent}/>
+                                    {/*已选条件*/}
+                                    <Haschoose hasChooseList={this.state.hasChooseList}  selectedOrCancelflag={this.state.selectedOrCancelflag}/>
                                 </div>
-                                {/*按品牌、级别*/}
-                                <Segmentbrand chooseBrandPrefix={this.chooseBrandPrefix}   equipList={this.state.resultList} chooseContent={this.chooseContent}/>
-                                {/*已选条件*/}
-                                <Haschoose hasChooseList={this.state.hasChooseList}  selectedOrCancelflag={this.state.selectedOrCancelflag}/>
-                            </TabPane>
+                        </TabPane>
                         </Tabs>
                     </div>
                 </form>
