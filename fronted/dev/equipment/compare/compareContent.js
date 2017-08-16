@@ -43,10 +43,11 @@ var CompareContent = React.createClass({
     allSelected:function(e){
         let thisName=$(e.target).attr('data-Name');
         let thisInnertext=$(e.target)[0].innerText;
-        var modelLi= $(e.target).parent().next().find('.chk');//该级别下的所有model
-        let flag=DataDeal.modelHasSelected(modelLi);//选中1，取消0
-        var ModelLiArry= DataDeal.getModelValue(modelLi);
+        let modelLi= $(e.target).parent().next().find('.chk');//该级别下的所有model
         DataDeal.allOrCancel(thisInnertext,$(e.target));//全选或取消
+        let flag=DataDeal.modelHasSelected(modelLi);//选中1，取消0
+        let ModelLiArry= DataDeal.getModelLiValue(modelLi);
+        this.setState({hasChooseList:ModelLiArry,selectedOrCancelflag:flag});
     },
     render: function () {
         let jspCell=this.state.recordsList.map(function(content,index){
@@ -123,12 +124,13 @@ var DDContent = React.createClass({
 
     render: function () {
         let flag=this.jugeModel(this.state.recordsList,343);
-        console.log(flag);
         let modelItem=this.state.details.map(function(content,index){
             let modelId=content.Model;
             let flag=this.jugeModel(this.state.recordsList,modelId);
             return(
-                <a key={index} className="chk" data-id={content.OEM+'_'+content.Model} data-oem={content.OEMInfo.NameC} data-model={content.ModelInfo.NameC}>{flag?content.ModelInfo.NameC+'('+content.OEMInfo.NameC+')':content.ModelInfo.NameC} <b></b></a>
+                <a key={index} className="chk" id={modelId} data-id={content.OEM+'_'+modelId} data-oem={content.OEMInfo.NameC} data-model={content.ModelInfo.NameC}>{flag?content.ModelInfo.NameC+'('+content.OEMInfo.NameC+')':content.ModelInfo.NameC}
+                    <b></b>
+                </a>
             )
         }.bind(this));
         return (

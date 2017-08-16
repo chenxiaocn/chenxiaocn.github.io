@@ -38,9 +38,8 @@ var Haschoose = React.createClass({
                 break;
             }
         }
-
         for(var i=0;i<hasChooseList.length;i++){
-            if(hasChooseList[i].modelId==thisId){
+            if(hasChooseList[i].id==thisId){
                 hasChooseList.splice(i,1);
                 break;
             }
@@ -50,13 +49,15 @@ var Haschoose = React.createClass({
     delAll:function(e){
         $('.model-li').removeClass('selected');
         $('.ant-col-2').removeClass('selectedSub');
+        $('.chk').removeClass('selected');
+        $('.all')[0].innerText="全选";
         this.setState({hasChooseList:[]});
     },
     render:function(){
         console.log(this.state.hasChooseList);
         let chooseLi=this.state.hasChooseList.map(function(content,index){
             return(
-                <li key={index} id={content.modelId}>
+                <li key={index} id={content.id} data-id={content.dataId}>
                     <span className="licontent">{content.modeValue}</span>
                     <span onClick={this.modelDel}>×</span>
                 </li>
