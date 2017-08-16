@@ -101,6 +101,21 @@ let Datadeal = {
         }
         return modeLiValue;
     },
+
+
+    //获取被选中的车系值
+    getModelValue:function(modelLi){
+        var modeLiValue=[],modelLiID=[];
+        for(let i=0;i<modelLi.length;i++){
+            let itemValue=$($(modelLi)[i])[0].innerText;
+            let itemId=$($(modelLi)[i]).attr('data-id');
+            let id=$($(modelLi)[i]).attr('id');
+            modeLiValue.push({"modeValue":itemValue,"data-id":itemId,"id":id});
+        }
+        return modeLiValue;
+    },
+
+
     //"取消"或"全选"
     allOrCancel:function(segTitle,target){
         if(segTitle=="取消"){

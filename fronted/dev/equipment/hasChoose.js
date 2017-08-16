@@ -53,6 +53,7 @@ var Haschoose = React.createClass({
         this.setState({hasChooseList:[]});
     },
     render:function(){
+        console.log(this.state.hasChooseList);
         let chooseLi=this.state.hasChooseList.map(function(content,index){
             return(
                 <li key={index} id={content.modelId}>

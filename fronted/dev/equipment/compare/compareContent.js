@@ -9,7 +9,7 @@ import API_URL from "../../common/url";
 import store from "../../../reduxFile/store";
 import {allEquipJsonData} from "../../../reduxFile/actions";
 //import {Row} from 'antd';
-//import DataDeal from "./datadeal.js";
+import DataDeal from "../../common/datadeal.js";
 import $ from "jquery";
 import './compare.less'
 
@@ -40,12 +40,21 @@ var CompareContent = React.createClass({
     },
     componentWillReceiveProps:function(nextprops){
     },
+    allSelected:function(e){
+        let thisName=$(e.target).attr('data-Name');
+        let thisInnertext=$(e.target)[0].innerText;
+        var modelLi= $(e.target).parent().next().find('.chk');//该级别下的所有model
+        let flag=DataDeal.modelHasSelected(modelLi);//选中1，取消0
+        var ModelLiArry= DataDeal.getModelValue(modelLi);
+        DataDeal.allOrCancel(thisInnertext,$(e.target));//全选或取消
+    },
     render: function () {
         let jspCell=this.state.recordsList.map(function(content,index){
             return(
                 <dl key={index}>
                     <dt>
-                        <b className="all">全选</b>{content.Name}
+                        <b className="all" onClick={this.allSelected} data-Name={content.Name}>全选</b>
+                        {content.Name}
                     </dt>
                     <DDContent content={content} recordsList={this.state.recordsList}/>
                 </dl>
