@@ -118,7 +118,7 @@ var EditTable = React.createClass({
                     <CheckboxComponent title="是否启用" name="reStart"  checked={this.state.reStartchecked} handleChangeCheckbox={this.handleChangeCheckbox}/>
                     <InputComponent title="邮箱" name="email"  value={this.state.email} handleChange={this.handleChange} onBlur={this.blur}/>
                     <InputComponent title="真实姓名" name="realName"  value={this.state.realName} handleChange={this.handleChange} onBlur={this.blur}/>
-                    <SelectComponent title="性别" name="sex"  value={this.state.role} optionList={["男","女"]} handleChange={this.handleChange}/>
+                    <SelectComponent title="性别" name="sex"  value={this.state.sex} optionList={["男","女"]} handleChange={this.handleChange}/>
                     <InputComponent title="电话" name="tel"  value={this.state.tel} handleChange={this.handleChange} onBlur={this.blur}/>
                     <InputComponent title="公司名称" name="company"  value={this.state.company} handleChange={this.handleChange} onBlur={this.blur}/>
                     <InputComponent title="有效期" name="period"  value={this.state.period} handleChange={this.handleChange} onBlur={this.blur}/>

@@ -9,7 +9,7 @@ import API_URL from "../url.js";
 import EditTable from "./editTable.js";
 import DelTable from "./delTable.js";
 import $ from "jquery";
-import {Modal,Icon,Table} from "antd";
+import {Modal,Icon,Table,Button} from "antd";
 import './table.less';
 
 var TableContent = React.createClass({
@@ -19,7 +19,9 @@ var TableContent = React.createClass({
             addOrEditModalVisible:false,
             delModalVisible:false,
             selectedId:'',
-            selectedDetail:[]
+            selectedDetail:[],
+            filteredInfo: null,  ///////表格排序
+            sortedInfo: null  ///////表格排序
         }
     },
     componentDidMount: function () {
@@ -56,17 +58,53 @@ var TableContent = React.createClass({
     addTest:function(){
         this.setState({addOrEditModalVisible:true,selectedId:'',selectedDetail:[]});
     },
+
+
+
+///////表格排序
+handleChange:function(pagination, filters, sorter){
+    //console.log('Various parameters', pagination, filters, sorter);
+    this.setState({
+        filteredInfo: filters,sortedInfo: sorter
+    });
+},
+
     render: function () {
-        let tableList=this.state.tableList;
+        let { sortedInfo, filteredInfo } = this.state;
+        sortedInfo = sortedInfo || {};
+        filteredInfo = filteredInfo || {};
+
+        let tableList=this.state.tableList; let data= [];
         //表格
         let columns = [
-            { title: '用户名', width:70, dataIndex: 'name', key: '0'},
-            { title: '内部用户',width:60,dataIndex: 'innerUser', key: '1'},
-            { title: '真实姓名', width:70,dataIndex: 'realName', key: '2' },
-            { title: '创建日期', width:70,dataIndex: 'createDate', key: '3'},
-            { title: '有效期',  width:70,dataIndex: 'period', key: '4'},
-            { title: '用户分类',  width:100,dataIndex: 'userClass', key: '5'},
-            { title: '角色',  width:80,dataIndex: 'role', key: '6'},
+            { title: '用户名', width:70, dataIndex: 'name', key: '0',
+                sorter: (a, b) => a.name.length - b.name.length,
+                sortOrder: sortedInfo.columnKey === '0' && sortedInfo.order
+            },
+            { title: '内部用户',width:60,dataIndex: 'innerUser', key: '1',
+                sorter: (a, b) => a.innerUser.length - b.innerUser.length,
+                sortOrder: sortedInfo.columnKey === '1' && sortedInfo.order
+            },
+            { title: '真实姓名', width:70,dataIndex: 'realName', key: '2',
+                sorter: (a, b) => a.realName.length - b.realName.length,
+                sortOrder: sortedInfo.columnKey === '2' && sortedInfo.order
+            },
+            { title: '创建日期', width:70,dataIndex: 'createDate', key: '3',
+                sorter: (a, b) => a.createDate.length - b.createDate.length,
+                sortOrder: sortedInfo.columnKey === '3' && sortedInfo.order
+            },
+            { title: '有效期',  width:70,dataIndex: 'period', key: '4',
+                sorter: (a, b) => a.period.length - b.period.length,
+                sortOrder: sortedInfo.columnKey === '4' && sortedInfo.order
+            },
+            { title: '用户分类',  width:100,dataIndex: 'userClass', key: '5',
+                sorter: (a, b) => a.userClass.length - b.userClass.length,
+                sortOrder: sortedInfo.columnKey === '5' && sortedInfo.order
+            },
+            { title: '角色',  width:80,dataIndex: 'role', key: '6',
+                sorter: (a, b) => a.role.length - b.role.length,
+                sortOrder: sortedInfo.columnKey === '6' && sortedInfo.order
+            },
             { title: '价格时间',width:50, dataIndex: 'priceDate', key: '7',
                 render: () => <a href="javascript:void(0);">设置</a>
             },
@@ -104,8 +142,6 @@ var TableContent = React.createClass({
              render: () => <a href="javascript:void(0);" onClick={this.del}>删除</a>
             }
         ];
-
-        let data = [];
         for (let i = 0; i < tableList.length; i++) {
             data.push({
                 key: i,
@@ -118,11 +154,13 @@ var TableContent = React.createClass({
                 role:tableList[i].role
             });
         }
+
         return (
             <div className="table-list">
                 <div onClick={this.addTest}>新增</div>
                 {/*列表*/}
-                <Table  bordered columns={columns} dataSource={data}/>
+                <Table  bordered columns={columns} dataSource={data} onChange={this.handleChange}/>
+
                 {/*编辑或修改*/}
                 <EditTable cancelModal={this.cancelModal} refresh={this.handleRefresh} addOrEditModalVisible={this.state.addOrEditModalVisible}
                            selectedId={this.state.selectedId} selectedDetail={this.state.selectedDetail}/>
