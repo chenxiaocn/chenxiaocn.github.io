@@ -14,7 +14,8 @@ let API_URL = {
         show: "/data/show.json"
     },
     equipment: {
-        list: "/data/equip/equiplist.json"
+        list: "/data/equip/equiplist.json",
+        compareList:"/data/equip/compare.json"
     },
     table:{
         list: "/data/table/tableList.json"
