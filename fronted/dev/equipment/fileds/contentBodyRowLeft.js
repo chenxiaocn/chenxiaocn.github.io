@@ -29,7 +29,7 @@ var contentBodyRowLeft = React.createClass({
             $(e.target).addClass('selectedSub');
         }
         var modelLi= $(e.target).next().find('.model-li');//该级别下的所有model
-        DataDeal.modelHasSelected(modelLi,flag);//选中1，取消0
+        DataDeal.modelHasSelected(modelLi,flag,'selected');//选中1，取消0
         var ModelLiArry= DataDeal.getModelLiValue(modelLi);
         this.props.leftValueChoose(ModelLiArry,flag);
     },
