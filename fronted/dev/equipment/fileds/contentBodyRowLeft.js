@@ -24,13 +24,14 @@ var contentBodyRowLeft = React.createClass({
         let flag=0;
         if($(e.target).hasClass('selectedSub')){
             $(e.target).removeClass('selectedSub');
+            $(e.target).parent().parent().prev().find('.all').text('å…¨é€‰');
         }else{
             flag=1;
             $(e.target).addClass('selectedSub');
         }
-        var modelLi= $(e.target).next().find('.model-li');//¸Ã¼¶±ğÏÂµÄËùÓĞmodel
-        DataDeal.modelHasSelected(modelLi,flag,'selected');//Ñ¡ÖĞ1£¬È¡Ïû0
-        var ModelLiArry= DataDeal.getModelLiValue(modelLi);
+        let modelLi= $(e.target).next().find('.model-li');//è¯¥çº§åˆ«ä¸‹çš„æ‰€æœ‰model
+        DataDeal.modelHasSelected(modelLi,flag,'selected');//é€‰ä¸­1ï¼Œå–æ¶ˆ0
+        let ModelLiArry= DataDeal.getModelLiValue(modelLi);
         this.props.leftValueChoose(ModelLiArry,flag);
     },
     render: function () {
