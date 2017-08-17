@@ -232,6 +232,14 @@ var EquipDetail = React.createClass({
             store.dispatch(allEquipJsonData(conditions));//存到store
             this.setState({historyList:this.state.hasChooseList,selectedOrCancelflag:2});
         }
+
+        //获取厂商Model号
+        let OEMModelIDs=[];
+        let choooseLi=$('.has-choose-ul li');
+        for(let i=0;i<choooseLi.length;i++){
+            OEMModelIDs.push($($(choooseLi)[i]).attr('data-id'));
+        }
+        console.log(OEMModelIDs);
     },
     render(){
         let conditionLists=[], allConditions=this.state.allConditions;
