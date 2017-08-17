@@ -55,12 +55,21 @@ var CompareContent = React.createClass({
     modelChoose:function(ModelLiArry,flag){
         this.setState({hasChooseList:ModelLiArry,selectedOrCancelflag:flag});
     },
+    historyChoose:function(e){
+        let target=$(e.target);
+        let itemValue=target[0].innerText;
+        let id=target.attr('id');
+        let dataId=target.attr('data-id');
+        let flag= DataDeal.selectedModel(target);//选中1，取消0
+        let ModelLiArry=[{"modelValue":itemValue,"dataId":dataId,"id":id}];
+        this.modelChoose(ModelLiArry,flag);
+    },
     render: function () {
         let historyCell;
         if(this.state.historyList){
             historyCell=this.state.historyList.map(function(content,index){
                 return(
-                    <a key={index} className="chk" data-id={content.dataId} data-model={content.modelValue}>{content.modelValue}<b></b></a>
+                    <a key={index} className="chk" data-id={content.dataId} data-model={content.modelValue} onClick={this.historyChoose}>{content.modelValue}<b></b></a>
                 )
             }.bind(this));
         }else{historyCell=''}
