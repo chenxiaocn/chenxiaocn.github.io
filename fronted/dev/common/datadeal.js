@@ -42,7 +42,7 @@ let Datadeal = {
     sorSplice:function(arr1,arr2){
         for (var i = 0; i<arr1.length; i++){
             for(var j=0;j<arr2.length;j++){
-                if(arr1[i].modelId==arr2[j].modelId){
+                if(arr1[i].dataId==arr2[j].dataId){
                     arr1.splice(i,1);
                 }
             }
