@@ -38,6 +38,7 @@ let Datadeal = {
             arr.sort(bySort(arr[i][sortStr]));
         }
     },
+
     //数组对象相减
     sorSplice:function(arr1,arr2){
         for (var i = 0; i<arr1.length; i++){
@@ -98,6 +99,8 @@ let Datadeal = {
         }
         return modeLiValue;
     },
+
+    //
 
     //"取消"或"全选"
     allOrCancel:function(segTitle,target){

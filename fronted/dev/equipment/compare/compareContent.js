@@ -8,7 +8,6 @@ import Ajax from "../../common/ajax";
 import API_URL from "../../common/url";
 import store from "../../../reduxFile/store";
 import {allEquipJsonData} from "../../../reduxFile/actions";
-//import {Row} from 'antd';
 import DataDeal from "../../common/datadeal.js";
 import $ from "jquery";
 import './compare.less'
@@ -116,8 +115,6 @@ var DDContent = React.createClass({
             recordsList:this.props.recordsList
         }
     },
-    componentDidMount: function () {
-    },
     componentWillReceiveProps:function(nextprops){
         this.setState({
             details:nextprops.content.Details,
@@ -167,12 +164,3 @@ var DDContent = React.createClass({
     }
 });
 export {CompareContent as default}
-
-//<a className="chk" data-id="4111_598" data-oem="奥迪" data-model="Q5">Q5(奥迪)<b></b></a>
-//<a className="chk" data-id="4111_142202" data-oem="奥迪" data-model="Q3">Q3(奥迪)<b></b></a>
-//    <a className="chk" data-id="331_598" data-oem="一汽大众" data-model="Q5">Q5(一汽大众)<b></b></a>
-//    <a className="chk" data-id="331_142202" data-oem="一汽大众" data-model="Q3">Q3(一汽大众)<b></b></a>
-//    <a className="chk" data-id="331_341" data-oem="一汽大众" data-model="A6">A6(一汽大众)<b></b></a>
-//    <a className="chk" data-id="331_343" data-model="A6L">A6L<b></b></a>
-//    <a className="chk" data-id="4111_4437" data-model="S5 Sportback">S5 Sportback<b></b></a>
-//

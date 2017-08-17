@@ -24,6 +24,12 @@ var Haschoose = React.createClass({
         }
         if(nextprops.selectedOrCancelflag==1){
             hasChooseList=hasChooseList.concat(nextprops.hasChooseList);
+            //数组对象去重
+            let hash = {};
+            hasChooseList = hasChooseList.reduce(function(item, next) {
+                hash[next.dataId] ?'': hash[next.dataId] = true && item.push(next);
+                return item;
+            }, []);
         }
 
         let conditions = {hasChooseList:hasChooseList};
@@ -32,22 +38,27 @@ var Haschoose = React.createClass({
         this.setState({hasChooseList:hasChooseList,selectedOrCancelflag:nextprops.selectedOrCancelflag});
     },
     modelDel:function(e){
-        var hasChooseList=this.state.hasChooseList;
-        var thisInnerText=$(e.target).prev()[0].innerText;
-        var thisId=$(e.target).parent().attr('id');
+        let allNode,leftNode;
+        let hasChooseList=this.state.hasChooseList;
+        let thisInnerText=$(e.target).prev()[0].innerText;
+        let thisId=$(e.target).parent().attr('id');
 
-        for(let i=0;i<$('.selected').length;i++){
+        for(var i=0;i<$('.selected').length;i++){
             if(thisInnerText==$('.selected')[i].innerText){
                 $($('.selected')[i]).removeClass('selected');
                 //全选变取消
                 let thisTabInnerText=$('.ant-tabs-tab-active')[0].innerText;
                 if(thisTabInnerText=='竞品组'){
-                    $($('.selected')[i]).parent().prev().find('.all').text("全选");
+                    allNode= $($('.selected')[i]).parent().prev().find('.all');
                 }
                 if(thisTabInnerText=='条件选车'){
-                    //console.log($($('.selected')[0]).parent('.item-body'));
+                    leftNode=$($('.selected')[i]).parent().parent().prev();
+                    console.log(leftNode);
+                    leftNode.removeClass('selectedSub');
+                    allNode=leftNode.parent().parent().prev().find('.all');
                     $($('.selected')[i]).parent('.item-body').prev().find('.all').text("全选");
                 }
+                allNode.text("全选");
 
                 break;
             }
@@ -64,7 +75,9 @@ var Haschoose = React.createClass({
         $('.model-li').removeClass('selected');
         $('.ant-col-2').removeClass('selectedSub');
         $('.chk').removeClass('selected');
-        $('.all')[0].innerText="全选";
+        for(let i=0;i<$('.all').length;i++){
+            $($('.all')[i]).text("全选");
+        }
         this.setState({hasChooseList:[]});
     },
     render:function(){

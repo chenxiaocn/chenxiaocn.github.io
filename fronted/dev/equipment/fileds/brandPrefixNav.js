@@ -39,7 +39,7 @@ var BrandPrefixNav = React.createClass({
         let hash = {};
         brandPrefixBrand = brandPrefixBrand.reduce(function(item, next) {
             hash[next.Brand] ?'' : hash[next.Brand] = true && item.push(next);
-            return item
+            return item;
         }, []);
 
         //数组对象按大写字母排序
