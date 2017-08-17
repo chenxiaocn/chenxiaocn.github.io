@@ -98,7 +98,7 @@ let Datadeal = {
             var itemValue=$($(modelLi)[i])[0].innerText;
             let itemId=$($(modelLi)[i]).attr('data-id');
             let id=$($(modelLi)[i]).attr('id');
-            modeLiValue.push({"modeValue":itemValue,"dataId":itemId,"id":id}) ;
+            modeLiValue.push({"modelValue":itemValue,"dataId":itemId,"id":id}) ;
         }
         return modeLiValue;
     },

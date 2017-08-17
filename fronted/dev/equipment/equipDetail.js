@@ -15,14 +15,21 @@ import "./equip.less";
 
 import $ from "jquery";
 import API_URL from "../common/url";
-import {Modal ,Menu ,Tabs, Radio} from "antd";
+import {Modal ,Menu ,Tabs, Radio,Button} from "antd";
 const TabPane = Tabs.TabPane;
 
 {/*添加 选车*/}
 var EquipDetail = React.createClass({
     getInitialState: function () {
+        let equipListConditions = store.getState().allEquipJsonDataState ;
+        let hasChooseList=equipListConditions.hasChooseList;
+        let historyList=equipListConditions.historyList;
         return {
             visible: false,
+            HZZZList:[],//所有性质列表
+            segmentList: [],//所有级别列表
+            bodyList:[],//所有车身列表
+            fuelList:[],//所有燃油列表
             selectedHZZZList:[],//选中的性质集合
             selectedSegmentList:[],
             selectedBodyList:[],
@@ -32,14 +39,10 @@ var EquipDetail = React.createClass({
             selectedOEMList:[],
             selectedBrandPrefixList:[],
             resultList:[],//所有的车系数据
-            hasChooseList:[],//已选级别
-            selectedOrCancelflag:0,
-            HZZZList:[],//所有性质列表
-            segmentList: [],//所有级别列表
-            bodyList:[],//所有车身列表
-            fuelList:[],//所有燃油列表
             allConditions:[],
-            CompareChoosedList:[]//竞品组已选条件
+            hasChooseList:hasChooseList,//已选级别
+            selectedOrCancelflag:0,
+            historyList:historyList//最近浏览
         }
     },
     componentDidMount: function () {
@@ -214,7 +217,21 @@ var EquipDetail = React.createClass({
     chooseContent:function(chooseContent,flag){
         this.setState({hasChooseList:chooseContent,selectedOrCancelflag:flag});
     },
-    submitModifyOrAdd: function () {
+    callback:function(key){
+        if(key=="1"){
+            let equipListConditions = store.getState().allEquipJsonDataState ;
+            let historyList=equipListConditions.historyList;
+            this.setState({historyList:historyList});
+        }
+    },
+    submitModifyOrAdd: function (e) {
+        //条件选车“已选条件”为竞品组的“最近浏览”
+        let thisTabInnerText=$('.ant-tabs-tab-active')[0].innerText;
+        if(thisTabInnerText=='条件选车'){
+            let conditions = {historyList : this.state.hasChooseList };
+            store.dispatch(allEquipJsonData(conditions));//存到store
+            this.setState({historyList:this.state.hasChooseList,selectedOrCancelflag:2});
+        }
     },
     render(){
         let conditionLists=[], allConditions=this.state.allConditions;
@@ -232,14 +249,19 @@ var EquipDetail = React.createClass({
                 width={1000}
                 wrapClassName="modifyPasswordModal infoModal"
                 maskClosable={false}
-                onOk={this.submitModifyOrAdd}>
+                onOk={this.submitModifyOrAdd}
+                footer={[
+                <Button key="submit" type="primary" size="large" onClick={this.submitModifyOrAdd}>确定</Button>,
+                <Button key="back" size="large" onClick={this.handleCancel}>取消</Button>
+                ]}
+                >
                 <form  id="modifyOrAddForm">
                     {/*条件选车tab*/}
                     <div className="card-container">
-                        <Tabs type="card" defaultActiveKey="1">
+                        <Tabs type="card" defaultActiveKey="1" onChange={this.callback}>
                             <TabPane tab="竞品组" key="1">
-                                <CompareContent />
-                           </TabPane>
+                                <CompareContent  historyList={this.state.historyList}/>
+                            </TabPane>
                             <TabPane tab="条件选车" key="2">
                                 {/*条件*/}
                                 <div className="card-content">
@@ -252,7 +274,7 @@ var EquipDetail = React.createClass({
                                     {/*已选条件*/}
                                     <Haschoose hasChooseList={this.state.hasChooseList}  selectedOrCancelflag={this.state.selectedOrCancelflag}/>
                                 </div>
-                        </TabPane>
+                            </TabPane>
                         </Tabs>
                     </div>
                 </form>

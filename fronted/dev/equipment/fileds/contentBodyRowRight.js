@@ -39,7 +39,7 @@ var contentBodyRowRight = React.createClass({
         let id=target.attr('id');
         let dataId=target.attr('data-id');
         let flag= DataDeal.selectedModel(target);//选中1，取消0
-        let ModelLiArry=[{"modeValue":itemValue,"dataId":dataId,"id":id}];
+        let ModelLiArry=[{"modelValue":itemValue,"dataId":dataId,"id":id}];
         this.props.modelChoose(ModelLiArry,flag);
     },
     loadData:function(content,leftVaule,leftProperty){

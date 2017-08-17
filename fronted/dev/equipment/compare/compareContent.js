@@ -18,7 +18,8 @@ var CompareContent = React.createClass({
         return {
             hasChooseList:[],
             selectedOrCancelflag:0,
-            recordsList:[]
+            recordsList:[],
+            historyList:[]
         }
     },
     componentDidMount: function () {
@@ -31,7 +32,7 @@ var CompareContent = React.createClass({
             //data:{content:content},
             success: function(data) {
                 let recordsList=data.Records;
-                console.log(recordsList);
+                //console.log(recordsList);
                 let conditions = {compareList : recordsList};
                 store.dispatch(allEquipJsonData(conditions));//存到store
                 this.setState({recordsList:recordsList});
@@ -39,6 +40,8 @@ var CompareContent = React.createClass({
         });
     },
     componentWillReceiveProps:function(nextprops){
+        let historyList =nextprops.historyList;
+        this.setState({historyList:historyList});
     },
     allSelected:function(e){
         let thisName=$(e.target).attr('data-Name');
@@ -53,6 +56,15 @@ var CompareContent = React.createClass({
         this.setState({hasChooseList:ModelLiArry,selectedOrCancelflag:flag});
     },
     render: function () {
+        let historyCell;
+        if(this.state.historyList){
+            historyCell=this.state.historyList.map(function(content,index){
+                return(
+                    <a key={index} className="chk" data-id={content.dataId} data-model={content.modelValue}>{content.modelValue}<b></b></a>
+                )
+            }.bind(this));
+        }else{historyCell=''}
+
         let jspCell=this.state.recordsList.map(function(content,index){
             return(
                 <dl key={index}>
@@ -78,13 +90,7 @@ var CompareContent = React.createClass({
                     {/*最近浏览*/}
                     <div className="sm-history">
                         <div className="title">最近浏览:</div>
-                        <a className="chk" data-id="4111_598" data-oem="奥迪" data-model="Q5">Q5(奥迪)<b></b></a>
-                        <a className="chk" data-id="4111_142202" data-oem="奥迪" data-model="Q3">Q3(奥迪)<b></b></a>
-                        <a className="chk" data-id="331_598" data-oem="一汽大众" data-model="Q5">Q5(一汽大众)<b></b></a>
-                        <a className="chk" data-id="331_142202" data-oem="一汽大众" data-model="Q3">Q3(一汽大众)<b></b></a>
-                        <a className="chk" data-id="331_341" data-oem="一汽大众" data-model="A6">A6(一汽大众)<b></b></a>
-                        <a className="chk" data-id="331_343" data-model="A6L">A6L<b></b></a>
-                        <a className="chk" data-id="4111_4437" data-model="S5 Sportback">S5 Sportback<b></b></a>
+                        {historyCell}
                         <div style={{clear:'both'}}></div>
                     </div>
                 </div>
@@ -131,8 +137,7 @@ var DDContent = React.createClass({
         let id=target.attr('id');
         let dataId=target.attr('data-id');
         let flag= DataDeal.selectedModel(target);//选中1，取消0
-        let ModelLiArry=[{"modeValue":itemValue,"dataId":dataId,"id":id}];
-        this.setState({hasChooseList:ModelLiArry,selectedOrCancelflag:flag});
+        let ModelLiArry=[{"modelValue":itemValue,"dataId":dataId,"id":id}];
         this.props.modelChoose(ModelLiArry,flag);
     },
     render: function () {
@@ -154,3 +159,12 @@ var DDContent = React.createClass({
     }
 });
 export {CompareContent as default}
+
+//<a className="chk" data-id="4111_598" data-oem="奥迪" data-model="Q5">Q5(奥迪)<b></b></a>
+//<a className="chk" data-id="4111_142202" data-oem="奥迪" data-model="Q3">Q3(奥迪)<b></b></a>
+//    <a className="chk" data-id="331_598" data-oem="一汽大众" data-model="Q5">Q5(一汽大众)<b></b></a>
+//    <a className="chk" data-id="331_142202" data-oem="一汽大众" data-model="Q3">Q3(一汽大众)<b></b></a>
+//    <a className="chk" data-id="331_341" data-oem="一汽大众" data-model="A6">A6(一汽大众)<b></b></a>
+//    <a className="chk" data-id="331_343" data-model="A6L">A6L<b></b></a>
+//    <a className="chk" data-id="4111_4437" data-model="S5 Sportback">S5 Sportback<b></b></a>
+//

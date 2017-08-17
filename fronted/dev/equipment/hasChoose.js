@@ -5,13 +5,15 @@ import React from  'react'
 import ReactDOM from 'react-dom'
 import {Row,Col,Icon} from "antd";
 import DataDeal from "../common/datadeal.js";
+import store from "../../reduxFile/store";
+import {allEquipJsonData} from "../../reduxFile/actions";
 import $ from "jquery";
 import './equip.less'
 
 var Haschoose = React.createClass({
     getInitialState: function () {
         return {
-            hasChooseList:[],
+            hasChooseList:this.props.hasChooseList,
             selectedOrCancelflag:0
         }
     },
@@ -22,9 +24,14 @@ var Haschoose = React.createClass({
         var hasChooseList=this.state.hasChooseList;
         if(nextprops.selectedOrCancelflag==0){
             hasChooseList= DataDeal.sorSplice(hasChooseList,nextprops.hasChooseList);
-        }else{
+        }
+        if(nextprops.selectedOrCancelflag==1){
             hasChooseList=hasChooseList.concat(nextprops.hasChooseList);
         }
+
+        let conditions = {hasChooseList:hasChooseList};
+        store.dispatch(allEquipJsonData(conditions));//存到store
+
         this.setState({hasChooseList:hasChooseList,selectedOrCancelflag:nextprops.selectedOrCancelflag});
     },
     modelDel:function(e){
@@ -57,7 +64,7 @@ var Haschoose = React.createClass({
         let chooseLi=this.state.hasChooseList.map(function(content,index){
             return(
                 <li key={index} id={content.id} data-id={content.dataId}>
-                    <span className="licontent">{content.modeValue}</span>
+                    <span className="licontent">{content.modelValue}</span>
                     <span onClick={this.modelDel}>×</span>
                 </li>
             )
