@@ -77,17 +77,22 @@ let Datadeal = {
         return str_big;
     },
     //车系被选中样式
-    modelHasSelected:function(modelLi){
-        var modelItemInnertext=[], flag=0;
+    modelHasSelected:function(modelLi,flag){
+        var modelItemInnertext=[];
         for(var i=0;i<modelLi.length;i++){
             modelItemInnertext=$($(modelLi)[i])[0].innerText;
-            if($($(modelLi)[i]).hasClass('selected')){
-                $($(modelLi)[i]).removeClass('selected');
-                flag=0;
-            }else{
+            if(flag){
                 $($(modelLi)[i]).addClass('selected');
-                flag=1;
+            }else{
+                $($(modelLi)[i]).removeClass('selected');
             }
+            //if($($(modelLi)[i]).hasClass('selected')){
+            //    $($(modelLi)[i]).removeClass('selected');
+            //    flag=0;
+            //}else{
+            //    $($(modelLi)[i]).addClass('selected');
+            //    flag=1;
+            //}
         }
         return flag;
     },
@@ -105,12 +110,15 @@ let Datadeal = {
 
     //"取消"或"全选"
     allOrCancel:function(segTitle,target){
+        let flag=0;
         if(segTitle=="取消"){
             target[0].innerText="全选";
         }
         if(segTitle=="全选"){
+            flag=1;
             target[0].innerText="取消";
         }
+        return flag;
     },
     //单个车系选中
     selectedModel:function(target){

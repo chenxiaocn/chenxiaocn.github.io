@@ -66,9 +66,9 @@ var BodyLi = React.createClass({
     },
 
     loadData:function(segment,list){
-        var dataList=list;
-        var subSegmentList=[],carList=[];
-        for(var i=0;i<dataList.length;i++){
+        let dataList=list;
+        let subSegmentList=[],carList=[];
+        for(let i=0;i<dataList.length;i++){
             if(segment==dataList[i].Segment){
                 subSegmentList.push(dataList[i].SubSegment);
                 carList.push(dataList[i]);
@@ -82,11 +82,11 @@ var BodyLi = React.createClass({
         this.loadData(nextProps.segment,nextProps.equipList);
     },
     allChoose:function(e){
-        var thisInnertext=$(e.target)[0].innerText;
-        var modelLi= $(e.target).parent().next().find('.model-li');//该级别下的所有model
-        var flag=DataDeal.modelHasSelected(modelLi);//选中1，取消0
-        DataDeal.allOrCancel(thisInnertext,$(e.target));//全选或取消
-        var ModelLiArry= DataDeal.getModelLiValue(modelLi);
+        let thisInnertext=$(e.target)[0].innerText;
+        let modelLi= $(e.target).parent().next().find('.model-li');//该级别下的所有model
+        let flag=DataDeal.allOrCancel(thisInnertext,$(e.target));//全选或取消
+        DataDeal.modelHasSelected(modelLi,flag);//选中1，取消0
+        let ModelLiArry= DataDeal.getModelLiValue(modelLi);
         this.props.chooseContent(ModelLiArry,flag);
     },
     leftValueChoose:function(ModelLiArry,flag){

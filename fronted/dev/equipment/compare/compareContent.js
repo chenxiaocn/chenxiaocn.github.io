@@ -44,11 +44,10 @@ var CompareContent = React.createClass({
         this.setState({historyList:historyList});
     },
     allSelected:function(e){
-        let thisName=$(e.target).attr('data-Name');
         let thisInnertext=$(e.target)[0].innerText;
+        let flag=DataDeal.allOrCancel(thisInnertext,$(e.target));//全选或取消
         let modelLi= $(e.target).parent().next().find('.chk');//该级别下的所有model
-        DataDeal.allOrCancel(thisInnertext,$(e.target));//全选或取消
-        let flag=DataDeal.modelHasSelected(modelLi);//选中1，取消0
+        DataDeal.modelHasSelected(modelLi,flag);//选中1，取消0
         let ModelLiArry= DataDeal.getModelLiValue(modelLi);
         this.setState({hasChooseList:ModelLiArry,selectedOrCancelflag:flag});
     },
@@ -87,7 +86,7 @@ var CompareContent = React.createClass({
         }.bind(this));
         return (
             <div>
-                <div className='st-content compare selected'>
+                <div className='st-content compare'>
                     <div className="scroll">
                         <div className="jspContainer">
                             <div className="jspPane">
