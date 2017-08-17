@@ -17,9 +17,6 @@ var Haschoose = React.createClass({
             selectedOrCancelflag:0
         }
     },
-    componentDidMount:function(){
-
-    },
     componentWillReceiveProps:function(nextprops){
         var hasChooseList=this.state.hasChooseList;
         if(nextprops.selectedOrCancelflag==0){
@@ -38,15 +35,18 @@ var Haschoose = React.createClass({
         var hasChooseList=this.state.hasChooseList;
         var thisInnerText=$(e.target).prev()[0].innerText;
         var thisId=$(e.target).parent().attr('id');
-        console.log($($('.selected')[0]).parent().prev().find('.all')[0].innerText);
-               $($('.selected')[0]).parent().prev().find('.all').text("全选");
+
         for(let i=0;i<$('.selected').length;i++){
             if(thisInnerText==$('.selected')[i].innerText){
                 $($('.selected')[i]).removeClass('selected');
-                //全选
+                //全选变取消
                 let thisTabInnerText=$('.ant-tabs-tab-active')[0].innerText;
                 if(thisTabInnerText=='竞品组'){
                     $($('.selected')[i]).parent().prev().find('.all').text("全选");
+                }
+                if(thisTabInnerText=='条件选车'){
+                    //console.log($($('.selected')[0]).parent('.item-body'));
+                    $($('.selected')[i]).parent('.item-body').prev().find('.all').text("全选");
                 }
 
                 break;

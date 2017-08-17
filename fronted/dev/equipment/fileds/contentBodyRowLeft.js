@@ -21,13 +21,15 @@ var contentBodyRowLeft = React.createClass({
         this.setState({content:nextprops.content});
     },
     leftValueChoose:function(e){
+        let flag=0;
         if($(e.target).hasClass('selectedSub')){
             $(e.target).removeClass('selectedSub');
         }else{
+            flag=1;
             $(e.target).addClass('selectedSub');
         }
         var modelLi= $(e.target).next().find('.model-li');//该级别下的所有model
-        var flag=DataDeal.modelHasSelected(modelLi);//选中1，取消0
+        DataDeal.modelHasSelected(modelLi,flag);//选中1，取消0
         var ModelLiArry= DataDeal.getModelLiValue(modelLi);
         this.props.leftValueChoose(ModelLiArry,flag);
     },

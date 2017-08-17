@@ -78,21 +78,12 @@ let Datadeal = {
     },
     //车系被选中样式
     modelHasSelected:function(modelLi,flag){
-        var modelItemInnertext=[];
         for(var i=0;i<modelLi.length;i++){
-            modelItemInnertext=$($(modelLi)[i])[0].innerText;
             if(flag){
                 $($(modelLi)[i]).addClass('selected');
             }else{
                 $($(modelLi)[i]).removeClass('selected');
             }
-            //if($($(modelLi)[i]).hasClass('selected')){
-            //    $($(modelLi)[i]).removeClass('selected');
-            //    flag=0;
-            //}else{
-            //    $($(modelLi)[i]).addClass('selected');
-            //    flag=1;
-            //}
         }
         return flag;
     },
@@ -243,11 +234,6 @@ let Datadeal = {
         //true:添加类，false:删除类
         selectedFlag==true?target.addClass(className):target.removeClass(className);
     },
-    //添加或删除类
-    //deal:function(liText,clickType,conditionTypeInnerText){
-    //    //true:添加类，false:删除类
-    //    EquipDetail.selectedCellCondition(liText,clickType,conditionTypeInnerText);
-    //}
     circleValue:function(value){
         var arr=[];
         for(var i=0;i<value;i++){
