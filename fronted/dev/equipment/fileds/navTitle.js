@@ -85,7 +85,7 @@ var BodyLi = React.createClass({
         let thisInnertext=$(e.target)[0].innerText;
         let modelLi= $(e.target).parent().next().find('.model-li');//该级别下的所有model
         let flag=DataDeal.allOrCancel(thisInnertext,$(e.target));//全选或取消
-        DataDeal.modelHasSelected(modelLi,flag);//选中1，取消0
+        DataDeal.modelHasSelected(modelLi,flag,'selected');//选中1，取消0
         let ModelLiArry= DataDeal.getModelLiValue(modelLi);
         this.props.chooseContent(ModelLiArry,flag);
     },

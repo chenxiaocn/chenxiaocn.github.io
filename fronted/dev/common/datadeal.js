@@ -77,12 +77,12 @@ let Datadeal = {
         return str_big;
     },
     //车系被选中样式
-    modelHasSelected:function(modelLi,flag){
+    modelHasSelected:function(modelLi,flag,className){
         for(var i=0;i<modelLi.length;i++){
             if(flag){
-                $($(modelLi)[i]).addClass('selected');
+                $($(modelLi)[i]).addClass(className);
             }else{
-                $($(modelLi)[i]).removeClass('selected');
+                $($(modelLi)[i]).removeClass(className);
             }
         }
         return flag;

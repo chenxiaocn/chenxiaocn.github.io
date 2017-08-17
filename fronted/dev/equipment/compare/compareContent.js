@@ -47,7 +47,7 @@ var CompareContent = React.createClass({
         let thisInnertext=$(e.target)[0].innerText;
         let flag=DataDeal.allOrCancel(thisInnertext,$(e.target));//全选或取消
         let modelLi= $(e.target).parent().next().find('.chk');//该级别下的所有model
-        DataDeal.modelHasSelected(modelLi,flag);//选中1，取消0
+        DataDeal.modelHasSelected(modelLi,flag,'selected');//选中1，取消0
         let ModelLiArry= DataDeal.getModelLiValue(modelLi);
         this.setState({hasChooseList:ModelLiArry,selectedOrCancelflag:flag});
     },
