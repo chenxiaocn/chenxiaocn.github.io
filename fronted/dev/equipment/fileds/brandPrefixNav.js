@@ -28,15 +28,15 @@ var BrandPrefixNav = React.createClass({
         this.loadBrandPrefix(nextprops.equipList);
     },
     loadBrandPrefix:function(equipList){
-        var dataList=equipList;
-        var brandPrefix=[],brandPrefixBrand=[];
+        let dataList=equipList;
+        let brandPrefix=[],brandPrefixBrand=[];
         for(var i=0;i<dataList.length;i++){
             brandPrefix.push(dataList[i].BrandPrefix);
             brandPrefixBrand.push({"BrandPrefix":dataList[i].BrandPrefix,"Brand":dataList[i].Brand});
         }
         brandPrefix = DataDeal.unique(brandPrefix).sort();
         //数组对象去重
-        var hash = {};
+        let hash = {};
         brandPrefixBrand = brandPrefixBrand.reduce(function(item, next) {
             hash[next.Brand] ?'' : hash[next.Brand] = true && item.push(next);
             return item
@@ -85,8 +85,8 @@ var BodyLi = React.createClass({
         this.loadData(nextProps.brand,nextProps.equipList);
     },
     loadData:function(brand,list){
-        var dataList=list;
-        var OEM=[],carList=[];
+        let dataList=list;
+        let OEM=[],carList=[];
         for(var i=0;i<dataList.length;i++){
             if(brand==dataList[i].Brand){
                 OEM.push(dataList[i].OEM);
@@ -97,11 +97,13 @@ var BodyLi = React.createClass({
         this.setState({OEM:OEM,carList:carList});
     },
     allChoose:function(e){
-        var thisInnertext=$(e.target)[0].innerText;
-        var modelLi= $(e.target).parent().next().find('.model-li');//该级别下的所有model
+        let thisInnertext=$(e.target)[0].innerText;
+        let modelLi= $(e.target).parent().next().find('.model-li');//该级别下的所有model
+        let leftLi=$(e.target).parent().next().find('.ant-col-2');
         let flag=DataDeal.allOrCancel(thisInnertext,$(e.target));//全选或取消.选中1，取消0
         DataDeal.modelHasSelected(modelLi,flag,'selected');
-        var ModelLiArry= DataDeal.getModelLiValue(modelLi);
+        let ModelLiArry= DataDeal.getModelLiValue(modelLi);
+        DataDeal.modelHasSelected(leftLi,flag,'selectedSub');//选中1，取消0
         this.props.chooseContent(ModelLiArry,flag);
     },
     leftValueChoose:function(ModelLiArry,flag){
