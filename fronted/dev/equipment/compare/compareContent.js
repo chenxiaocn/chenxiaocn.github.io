@@ -49,6 +49,9 @@ var CompareContent = React.createClass({
         let ModelLiArry= DataDeal.getModelLiValue(modelLi);
         this.setState({hasChooseList:ModelLiArry,selectedOrCancelflag:flag});
     },
+    modelChoose:function(ModelLiArry,flag){
+        this.setState({hasChooseList:ModelLiArry,selectedOrCancelflag:flag});
+    },
     render: function () {
         let jspCell=this.state.recordsList.map(function(content,index){
             return(
@@ -57,7 +60,7 @@ var CompareContent = React.createClass({
                         <b className="all" onClick={this.allSelected} data-Name={content.Name}>全选</b>
                         {content.Name}
                     </dt>
-                    <DDContent content={content} recordsList={this.state.recordsList}/>
+                    <DDContent content={content} recordsList={this.state.recordsList} modelChoose={this.modelChoose}/>
                 </dl>
             )
         }.bind(this));
@@ -122,13 +125,23 @@ var DDContent = React.createClass({
         return flag;
     },
 
+    modelChoose:function(e){
+        let target=$(e.target);
+        let itemValue=target[0].innerText;
+        let id=target.attr('id');
+        let dataId=target.attr('data-id');
+        let flag= DataDeal.selectedModel(target);//选中1，取消0
+        let ModelLiArry=[{"modeValue":itemValue,"dataId":dataId,"id":id}];
+        this.setState({hasChooseList:ModelLiArry,selectedOrCancelflag:flag});
+        this.props.modelChoose(ModelLiArry,flag);
+    },
     render: function () {
         let flag=this.jugeModel(this.state.recordsList,343);
         let modelItem=this.state.details.map(function(content,index){
             let modelId=content.Model;
             let flag=this.jugeModel(this.state.recordsList,modelId);
             return(
-                <a key={index} className="chk" id={modelId} data-id={content.OEM+'_'+modelId} data-oem={content.OEMInfo.NameC} data-model={content.ModelInfo.NameC}>{flag?content.ModelInfo.NameC+'('+content.OEMInfo.NameC+')':content.ModelInfo.NameC}
+                <a key={index} className="chk" id={modelId} data-id={content.OEM+'_'+modelId} data-oem={content.OEMInfo.NameC} data-model={content.ModelInfo.NameC} onClick={this.modelChoose}>{flag?content.ModelInfo.NameC+'('+content.OEMInfo.NameC+')':content.ModelInfo.NameC}
                     <b></b>
                 </a>
             )

@@ -32,13 +32,13 @@ var Haschoose = React.createClass({
         var thisInnerText=$(e.target).prev()[0].innerText;
         var thisId=$(e.target).parent().attr('id');
 
-        for(var i=0;i<$('.selected').length;i++){
+        for(let i=0;i<$('.selected').length;i++){
             if(thisInnerText==$('.selected')[i].innerText){
                 $($('.selected')[i]).removeClass('selected');
                 break;
             }
         }
-        for(var i=0;i<hasChooseList.length;i++){
+        for(let i=0;i<hasChooseList.length;i++){
             if(hasChooseList[i].id==thisId){
                 hasChooseList.splice(i,1);
                 break;
@@ -54,7 +54,6 @@ var Haschoose = React.createClass({
         this.setState({hasChooseList:[]});
     },
     render:function(){
-        console.log(this.state.hasChooseList);
         let chooseLi=this.state.hasChooseList.map(function(content,index){
             return(
                 <li key={index} id={content.id} data-id={content.dataId}>
