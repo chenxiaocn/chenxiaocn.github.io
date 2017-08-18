@@ -8,7 +8,7 @@ import DataDeal from "../common/datadeal.js";
 import store from "../../reduxFile/store";
 import {allEquipJsonData} from "../../reduxFile/actions";
 import $ from "jquery";
-import './equip.less'
+import './fileds/equip.less'
 
 var Haschoose = React.createClass({
     getInitialState: function () {

@@ -8,12 +8,11 @@ import store from "../../reduxFile/store";
 import {allEquipJsonData} from "../../reduxFile/actions";
 import FileContent from './fileds/fileContent.js';
 import CompareContent from "./compare/compareContent.js";
-import DataDeal from "../common/datadeal.js";
-import "./equip.less";
+import "./fileds/equip.less";
 
 import $ from "jquery";
 import API_URL from "../common/url";
-import {Modal ,Menu ,Tabs, Radio,Button} from "antd";
+import {Modal ,Tabs, Button} from "antd";
 const TabPane = Tabs.TabPane;
 
 {/*添加 选车*/}
@@ -61,7 +60,6 @@ var EquipDetail = React.createClass({
             this.setState({visible: true});
         }
     },
-
     callback:function(key){
         if(key=="1"){
             let equipListConditions = store.getState().allEquipJsonDataState ;
@@ -120,14 +118,3 @@ var EquipDetail = React.createClass({
 });
 
 export {EquipDetail as default}
-
-//<div className="card-content">
-//    <div className="condition-body">
-//        {/*查询条件(性质、级别、车身、燃油)*/}
-//        {conditionLists}
-//    </div>
-//    {/*按品牌、级别*/}
-//    <FileContent chooseBrandPrefix={this.chooseBrandPrefix}   equipList={this.state.resultList} chooseContent={this.chooseContent}/>
-//    {/*已选条件*/}
-//    <Haschoose hasChooseList={this.state.hasChooseList}  selectedOrCancelflag={this.state.selectedOrCancelflag}/>
-////</div>

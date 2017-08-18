@@ -10,7 +10,7 @@ import {allEquipJsonData} from "../../../reduxFile/actions";
 import ContentBodyRowLeft from "./contentBodyRowLeft.js";
 import ContentBodyRowRight from "./contentBodyRowRight.js";
 import $ from "jquery";
-import '../equip.less'
+import './equip.less'
 
 var NavTitle = React.createClass({
     getInitialState: function () {

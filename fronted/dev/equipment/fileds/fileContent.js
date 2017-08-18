@@ -11,7 +11,7 @@ import Haschoose from "../hasChoose.js";
 import NavTitle from "./navTitle.js";
 import DataDeal from "../../common/datadeal.js";
 import $ from "jquery";
-import './../equip.less'
+import './equip.less'
 
 var FileContent = React.createClass({
     getInitialState: function () {

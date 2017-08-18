@@ -8,7 +8,7 @@ import DataDeal from "./../../common/datadeal.js";
 import store from "../../../reduxFile/store";
 import {allEquipJsonData} from "../../../reduxFile/actions";
 import $ from "jquery";
-import '../equip.less'
+import './equip.less'
 
 var contentBodyRowRight = React.createClass({
     getInitialState: function () {

@@ -5,7 +5,7 @@ import React from  'react'
 import ReactDOM from 'react-dom'
 import DataDeal from "./datadeal.js";
 import $ from "jquery";
-import '../equipment/equip.less'
+import '../equipment/fileds/equip.less'
 
 var BigCharts = React.createClass({
     getInitialState: function () {
