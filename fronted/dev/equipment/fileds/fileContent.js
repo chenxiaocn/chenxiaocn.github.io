@@ -200,12 +200,12 @@ var FileContent = React.createClass({
     },
     render:function(){
         let conditionLists=[], allConditions=this.state.allConditions;
-        for(var item in allConditions){
-            for(var item2 in allConditions[item]){
-                conditionLists.push(<ConditionContent key={item2}  selectedCellCondition={this.selectedCellCondition} conditionTitle={item2} conditionContent={allConditions[item][item2]}/>
-                );
+        for(let item in allConditions){
+            for(let item2 in allConditions[item]){
+                conditionLists.push(<ConditionContent key={item2}  selectedCellCondition={this.selectedCellCondition} conditionTitle={item2} conditionContent={allConditions[item][item2]}/>);
             }
         }
+
         let filterType =this.state.filterType, navtitle;
         switch (filterType){
             case "按品牌":

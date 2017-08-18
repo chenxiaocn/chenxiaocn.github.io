@@ -18,7 +18,7 @@ var Haschoose = React.createClass({
         }
     },
     componentWillReceiveProps:function(nextprops){
-        var hasChooseList=this.state.hasChooseList;
+        let hasChooseList=this.state.hasChooseList;
         if(nextprops.selectedOrCancelflag==0){
             hasChooseList= DataDeal.sorSplice(hasChooseList,nextprops.hasChooseList);
         }
@@ -43,7 +43,7 @@ var Haschoose = React.createClass({
         let thisInnerText=$(e.target).prev().text();
         let thisId=$(e.target).parent().attr('id');
 
-        for(var i=0;i<$('.selected').length;i++){
+        for(let i=0;i<$('.selected').length;i++){
             if(thisInnerText==$('.selected')[i].innerText){
                 //全选变取消
                 let thisTabInnerText=$('.ant-tabs-tab-active').text();
