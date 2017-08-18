@@ -114,10 +114,11 @@ var BodyLi = React.createClass({
                 </Row>
             );
         }.bind(this));
+
         return (
             <li>
                 <div className="item-title clearfix">
-                    <div className="all pull-left" onClick={this.allChoose}>全选</div>
+                   <div className="all pull-left" onClick={this.allChoose}>全选</div>
                     <p className="pull-left"><b>{this.state.segment}</b></p>
                 </div>
                 <div className="item-body">

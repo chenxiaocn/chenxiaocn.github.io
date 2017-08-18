@@ -103,14 +103,15 @@ var BodyLi = React.createClass({
         let dataList=equipListConditions.equipList;
 
         let thisInnertext=$(e.target).text();
-        let modelLi= $(e.target).parent().next().find('.model-li');//该级别下的所有model
         let leftLi=$(e.target).parent().next().find('.ant-col-2');
+        let modelLi= $(e.target).parent().next().find('.model-li');//该级别下的所有model
         let flag=DataDeal.allOrCancel(thisInnertext,$(e.target));//全选或取消.选中1，取消0
         DataDeal.modelHasSelected(modelLi,flag,'selected');
+        DataDeal.modelHasSelected(leftLi,flag,'selectedSub');//选中1，取消0
+
         let ModelLiArry= DataDeal.getModelLiValue(modelLi);
         ModelLiArry=DataDeal.jugeModel(dataList,ModelLiArry);//判断重名
 
-        DataDeal.modelHasSelected(leftLi,flag,'selectedSub');//选中1，取消0
         this.props.chooseContent(ModelLiArry,flag);
     },
     leftValueChoose:function(ModelLiArry,flag){

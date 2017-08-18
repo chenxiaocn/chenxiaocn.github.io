@@ -1,7 +1,8 @@
 import React from  'react';
 import ReactDOM from 'react-dom';
 import $ from "jquery";
-import EquipDetail from "../equipment/equipDetail.js";
+import  store from "../../reduxFile/store";
+import {allEquipJsonData} from "../../reduxFile/actions";
 
 let Datadeal = {
     //数组去重
@@ -38,7 +39,6 @@ let Datadeal = {
             arr.sort(bySort(arr[i][sortStr]));
         }
     },
-
     //数组对象相减
     sorSplice:function(arr1,arr2){
         for (var i = 0; i<arr1.length; i++){
@@ -50,7 +50,6 @@ let Datadeal = {
         }
         return arr1;
     },
-
     //数组相减
     sortMinus:function(b,c){
         var a = {};
@@ -100,7 +99,6 @@ let Datadeal = {
         }
         return modeLiValue;
     },
-
     //"取消"或"全选"
     allOrCancel:function(segTitle,target){
         let flag=0;
@@ -156,7 +154,6 @@ let Datadeal = {
         }
         return tmpData;
     },
-
     myFunction:function(type,conArray,dataArray){
         var res=new Array();
         for(var item in dataArray){
@@ -168,7 +165,6 @@ let Datadeal = {
         }
         return res;
     },
-
     //删除数组指定元素
     removeByValue:function(arr, val){
         for(var i=0; i<arr.length; i++) {
@@ -189,7 +185,6 @@ let Datadeal = {
         }
         return arr;
     },
-
     //获取指定级别下的子级别
     getSubSegList:function(list,seg){
         var subSegList=[];
@@ -201,7 +196,6 @@ let Datadeal = {
         subSegList=this.unique(subSegList);
         return subSegList;
     },
-
     //指定类
     getId:function(content){
         var arr='';
@@ -230,7 +224,6 @@ let Datadeal = {
         arr=this.unique(arr);
         return arr;
     },
-
     //添加或删除类
     addOrDelClass:function(selectedFlag,target,className){
         //true:添加类，false:删除类
@@ -306,7 +299,6 @@ let Datadeal = {
         }
         return dateRangeList;
     },
-
     //获取选中时间段数组列表
     getSelectedRangeArr:function(selectedList,dataType){
         let selectedArr=[];
@@ -333,7 +325,6 @@ let Datadeal = {
         selectedArr=selectedArr.split(',');
         return selectedArr;
     },
-
     //判断同一厂商汽车重名
     jugeModel:function(list,recordsList){
         let arry=[],count=0;
@@ -353,7 +344,6 @@ let Datadeal = {
         }
         return arry;
     },
-
     jugeCell:function(list,modelId){
         let count=0;
         for(let i=0;i<list.length;i++){
@@ -362,6 +352,24 @@ let Datadeal = {
             }
         }
         return count;
+    },
+
+    /////////////////////条件选车 全选/////////////////
+    allSelected:function(e){
+        let equipListConditions = store.getState().allEquipJsonDataState ;
+        let dataList=equipListConditions.equipList;
+
+        let thisInnertext=$(e.target).text();
+        let leftLi=$(e.target).parent().next().find('.ant-col-2');
+        let modelLi= $(e.target).parent().next().find('.model-li');//该级别下的所有model
+        let flag=this.allOrCancel(thisInnertext,$(e.target));//全选或取消.选中1，取消0
+        this.modelHasSelected(modelLi,flag,'selected');
+        this.modelHasSelected(leftLi,flag,'selectedSub');//选中1，取消0
+
+        let ModelLiArry= this.getModelLiValue(modelLi);
+        ModelLiArry=this.jugeModel(dataList,ModelLiArry);//判断重名
+
+
     }
 
 };
