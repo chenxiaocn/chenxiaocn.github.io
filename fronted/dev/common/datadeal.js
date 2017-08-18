@@ -356,9 +356,6 @@ let Datadeal = {
 
     /////////////////////条件选车 全选/////////////////
     allSelected:function(target){
-        let equipListConditions = store.getState().allEquipJsonDataState ;
-        let dataList=equipListConditions.equipList;
-
         let thisInnertext=$(target).text();
         let leftLi=$(target).parent().next().find('.ant-col-2');
         let modelLi= $(target).parent().next().find('.model-li');//该级别下的所有model
@@ -366,11 +363,17 @@ let Datadeal = {
         this.modelHasSelected(modelLi,flag,'selected');
         this.modelHasSelected(leftLi,flag,'selectedSub');//选中1，取消0
 
+        this.getSelectedModelLiArr(modelLi,flag);
+
+    },
+    getSelectedModelLiArr:function(modelLi,flag){
+        let equipListConditions = store.getState().allEquipJsonDataState ;
+        let dataList=equipListConditions.equipList;
+
         let ModelLiArry= this.getModelLiValue(modelLi);
         ModelLiArry=this.jugeModel(dataList,ModelLiArry);//判断重名
         let conditions = {selectedList : ModelLiArry,selectedOrCancelflag:flag};
         store.dispatch(allEquipJsonData(conditions));//存到store
     }
-
 };
 module.exports=Datadeal;
