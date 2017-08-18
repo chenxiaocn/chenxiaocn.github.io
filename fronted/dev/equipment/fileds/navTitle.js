@@ -5,6 +5,8 @@ import React from  'react'
 import ReactDOM from 'react-dom'
 import {Row} from "antd";
 import DataDeal from "./../../common/datadeal.js";
+import store from "../../../reduxFile/store";
+import {allEquipJsonData} from "../../../reduxFile/actions";
 import ContentBodyRowLeft from "./contentBodyRowLeft.js";
 import ContentBodyRowRight from "./contentBodyRowRight.js";
 import $ from "jquery";
@@ -82,6 +84,9 @@ var BodyLi = React.createClass({
         this.loadData(nextProps.segment,nextProps.equipList);
     },
     allChoose:function(e){
+        let equipListConditions = store.getState().allEquipJsonDataState ;
+        let dataList=equipListConditions.equipList;
+
         let thisInnertext=$(e.target).text();
         let leftLi=$(e.target).parent().next().find('.ant-col-2');
         let modelLi= $(e.target).parent().next().find('.model-li');//该级别下的所有model
@@ -90,6 +95,8 @@ var BodyLi = React.createClass({
         DataDeal.modelHasSelected(leftLi,flag,'selectedSub');//选中1，取消0
 
         let ModelLiArry= DataDeal.getModelLiValue(modelLi);
+        ModelLiArry=DataDeal.jugeModel(dataList,ModelLiArry);//判断重名
+
         this.props.chooseContent(ModelLiArry,flag);
     },
     leftValueChoose:function(ModelLiArry,flag){

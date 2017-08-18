@@ -10,6 +10,139 @@
     <input type="text"  value="aaaa"/>
 </div>
 <script>
+
+    var list1=[
+        {
+            "HZZZ": "自主",
+            "Segment": "A",
+            "SubSegment": "A-L",
+            "BodyType": "SUV",
+            "OEM": "东风柳汽",
+            "Brand": "东风",
+            "Model": "景逸X5",
+            "OEMID": "815",
+            "BrandPrefix": "D",
+            "ModelID": "219385",
+            "Fuel": "汽油"
+        },
+        {
+            "HZZZ": "他主",
+            "Segment": "A",
+            "SubSegment": "A-L",
+            "BodyType": "SUV",
+            "OEM": "一汽",
+            "Brand": "东风",
+            "Model": "景逸X5",
+            "OEMID": "813",
+            "BrandPrefix": "D",
+            "ModelID": "219385",
+            "Fuel": "汽油"
+        },
+        {
+            "HZZZ": "自主",
+            "Segment": "A",
+            "SubSegment": "A-L",
+            "BodyType": "SUV",
+            "OEM": "东风柳汽",
+            "Brand": "东风",
+            "Model": "X5",
+            "OEMID": "815",
+            "BrandPrefix": "D",
+            "ModelID": "219",
+            "Fuel": "汽油"
+        },
+        {
+            "HZZZ": "自主",
+            "Segment": "A",
+            "SubSegment": "A-L",
+            "BodyType": "SUV",
+            "OEM": "一汽",
+            "Brand": "东风",
+            "Model": "X5",
+            "OEMID": "815",
+            "BrandPrefix": "D",
+            "ModelID": "219",
+            "Fuel": "汽油"
+        },
+        {
+            "HZZZ": "自主",
+            "Segment": "A",
+            "SubSegment": "A-L",
+            "BodyType": "SUV",
+            "OEM": "汕头",
+            "Brand": "东风",
+            "Model": "奔驰",
+            "OEMID": "815",
+            "BrandPrefix": "D",
+            "ModelID": "218",
+            "Fuel": "汽油"
+        }
+    ];
+    var recordsList=[
+        {
+            "modelValue": "景逸X5",
+            "dataId": "815_219385",
+            "id": "219385",
+            "dataOem": "东风柳汽"
+        },
+        {
+            "modelValue": "景逸X5",
+            "dataId": "815_219385",
+            "id": "219385",
+            "dataOem": "一汽"
+        },
+        {
+            "modelValue": "X5",
+            "dataId": "815_219385",
+            "id": "219",
+            "dataOem": "东风柳汽"
+        },
+        {
+            "modelValue": "X5",
+            "dataId": "815_219385",
+            "id": "219",
+            "dataOem": "一汽"
+        },
+        {
+            "modelValue": "奔驰",
+            "dataId": "815_219385",
+            "id": "218",
+            "dataOem": "汕头"
+        }
+    ];
+
+    let rearry=jugeModel(recordsList,list1);
+    console.log(rearry);
+
+    function jugeModel(recordsList,list){
+        let arry=[],count=0;
+        for(let i=0;i<recordsList.length;i++){
+            let modelValue=recordsList[i].modelValue;
+            let dataId=recordsList[i].dataId;
+            let id=recordsList[i].id;
+            let dataOem=recordsList[i].dataOem;
+
+            count=jugeCell(list,recordsList[i].id);
+            if(count>1){
+                modelValue=recordsList[i].modelValue+'('+recordsList[i].dataOem+')';
+                arry.push({"modelValue":modelValue,"dataId":dataId,"id":id,"dataOem":dataOem})
+            }else{
+                arry.push(recordsList[i]);
+            }
+        }
+        return arry;
+    };
+
+    function jugeCell(recordsList,modelId){
+        let count=0;
+        for(let i=0;i<recordsList.length;i++){
+            if(modelId==recordsList[i].ModelID){
+                count++;
+            }
+        }
+        return count;
+    }
+
     // /////////////////////模糊查询 /////////////////////
     var list=[
         {
@@ -84,7 +217,7 @@
             }
         }
     }
-//    console.log(a1);
+    //    console.log(a1);
 
     /////////////////////删除数组指定元素///////////////////
     var spliceList=['1','2','3']
@@ -104,7 +237,7 @@
     var dataList=['0','1','2','2'];
     var listResult=unique(dataList);
     console.log(listResult);
-   function  unique(arr){
+    function  unique(arr){
         var tmp = new Array();
         for(var i in arr){
             //该元素在tmp内部不存在才允许追加

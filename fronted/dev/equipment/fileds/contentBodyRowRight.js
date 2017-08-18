@@ -5,6 +5,8 @@ import React from  'react'
 import ReactDOM from 'react-dom'
 import {Col} from "antd";
 import DataDeal from "./../../common/datadeal.js";
+import store from "../../../reduxFile/store";
+import {allEquipJsonData} from "../../../reduxFile/actions";
 import $ from "jquery";
 import '../equip.less'
 
@@ -34,12 +36,19 @@ var contentBodyRowRight = React.createClass({
         this.loadData(nextprops.content,nextprops.leftVaule,nextprops.leftProperty);
     },
     modelChoose:function(e){
+        let equipListConditions = store.getState().allEquipJsonDataState ;
+        let dataList=equipListConditions.equipList;
+
         let target=$(e.target);
         let itemValue=target.text();
         let id=target.attr('id');
         let dataId=target.attr('data-id');
+        let dataOem=target.attr('data-oem');
+
         let flag= DataDeal.selectedModel(target);//选中1，取消0
-        let ModelLiArry=[{"modelValue":itemValue,"dataId":dataId,"id":id}];
+        let ModelLiArry=[{"modelValue":itemValue,"dataId":dataId,"id":id,"dataOem":dataOem}];
+        ModelLiArry=DataDeal.jugeModel(dataList,ModelLiArry);//判断重名
+
         this.props.modelChoose(ModelLiArry,flag);
     },
     loadData:function(content,leftVaule,leftProperty){
@@ -49,13 +58,13 @@ var contentBodyRowRight = React.createClass({
             for(let key in dataList[item]){
                 if(key==leftProperty){
                     if(leftVaule==dataList[item][key]){
-                        Model.push({OEMID:dataList[item].OEMID,Model:dataList[item].Model,ModelID:dataList[item].ModelID});
+                       Model.push(dataList[item]);
                     }
                 }
             }
         }
         //数组对象去重
-        var hash = {};
+        let hash = {};
         Model = Model.reduce(function(item, next) {
             hash[next.ModelID] ?'' : hash[next.ModelID] = true && item.push(next);
             return item
@@ -66,7 +75,7 @@ var contentBodyRowRight = React.createClass({
     render: function () {
         let itemModel=this.state.ModelList.map(function(content,index){
             return(
-                <li className="model-li"  key={index} data-id={content.OEMID+'_'+content.ModelID} id={content.ModelID} onClick={this.modelChoose}>
+                <li className="model-li"  key={index} data-id={content.OEMID+'_'+content.ModelID} id={content.ModelID} data-oem={content.OEM} onClick={this.modelChoose}>
                     {content.Model}
                     <b></b>
                 </li>

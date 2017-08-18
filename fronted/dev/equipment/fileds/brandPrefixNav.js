@@ -5,6 +5,8 @@ import React from  'react'
 import ReactDOM from 'react-dom'
 import {Row} from "antd";
 import DataDeal from "./../../common/datadeal.js";
+import store from "../../../reduxFile/store";
+import {allEquipJsonData} from "../../../reduxFile/actions";
 import ContentBodyRowLeft from "./contentBodyRowLeft.js";
 import ContentBodyRowRight from "./contentBodyRowRight.js";
 import $ from "jquery";
@@ -97,12 +99,17 @@ var BodyLi = React.createClass({
         this.setState({OEM:OEM,carList:carList});
     },
     allChoose:function(e){
+        let equipListConditions = store.getState().allEquipJsonDataState ;
+        let dataList=equipListConditions.equipList;
+
         let thisInnertext=$(e.target).text();
         let modelLi= $(e.target).parent().next().find('.model-li');//该级别下的所有model
         let leftLi=$(e.target).parent().next().find('.ant-col-2');
         let flag=DataDeal.allOrCancel(thisInnertext,$(e.target));//全选或取消.选中1，取消0
         DataDeal.modelHasSelected(modelLi,flag,'selected');
         let ModelLiArry= DataDeal.getModelLiValue(modelLi);
+        ModelLiArry=DataDeal.jugeModel(dataList,ModelLiArry);//判断重名
+
         DataDeal.modelHasSelected(leftLi,flag,'selectedSub');//选中1，取消0
         this.props.chooseContent(ModelLiArry,flag);
     },

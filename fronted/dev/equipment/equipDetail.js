@@ -106,7 +106,7 @@ var EquipDetail = React.createClass({
     //条件选择
     selectedCellCondition:function(content,clickType,conditionTypeInnerText){
         let equipListConditions = store.getState().allEquipJsonDataState ;
-        var dataList=equipListConditions.equipList;
+        let dataList=equipListConditions.equipList;
         var allConditions=[],equipListArry=[];
         var segmentList=[],bodyList=[],fuelList=[],equipListArry=[];
         var initSegmentList=this.state.segmentList,initBodyList=this.state.bodyList,initFuelList=this.state.fuelList;

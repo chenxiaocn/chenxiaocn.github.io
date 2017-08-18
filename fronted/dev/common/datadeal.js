@@ -91,16 +91,15 @@ let Datadeal = {
     //获取被选中的车系值
     getModelLiValue:function(modelLi){
         var modeLiValue=[],modelLiID=[];
-        for(var i=0;i<modelLi.length;i++){
-            var itemValue=$($(modelLi)[i])[0].innerText;
+        for(let i=0;i<modelLi.length;i++){
+            let itemValue=$($(modelLi)[i]).text();
             let itemId=$($(modelLi)[i]).attr('data-id');
             let id=$($(modelLi)[i]).attr('id');
-            modeLiValue.push({"modelValue":itemValue,"dataId":itemId,"id":id}) ;
+            let dataOem=$($(modelLi)[i]).attr('data-oem');
+            modeLiValue.push({"modelValue":itemValue,"dataId":itemId,"id":id,"dataOem":dataOem}) ;
         }
         return modeLiValue;
     },
-
-    //
 
     //"取消"或"全选"
     allOrCancel:function(segTitle,target){
@@ -333,6 +332,36 @@ let Datadeal = {
         selectedArr=selectedArr.substring(0,selectedArr.length-1);
         selectedArr=selectedArr.split(',');
         return selectedArr;
+    },
+
+    //判断同一厂商汽车重名
+    jugeModel:function(list,recordsList){
+        let arry=[],count=0;
+        for(let i=0;i<recordsList.length;i++){
+            let modelValue=recordsList[i].modelValue;
+            let dataId=recordsList[i].dataId;
+            let id=recordsList[i].id;
+            let dataOem=recordsList[i].dataOem;
+
+            count=this.jugeCell(list,recordsList[i].id);
+            if(count>1){
+                modelValue=recordsList[i].modelValue+'('+recordsList[i].dataOem+')';
+                arry.push({"modelValue":modelValue,"dataId":dataId,"id":id,"dataOem":dataOem})
+            }else{
+                arry.push(recordsList[i]);
+            }
+        }
+        return arry;
+    },
+
+    jugeCell:function(list,modelId){
+        let count=0;
+        for(let i=0;i<list.length;i++){
+            if(modelId==list[i].ModelID){
+                count++;
+            }
+        }
+        return count;
     }
 
 };

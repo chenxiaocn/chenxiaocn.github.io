@@ -5,8 +5,10 @@ import React from  'react'
 import ReactDOM from 'react-dom'
 import {Col} from "antd";
 import DataDeal from "./../../common/datadeal.js";
+import store from "../../../reduxFile/store";
+import {allEquipJsonData} from "../../../reduxFile/actions";
 import $ from "jquery";
-import '../equip.less'
+import '../equip.less';
 
 var contentBodyRowLeft = React.createClass({
     getInitialState: function () {
@@ -22,6 +24,9 @@ var contentBodyRowLeft = React.createClass({
     },
     leftValueChoose:function(e){
         let flag=0;
+        let equipListConditions = store.getState().allEquipJsonDataState ;
+        let dataList=equipListConditions.equipList;
+
         if($(e.target).hasClass('selectedSub')){
             $(e.target).removeClass('selectedSub');
             $(e.target).parent().parent().prev().find('.all').text('全选');
@@ -32,6 +37,8 @@ var contentBodyRowLeft = React.createClass({
         let modelLi= $(e.target).next().find('.model-li');//该级别下的所有model
         DataDeal.modelHasSelected(modelLi,flag,'selected');//选中1，取消0
         let ModelLiArry= DataDeal.getModelLiValue(modelLi);
+        ModelLiArry=DataDeal.jugeModel(dataList,ModelLiArry);//判断重名
+
         this.props.leftValueChoose(ModelLiArry,flag);
     },
     render: function () {
