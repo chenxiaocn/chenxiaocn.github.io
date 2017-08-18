@@ -35,7 +35,7 @@ var contentBodyRowRight = React.createClass({
     },
     modelChoose:function(e){
         let target=$(e.target);
-        let itemValue=target[0].innerText;
+        let itemValue=target.text();
         let id=target.attr('id');
         let dataId=target.attr('data-id');
         let flag= DataDeal.selectedModel(target);//选中1，取消0

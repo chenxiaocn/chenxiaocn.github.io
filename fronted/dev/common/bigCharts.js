@@ -20,7 +20,7 @@ var BigCharts = React.createClass({
     componentWillReceiveProps:function(nextprops){
     },
     chooseBrandPrefix:function(e){
-        var thisInnerText=$(e.target)[0].innerText;
+        var thisInnerText=$(e.target).text();
         if($(e.target).hasClass("choose-active")){
             $(e.target).removeClass("choose-active");
             //加载数据

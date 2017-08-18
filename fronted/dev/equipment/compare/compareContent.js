@@ -43,7 +43,7 @@ var CompareContent = React.createClass({
         this.setState({historyList:historyList});
     },
     allSelected:function(e){
-        let thisInnertext=$(e.target)[0].innerText;
+        let thisInnertext=$(e.target).text();
         let flag=DataDeal.allOrCancel(thisInnertext,$(e.target));//全选或取消
         let modelLi= $(e.target).parent().next().find('.chk');//该级别下的所有model
         DataDeal.modelHasSelected(modelLi,flag,'selected');//选中1，取消0
@@ -55,7 +55,7 @@ var CompareContent = React.createClass({
     },
     historyChoose:function(e){
         let target=$(e.target);
-        let itemValue=target[0].innerText;
+        let itemValue=target.text();
         let id=target.attr('id');
         let dataId=target.attr('data-id');
         let flag= DataDeal.selectedModel(target);//选中1，取消0
@@ -138,7 +138,7 @@ var DDContent = React.createClass({
 
     modelChoose:function(e){
         let target=$(e.target);
-        let itemValue=target[0].innerText;
+        let itemValue=target.text();
         let id=target.attr('id');
         let dataId=target.attr('data-id');
         let flag= DataDeal.selectedModel(target);//选中1，取消0

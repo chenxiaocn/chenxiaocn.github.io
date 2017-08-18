@@ -27,8 +27,8 @@ var ConditionContent = React.createClass({
         this.props.selectedCellCondition(liText,clickType,conditionTypeInnerText);
     },
     chooseNoLimit:function(e){
-        var liText = $(e.target)[0].innerText;
-        var typeInnerText=$(e.target).prev()[0].innerText;//所属筛选条件
+        var liText = $(e.target).text();
+        var typeInnerText=$(e.target).prev().text();//所属筛选条件
         typeInnerText=typeInnerText.substring(0,typeInnerText.length-1);
         var conditionLi=$(e.target).parent().parent().find('.condition-ul li');
         if(!($(e.target).hasClass('title-choose-active'))){
@@ -81,7 +81,7 @@ var ConditionLi=React.createClass({
     },
     selectedCellCondition:function(e){
         var selectedFlag=!(this.state.selectedFlag);
-        var liText = $(e.target)[0].innerText;
+        var liText = $(e.target).text();
         var conditionTypeInnerText=this.state.conditionTitle;
 
         DataDeal.addOrDelClass(selectedFlag,$(e.target),'choose-active');
@@ -95,7 +95,7 @@ var ConditionLi=React.createClass({
         //“不限”添样式
         for(var i=0;i<$('.conditonType').length;i++)
         {
-            var conditonTypeCellContent=$($('.conditonType')[i])[0].innerText;
+            var conditonTypeCellContent=$($('.conditonType')[i]).text();
             conditonTypeCellContent=conditonTypeCellContent.substring(0,conditonTypeCellContent.length-1);
             if(conditonTypeCellContent==conditionTypeInnerText){
                 $($('.conditonType')[i]).next().removeClass("title-choose-active");
@@ -111,7 +111,7 @@ var ConditionLi=React.createClass({
     },
     subSegChoose:function(e){
         var selectedFlag=!(this.state.selectedFlag);
-        let liText = $(e.target)[0].innerText;
+        let liText = $(e.target).text();
         let thisDataParent=$(e.target).attr('data-parent');
         let conditionTypeInnerText=this.state.conditionTitle;
 
@@ -124,7 +124,7 @@ var ConditionLi=React.createClass({
 
             for(var i=0;i<$('.conditonType').length;i++)
             {
-                var conditonTypeCellContent=$($('.conditonType')[i])[0].innerText;
+                var conditonTypeCellContent=$($('.conditonType')[i]).text();
                 conditonTypeCellContent=conditonTypeCellContent.substring(0,conditonTypeCellContent.length-1);
                 if(conditonTypeCellContent==conditionTypeInnerText){
                     var segLi=$($('.conditonType')[i]).parent().next().find('li');
@@ -146,7 +146,7 @@ var ConditionLi=React.createClass({
         }else{
             for(var i=0;i<$('.conditonType').length;i++)
             {
-                var conditonTypeCellContent=$($('.conditonType')[i])[0].innerText;
+                var conditonTypeCellContent=$($('.conditonType')[i]).text();
                 conditonTypeCellContent=conditonTypeCellContent.substring(0,conditonTypeCellContent.length-1);
                 if(conditonTypeCellContent==conditionTypeInnerText){
                     //“不限”添样式

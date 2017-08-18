@@ -82,7 +82,7 @@ var BodyLi = React.createClass({
         this.loadData(nextProps.segment,nextProps.equipList);
     },
     allChoose:function(e){
-        let thisInnertext=$(e.target)[0].innerText;
+        let thisInnertext=$(e.target).text();
         let leftLi=$(e.target).parent().next().find('.ant-col-2');
         let modelLi= $(e.target).parent().next().find('.model-li');//该级别下的所有model
         let flag=DataDeal.allOrCancel(thisInnertext,$(e.target));//全选或取消

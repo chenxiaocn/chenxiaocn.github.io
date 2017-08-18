@@ -97,7 +97,7 @@ var BodyLi = React.createClass({
         this.setState({OEM:OEM,carList:carList});
     },
     allChoose:function(e){
-        let thisInnertext=$(e.target)[0].innerText;
+        let thisInnertext=$(e.target).text();
         let modelLi= $(e.target).parent().next().find('.model-li');//该级别下的所有model
         let leftLi=$(e.target).parent().next().find('.ant-col-2');
         let flag=DataDeal.allOrCancel(thisInnertext,$(e.target));//全选或取消.选中1，取消0

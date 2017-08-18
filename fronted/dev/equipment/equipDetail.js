@@ -226,7 +226,7 @@ var EquipDetail = React.createClass({
     },
     submitModifyOrAdd: function (e) {
         //条件选车“已选条件”为竞品组的“最近浏览”
-        let thisTabInnerText=$('.ant-tabs-tab-active')[0].innerText;
+        let thisTabInnerText=$('.ant-tabs-tab-active').text();
         if(thisTabInnerText=='条件选车'){
             let conditions = {historyList : this.state.hasChooseList };
             store.dispatch(allEquipJsonData(conditions));//存到store

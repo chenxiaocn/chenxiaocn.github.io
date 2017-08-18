@@ -42,7 +42,7 @@ var Segment = React.createClass({
         this.setState({searchContent: searchContent,equipList:searchResult});
     },
     chooseFilterType:function(e){
-        var thisInnerText=$(e.target)[0].innerText;
+        var thisInnerText=$(e.target).text();
         this.setState({filterType:thisInnerText});
         $('.filter-btn-group div').removeClass('btn-active');
         $(e.target).addClass('btn-active');

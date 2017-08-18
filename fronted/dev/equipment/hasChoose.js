@@ -40,26 +40,25 @@ var Haschoose = React.createClass({
     modelDel:function(e){
         let allNode,leftNode;
         let hasChooseList=this.state.hasChooseList;
-        let thisInnerText=$(e.target).prev()[0].innerText;
+        let thisInnerText=$(e.target).prev().text();
         let thisId=$(e.target).parent().attr('id');
 
         for(var i=0;i<$('.selected').length;i++){
             if(thisInnerText==$('.selected')[i].innerText){
-                $($('.selected')[i]).removeClass('selected');
                 //全选变取消
-                let thisTabInnerText=$('.ant-tabs-tab-active')[0].innerText;
+                let thisTabInnerText=$('.ant-tabs-tab-active').text();
                 if(thisTabInnerText=='竞品组'){
                     allNode= $($('.selected')[i]).parent().prev().find('.all');
                 }
                 if(thisTabInnerText=='条件选车'){
                     leftNode=$($('.selected')[i]).parent().parent().prev();
-                    console.log(leftNode);
                     leftNode.removeClass('selectedSub');
                     allNode=leftNode.parent().parent().prev().find('.all');
                     $($('.selected')[i]).parent('.item-body').prev().find('.all').text("全选");
                 }
                 allNode.text("全选");
 
+                $($('.selected')[i]).removeClass('selected');
                 break;
             }
         }

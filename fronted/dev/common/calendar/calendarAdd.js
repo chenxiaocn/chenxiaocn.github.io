@@ -20,7 +20,7 @@ var CalendarAdd = React.createClass({
         this.setState({selectedList:nextprops.selectedList});
     },
     delSelected:function(e){
-        let delSelectedInner=$(e.target).prev()[0].innerText;
+        let delSelectedInner=$(e.target).prev().text();
         this.props.delSelected(delSelectedInner);
     },
     addSelected:function(){
