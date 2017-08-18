@@ -23,13 +23,11 @@ var contentBodyRowLeft = React.createClass({
         this.setState({content:nextprops.content});
     },
     leftValueChoose:function(e){
-        let flag=0;
-        if($(e.target).hasClass('selectedSub')){
-            $(e.target).removeClass('selectedSub');
+        let flag=DataDeal.selectedModel($(e.target),'selectedSub');
+        if(flag==0){
             $(e.target).parent().parent().prev().find('.all').text('全选');
         }else{
-            flag=1;
-            $(e.target).addClass('selectedSub');
+
         }
 
         let modelLi= $(e.target).next().find('.model-li');//该级别下的所有model

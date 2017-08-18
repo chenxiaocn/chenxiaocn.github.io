@@ -39,13 +39,14 @@ var contentBodyRowRight = React.createClass({
         let equipListConditions = store.getState().allEquipJsonDataState ;
         let dataList=equipListConditions.equipList;
 
+
         let target=$(e.target);
         let itemValue=target.text();
         let id=target.attr('id');
         let dataId=target.attr('data-id');
         let dataOem=target.attr('data-oem');
 
-        let flag= DataDeal.selectedModel(target);//选中1，取消0
+        let flag= DataDeal.selectedModel(target,'selected');//选中1，取消0
         let ModelLiArry=[{"modelValue":itemValue,"dataId":dataId,"id":id,"dataOem":dataOem}];
         ModelLiArry=DataDeal.jugeModel(dataList,ModelLiArry);//判断重名
 

@@ -141,7 +141,7 @@ var DDContent = React.createClass({
         let itemValue=target.text();
         let id=target.attr('id');
         let dataId=target.attr('data-id');
-        let flag= DataDeal.selectedModel(target);//选中1，取消0
+        let flag= DataDeal.selectedModel(target,'selected');//选中1，取消0
         let ModelLiArry=[{"modelValue":itemValue,"dataId":dataId,"id":id}];
         this.props.modelChoose(ModelLiArry,flag);
     },

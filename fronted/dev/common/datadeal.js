@@ -112,15 +112,13 @@ let Datadeal = {
         return flag;
     },
     //单个车系选中
-    selectedModel:function(target){
-        var thisInnerText=target[0].innerText;
-        var flag=0;//有
-        if(target.hasClass('selected')){
-            target.removeClass('selected');
-            flag=0;
+    selectedModel:function(target,className){
+        let flag=0;//有
+        if(target.hasClass(className)){
+            target.removeClass(className);
         }
         else{
-            target.addClass('selected');
+            target.addClass(className);
             flag=1;
         }
         return flag;
