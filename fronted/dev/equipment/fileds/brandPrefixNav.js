@@ -32,7 +32,7 @@ var BrandPrefixNav = React.createClass({
     loadBrandPrefix:function(equipList){
         let dataList=equipList;
         let brandPrefix=[],brandPrefixBrand=[];
-        for(var i=0;i<dataList.length;i++){
+        for(let i=0;i<dataList.length;i++){
             brandPrefix.push(dataList[i].BrandPrefix);
             brandPrefixBrand.push({"BrandPrefix":dataList[i].BrandPrefix,"Brand":dataList[i].Brand});
         }
@@ -89,7 +89,7 @@ var BodyLi = React.createClass({
     loadData:function(brand,list){
         let dataList=list;
         let OEM=[],carList=[];
-        for(var i=0;i<dataList.length;i++){
+        for(let i=0;i<dataList.length;i++){
             if(brand==dataList[i].Brand){
                 OEM.push(dataList[i].OEM);
                 carList.push(dataList[i]);
@@ -99,26 +99,14 @@ var BodyLi = React.createClass({
         this.setState({OEM:OEM,carList:carList});
     },
     allChoose:function(e){
-        let equipListConditions = store.getState().allEquipJsonDataState ;
-        let dataList=equipListConditions.equipList;
-
-        let thisInnertext=$(e.target).text();
-        let leftLi=$(e.target).parent().next().find('.ant-col-2');
-        let modelLi= $(e.target).parent().next().find('.model-li');//该级别下的所有model
-        let flag=DataDeal.allOrCancel(thisInnertext,$(e.target));//全选或取消.选中1，取消0
-        DataDeal.modelHasSelected(modelLi,flag,'selected');
-        DataDeal.modelHasSelected(leftLi,flag,'selectedSub');//选中1，取消0
-
-        let ModelLiArry= DataDeal.getModelLiValue(modelLi);
-        ModelLiArry=DataDeal.jugeModel(dataList,ModelLiArry);//判断重名
-
-        this.props.chooseContent(ModelLiArry,flag);
+        DataDeal.allSelected(e.target);
+        this.props.chooseContent();
     },
-    leftValueChoose:function(ModelLiArry,flag){
-        this.props.chooseContent(ModelLiArry,flag);
+    leftValueChoose:function(){
+        this.props.chooseContent();
     },
-    modelChoose:function(ModelLiArry,flag){
-        this.props.chooseContent(ModelLiArry,flag);
+    modelChoose:function(){
+        this.props.chooseContent();
     },
     render: function () {
         let itemBodyRow=this.state.OEM.map(function(content,index){

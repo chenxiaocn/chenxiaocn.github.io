@@ -49,7 +49,10 @@ var contentBodyRowRight = React.createClass({
         let ModelLiArry=[{"modelValue":itemValue,"dataId":dataId,"id":id,"dataOem":dataOem}];
         ModelLiArry=DataDeal.jugeModel(dataList,ModelLiArry);//判断重名
 
-        this.props.modelChoose(ModelLiArry,flag);
+        let conditions = {selectedList : ModelLiArry,selectedOrCancelflag:flag};
+        store.dispatch(allEquipJsonData(conditions));//存到store
+
+        this.props.modelChoose();
     },
     loadData:function(content,leftVaule,leftProperty){
         let dataList=content;

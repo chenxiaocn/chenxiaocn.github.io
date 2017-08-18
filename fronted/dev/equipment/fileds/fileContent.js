@@ -3,6 +3,8 @@
  */
 import React from  'react'
 import ReactDOM from 'react-dom'
+import store from "../../../reduxFile/store";
+import {allEquipJsonData} from "../../../reduxFile/actions";
 import SearchItem from "../../common/searchItem/searchItem";
 import ConditionContent from './conditionContent.js';
 import BigCharts from "../../common/bigCharts.js";
@@ -195,8 +197,14 @@ var FileContent = React.createClass({
         });
     },
     //选择车系
-    chooseContent:function(chooseContent,flag){
-        this.setState({hasChooseList:chooseContent,selectedOrCancelflag:flag});
+    //chooseContent:function(chooseContent,flag){
+    //    this.setState({hasChooseList:chooseContent,selectedOrCancelflag:flag});
+    //},
+    chooseContent:function(){
+        let equipListConditions = store.getState().allEquipJsonDataState ;
+        let selectedList=equipListConditions.selectedList;
+        let selectedOrCancelflag=equipListConditions.selectedOrCancelflag;
+        this.setState({hasChooseList:selectedList,selectedOrCancelflag:selectedOrCancelflag});
     },
     render:function(){
         let conditionLists=[], allConditions=this.state.allConditions;

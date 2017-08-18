@@ -39,7 +39,10 @@ var contentBodyRowLeft = React.createClass({
         let ModelLiArry= DataDeal.getModelLiValue(modelLi);
         ModelLiArry=DataDeal.jugeModel(dataList,ModelLiArry);//判断重名
 
-        this.props.leftValueChoose(ModelLiArry,flag);
+        let conditions = {selectedList : ModelLiArry,selectedOrCancelflag:flag};
+        store.dispatch(allEquipJsonData(conditions));//存到store
+
+        this.props.leftValueChoose();
     },
     render: function () {
         return (
