@@ -59,20 +59,13 @@ var BodyLi = React.createClass({
     },
 
     componentDidMount: function () {
-        this.setState({equipList:this.props.equipList,segment:this.props.segment});
+        this.setState({segment:this.props.segment,equipList:this.props.equipList});
         this.loadData(this.props.segment,this.props.equipList);
     },
 
     loadData:function(segment,list){
-        let dataList=list;
-        let subSegmentList=[],carList=[];
-        for(let i=0;i<dataList.length;i++){
-            if(segment==dataList[i].Segment){
-                subSegmentList.push(dataList[i].SubSegment);
-                carList.push(dataList[i]);
-            }
-        }
-        subSegmentList = DataDeal.unique(subSegmentList);
+        let subSegmentList=DataDeal.getChildPropertyList(list,'Segment',segment,'SubSegment');
+        let carList=DataDeal.getConditionResults(list,'Segment');
         this.setState({subSegmentList:subSegmentList,carList:carList});
     },
     componentWillReceiveProps: function (nextProps) {

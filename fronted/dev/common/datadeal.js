@@ -144,9 +144,9 @@ let Datadeal = {
         return tmpData;
     },
     myFunction:function(type,conArray,dataArray){
-        var res=new Array();
-        for(var item in dataArray){
-            for(var item1 in conArray) {
+        let res=new Array();
+        for(let item in dataArray){
+            for(let item1 in conArray) {
                 if (dataArray[item][type] == conArray[item1]) {
                     res.push(dataArray[item]);
                 }
@@ -191,13 +191,13 @@ let Datadeal = {
     },
 
     //指定某个条件某个值的查询
-    getPropertyVaule:function(list,property,vaule){
+    getPropertyVaule:function(list,property,propertyVaule){
         let dataList=list;
         let arr=[];
         for(let item in list){
             for(let key in list[item]){
                 if(key==property){
-                    if(vaule==dataList[item][key]){
+                    if(propertyVaule==dataList[item][key]){
                         arr.push(dataList[item]);
                     }
                 }
@@ -222,13 +222,26 @@ let Datadeal = {
         }
         return arr;
     },
-    //指定某个条件的查询
+    //指定某个条件该条件列表的查询
     getConditionList:function(list,keyWord){
         let arr=[];
         for(let item in list){
             for(let key in list[item]){
                 if(key==keyWord){
                     arr.push(list[item][key]);
+                }
+            }
+        }
+        arr=this.unique(arr);
+        return arr;
+    },
+    //指定某个条件所有查询结果
+    getConditionResults:function(list,keyWord){
+        let arr=[];
+        for(let item in list){
+            for(let key in list[item]){
+                if(key==keyWord){
+                    arr.push(list[item]);
                 }
             }
         }

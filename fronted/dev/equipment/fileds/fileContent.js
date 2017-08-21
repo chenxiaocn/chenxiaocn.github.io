@@ -97,7 +97,6 @@ var FileContent = React.createClass({
         var selectedBodyList=this.state.selectedBodyList, selectedFuelList=this.state.selectedFuelList;
         var selectedSubSegmentList=this.state.selectedSubSegmentList, selectedBrandList=this.state.selectedBrandList;
         var selectedOEMList=this.state.selectedOEMList, selectedBrandPrefixList=this.state.selectedBrandPrefixList;
-
         if(clickType=='add'){
             switch (conditionTypeInnerText){
                 case "性质": selectedHZZZList.push(content);
@@ -112,7 +111,6 @@ var FileContent = React.createClass({
                     break;
             }
         }
-
         if(clickType=='remove'){
             switch (conditionTypeInnerText){
                 case "性质":  selectedHZZZList = DataDeal.removeByValue(selectedHZZZList,content);
@@ -127,7 +125,6 @@ var FileContent = React.createClass({
                     break;
             }
         }
-
         if(clickType=='noLimit'){
             switch (conditionTypeInnerText){
                 case "性质": selectedHZZZList=[];
@@ -143,9 +140,7 @@ var FileContent = React.createClass({
                     break;
             }
         }
-
         equipListArry=DataDeal.selectedCondition(selectedHZZZList,selectedSegmentList,selectedBodyList,selectedFuelList,selectedSubSegmentList,selectedBrandList,selectedOEMList,selectedBrandPrefixList,dataList);
-
         //该条件下的车的级别、车身、燃油
         for(var j=0;j<equipListArry.length;j++){
             segmentList.push(equipListArry[j].Segment);
