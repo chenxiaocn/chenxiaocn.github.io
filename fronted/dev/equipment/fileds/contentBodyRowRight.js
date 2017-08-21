@@ -36,22 +36,21 @@ var contentBodyRowRight = React.createClass({
         this.loadData(nextprops.content,nextprops.leftVaule,nextprops.leftProperty);
     },
     modelChoose:function(e){
-        let equipListConditions = store.getState().allEquipJsonDataState ;
-        let dataList=equipListConditions.equipList;
+        let flag=DataDeal.selectedModel($(e.target),'selected');
+        let ModelLiArry=[DataDeal.modelSelected($(e.target),flag)];
 
+        DataDeal.getSelectedModelLiArr(ModelLiArry,flag);
 
-        let target=$(e.target);
-        let itemValue=target.text();
-        let id=target.attr('id');
-        let dataId=target.attr('data-id');
-        let dataOem=target.attr('data-oem');
+        //左部随之变化的样式
+        let selectedModel=$(e.target).parent().find('.selected');
+        let leftNode=$(e.target).parent().parent().prev();
+        selectedModel.length?leftNode.addClass('selectedSub'):leftNode.removeClass('selectedSub');
 
-        let flag= DataDeal.selectedModel(target,'selected');//选中1，取消0
-        let ModelLiArry=[{"modelValue":itemValue,"dataId":dataId,"id":id,"dataOem":dataOem}];
-        ModelLiArry=DataDeal.jugeModel(dataList,ModelLiArry);//判断重名
-
-        let conditions = {selectedList : ModelLiArry,selectedOrCancelflag:flag};
-        store.dispatch(allEquipJsonData(conditions));//存到store
+        //全选或取消
+        let modelList=$(e.target).parent().parent().parent().parent().find('.model-li');
+        let selectedList=$(e.target).parent().parent().parent().parent().find('.selected');
+        let allNode=$(e.target).parent().parent().parent().parent().prev().find('.all');
+        DataDeal.modelSelctedAllCss(modelList,selectedList,allNode);
 
         this.props.modelChoose();
     },

@@ -38,30 +38,34 @@ var Haschoose = React.createClass({
         this.setState({hasChooseList:hasChooseList,selectedOrCancelflag:nextprops.selectedOrCancelflag});
     },
     modelDel:function(e){
-        let allNode,leftNode;
-        let hasChooseList=this.state.hasChooseList;
-        let thisInnerText=$(e.target).prev().text();
+        let allNode;
+        let thisTabInnerText=$('.ant-tabs-tab-active').text();
         let thisId=$(e.target).parent().attr('id');
+        let hasChooseList=this.state.hasChooseList;
+        let selectedList=$('.selected');
 
-        for(let i=0;i<$('.selected').length;i++){
-            if(thisInnerText==$('.selected')[i].innerText){
-                //全选变取消
-                let thisTabInnerText=$('.ant-tabs-tab-active').text();
+        for(let i=0;i<selectedList.length;i++){
+            let id=$(selectedList[i]).attr('id');
+            if(thisId==id){
                 if(thisTabInnerText=='竞品组'){
-                    allNode= $($('.selected')[i]).parent().prev().find('.all');
+                    allNode= $(selectedList[i]).parent().prev().find('.all');
                 }
                 if(thisTabInnerText=='条件选车'){
-                    leftNode=$($('.selected')[i]).parent().parent().prev();
-                    leftNode.removeClass('selectedSub');
-                    allNode=leftNode.parent().parent().prev().find('.all');
-                    $($('.selected')[i]).parent('.item-body').prev().find('.all').text("全选");
-                }
+                    //左部随之变化的样式
+                    let selectedModel=$(selectedList[i]).parent().find('.selected');
+                    let selectedModelLength=selectedModel.length;
+                    if(selectedModelLength==1)
+                    {
+                        $(selectedList[i]).parent().parent().prev().removeClass('selectedSub');
+                    }
+                    allNode=$(selectedList[i]).parent().parent().parent().parent().prev().find('.all')
+             }
                 allNode.text("全选");
-
-                $($('.selected')[i]).removeClass('selected');
+                $(selectedList[i]).removeClass('selected');
                 break;
             }
         }
+
         for(let i=0;i<hasChooseList.length;i++){
             if(hasChooseList[i].id==thisId){
                 hasChooseList.splice(i,1);

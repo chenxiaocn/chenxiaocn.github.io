@@ -31,7 +31,6 @@ var CompareContent = React.createClass({
             //data:{content:content},
             success: function(data) {
                 let recordsList=data.Records;
-                //console.log(recordsList);
                 let conditions = {compareList : recordsList};
                 store.dispatch(allEquipJsonData(conditions));//存到store
                 this.setState({recordsList:recordsList});
@@ -48,19 +47,18 @@ var CompareContent = React.createClass({
         let modelLi= $(e.target).parent().next().find('.chk');//该级别下的所有model
         DataDeal.modelHasSelected(modelLi,flag,'selected');//选中1，取消0
         let ModelLiArry= DataDeal.getModelLiValue(modelLi);
+
         this.setState({hasChooseList:ModelLiArry,selectedOrCancelflag:flag});
     },
     modelChoose:function(ModelLiArry,flag){
         this.setState({hasChooseList:ModelLiArry,selectedOrCancelflag:flag});
     },
     historyChoose:function(e){
-        let target=$(e.target);
-        let itemValue=target.text();
-        let id=target.attr('id');
-        let dataId=target.attr('data-id');
-        let flag= DataDeal.selectedModel(target);//选中1，取消0
-        let ModelLiArry=[{"modelValue":itemValue,"dataId":dataId,"id":id}];
+        let flag=DataDeal.selectedModel($(e.target),'selected');
+        let ModelLiArry=[DataDeal.modelSelected($(e.target),flag)];
+
         this.modelChoose(ModelLiArry,flag);
+        this.setState({flag:flag});
     },
     render: function () {
         let historyCell;
@@ -124,29 +122,26 @@ var DDContent = React.createClass({
     jugeModel:function(recordsList,modelId){
         let flag=false,count=0;
         for(let i=0;i<recordsList.length;i++){
-            for(let j=0;j<recordsList[i].Details.length;j++){
-                if(modelId==recordsList[i].Details[j].Model){
-                    count++;
-                }
-            }
+            let list=recordsList[i].Details;
+            count=DataDeal.jugeCell(list,modelId,'Model');
         }
-        if(count>1){
-            flag=true;
-        }
+        count>1? flag=true:flag=false;
         return flag;
     },
 
     modelChoose:function(e){
-        let target=$(e.target);
-        let itemValue=target.text();
-        let id=target.attr('id');
-        let dataId=target.attr('data-id');
-        let flag= DataDeal.selectedModel(target,'selected');//选中1，取消0
-        let ModelLiArry=[{"modelValue":itemValue,"dataId":dataId,"id":id}];
+        //全选样式
+        let flag=DataDeal.selectedModel($(e.target),'selected');
+
+        let modelLis=$(e.target).parent().find('.chk');
+        let selectedList=$(e.target).parent().find('.selected');
+        let allNode= $(e.target).parent().prev().find('.all');
+        DataDeal.modelSelctedAllCss(modelLis,selectedList,allNode);
+
+        let ModelLiArry=[DataDeal.modelSelected($(e.target),flag)];
         this.props.modelChoose(ModelLiArry,flag);
     },
     render: function () {
-        let flag=this.jugeModel(this.state.recordsList,343);
         let modelItem=this.state.details.map(function(content,index){
             let modelId=content.Model;
             let flag=this.jugeModel(this.state.recordsList,modelId);

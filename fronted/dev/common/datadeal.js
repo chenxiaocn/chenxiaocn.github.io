@@ -78,24 +78,16 @@ let Datadeal = {
     },
     //车系被选中样式
     modelHasSelected:function(modelLi,flag,className){
-        for(var i=0;i<modelLi.length;i++){
-            if(flag){
-                $($(modelLi)[i]).addClass(className);
-            }else{
-                $($(modelLi)[i]).removeClass(className);
-            }
+        for(let i=0;i<modelLi.length;i++){
+            flag?$($(modelLi)[i]).addClass(className): $($(modelLi)[i]).removeClass(className);
         }
-        return flag;
     },
     //获取被选中的车系值
     getModelLiValue:function(modelLi){
         var modeLiValue=[],modelLiID=[];
         for(let i=0;i<modelLi.length;i++){
-            let itemValue=$($(modelLi)[i]).text();
-            let itemId=$($(modelLi)[i]).attr('data-id');
-            let id=$($(modelLi)[i]).attr('id');
-            let dataOem=$($(modelLi)[i]).attr('data-oem');
-            modeLiValue.push({"modelValue":itemValue,"dataId":itemId,"id":id,"dataOem":dataOem}) ;
+            let modelLiCell=this.modelSelected($($(modelLi)[i]));
+            modeLiValue.push(modelLiCell) ;
         }
         return modeLiValue;
     },
@@ -103,23 +95,22 @@ let Datadeal = {
     allOrCancel:function(segTitle,target){
         let flag=0;
         if(segTitle=="取消"){
-            target[0].innerText="全选";
+            target.text("全选");
         }
         if(segTitle=="全选"){
             flag=1;
-            target[0].innerText="取消";
+            target.text("取消");
         }
         return flag;
     },
     //单个车系选中
     selectedModel:function(target,className){
-        let flag=0;//有
+        let flag=0;
         if(target.hasClass(className)){
             target.removeClass(className);
-        }
-        else{
+        }else{
             target.addClass(className);
-            flag=1;
+            flag=1
         }
         return flag;
     },
@@ -332,7 +323,8 @@ let Datadeal = {
             let id=recordsList[i].id;
             let dataOem=recordsList[i].dataOem;
 
-            count=this.jugeCell(list,recordsList[i].id);
+            //count=this.jugeCell(list,recordsList[i].id);
+            count=this.jugeCell(list,recordsList[i].id,'ModelID');
             if(count>1){
                 modelValue=recordsList[i].modelValue+'('+recordsList[i].dataOem+')';
                 arry.push({"modelValue":modelValue,"dataId":dataId,"id":id,"dataOem":dataOem})
@@ -342,11 +334,15 @@ let Datadeal = {
         }
         return arry;
     },
-    jugeCell:function(list,modelId){
+    jugeCell:function(list,modelId,keyWord){
         let count=0;
-        for(let i=0;i<list.length;i++){
-            if(modelId==list[i].ModelID){
-                count++;
+        for(let item in list){
+            for(let key in list[item]){
+                if(key==keyWord){
+                    if(modelId==list[item][key]){
+                        count++;
+                    }
+                }
             }
         }
         return count;
@@ -361,17 +357,29 @@ let Datadeal = {
         this.modelHasSelected(modelLi,flag,'selected');
         this.modelHasSelected(leftLi,flag,'selectedSub');//选中1，取消0
 
-        this.getSelectedModelLiArr(modelLi,flag);
+        let ModelLiArry= this.getModelLiValue(modelLi);
+        this.getSelectedModelLiArr(ModelLiArry,flag);
 
     },
-    getSelectedModelLiArr:function(modelLi,flag){
+    getSelectedModelLiArr:function(ModelLiArry,flag){
         let equipListConditions = store.getState().allEquipJsonDataState ;
         let dataList=equipListConditions.equipList;
-
-        let ModelLiArry= this.getModelLiValue(modelLi);
-        ModelLiArry=this.jugeModel(dataList,ModelLiArry);//判断重名
-        let conditions = {selectedList : ModelLiArry,selectedOrCancelflag:flag};
+        let modelLiArry=this.jugeModel(dataList,ModelLiArry);//判断重名
+        let conditions = {selectedList : modelLiArry,selectedOrCancelflag:flag};
         store.dispatch(allEquipJsonData(conditions));//存到store
+    },
+    /////////////////////条件选车 单选/////////////////
+    modelSelected:function(target){
+        let itemValue=target.text();
+        let id=target.attr('id');
+        let dataId=target.attr('data-id');
+        let dataOem=target.attr('data-oem');
+        let ModelLiArry={"modelValue":itemValue,"dataId":dataId,"id":id,"dataOem":dataOem};
+        return ModelLiArry;
+    },
+    /////////////////////左部、单个车子选中或取消  全选的样式/////////////////
+    modelSelctedAllCss:function(selectedList,modelLis,allNode){
+        selectedList.length==modelLis.length? allNode.text('取消'): allNode.text('全选');
     }
 };
 module.exports=Datadeal;

@@ -49,8 +49,8 @@ var BrandPrefixNav = React.createClass({
 
         this.setState({brandPrefix:brandPrefix,brandPrefixBrand:brandPrefixBrand,equipList:equipList});
     },
-    chooseContent:function(ModelLiArry,flag){
-        this.props.chooseContent(ModelLiArry,flag);
+    chooseContent:function(){
+        this.props.chooseContent();
     },
     render: function () {
         let navTitle=this.state.brandPrefixBrand.map(function(content,index){
@@ -105,8 +105,9 @@ var BodyLi = React.createClass({
     leftValueChoose:function(){
         this.props.chooseContent();
     },
-    modelChoose:function(){
+    modelChoose:function(selectedSubFlag){
         this.props.chooseContent();
+        this.setState({selectedSubFlag:selectedSubFlag});
     },
     render: function () {
         let itemBodyRow=this.state.OEM.map(function(content,index){

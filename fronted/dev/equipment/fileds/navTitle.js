@@ -35,8 +35,8 @@ var NavTitle = React.createClass({
         this.setState({equipList:nextprops.equipList});
         this.getSegmentList(nextprops.equipList);
     },
-    chooseContent:function(ModelLiArry,flag){
-        this.props.chooseContent(ModelLiArry,flag);
+    chooseContent:function(){
+        this.props.chooseContent();
     },
     render: function () {
         let navTitle=this.state.segmentList.map(function(content,index){

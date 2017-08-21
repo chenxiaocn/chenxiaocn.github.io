@@ -20,19 +20,21 @@ var contentBodyRowLeft = React.createClass({
         this.setState({content:this.props.content});
     },
     componentWillReceiveProps:function(nextprops){
-        this.setState({content:nextprops.content});
+        this.setState({content:nextprops.content,flag:nextprops.selectedSubFlag});
     },
     leftValueChoose:function(e){
         let flag=DataDeal.selectedModel($(e.target),'selectedSub');
-        if(flag==0){
-            $(e.target).parent().parent().prev().find('.all').text('全选');
-        }else{
-
-        }
+        //全选、取消
+        let antRow=$(e.target).parent().parent().find('.ant-row');
+        let selectedSub=$(e.target).parent().parent().find('.selectedSub');
+        let allNode=$(e.target).parent().parent().parent().find('.all');
+        DataDeal.modelSelctedAllCss(antRow,selectedSub,allNode);
 
         let modelLi= $(e.target).next().find('.model-li');//该级别下的所有model
         DataDeal.modelHasSelected(modelLi,flag,'selected');//选中1，取消0
-        DataDeal.getSelectedModelLiArr(modelLi,flag);
+
+        let ModelLiArry= DataDeal.getModelLiValue(modelLi);
+        DataDeal.getSelectedModelLiArr(ModelLiArry,flag);
 
         this.props.leftValueChoose();
     },
