@@ -16,13 +16,12 @@ import './equip.less'
 var BrandPrefixNav = React.createClass({
     getInitialState: function () {
         return {
-            equipList:[],
+            equipList:this.props.equipList,
             brandPrefix:[],//品牌首字母
             brandPrefixBrand:[]//首字母加品牌名称
         }
     },
     componentDidMount: function () {
-        this.setState({equipList:this.props.equipList});
         this.loadBrandPrefix(this.props.equipList);
     },
     componentWillReceiveProps:function(nextprops){
@@ -69,16 +68,15 @@ var BrandPrefixNav = React.createClass({
 var BodyLi = React.createClass({
     getInitialState: function () {
         return {
-            brand:'',
-            brandPrefix:'',
+            brand:this.props.brand,
+            brandPrefix:this.props.brandPrefix,
             OEM:[],
-            equipList:[],
+            equipList:this.props.equipList,
             carList:[]
         }
     },
 
     componentDidMount: function () {
-        this.setState({equipList:this.props.equipList,brand:this.props.brand,brandPrefix:this.props.brandPrefix});
         this.loadData(this.props.brand,this.props.equipList);
     },
 
@@ -87,15 +85,8 @@ var BodyLi = React.createClass({
         this.loadData(nextProps.brand,nextProps.equipList);
     },
     loadData:function(brand,list){
-        let dataList=list;
-        let OEM=[],carList=[];
-        for(let i=0;i<dataList.length;i++){
-            if(brand==dataList[i].Brand){
-                OEM.push(dataList[i].OEM);
-                carList.push(dataList[i]);
-            }
-        }
-        OEM = DataDeal.unique(OEM);
+        let OEM=DataDeal.getChildPropertyList(list,'Brand',brand,'OEM');
+        let carList=DataDeal.getConditionResults(list,'Brand');
         this.setState({OEM:OEM,carList:carList});
     },
     allChoose:function(e){
