@@ -19,7 +19,7 @@ var FileContent = React.createClass({
     getInitialState: function () {
         return {
             equipList:this.props.equipList,//所有的数据
-            resultList:[],//筛选的数据
+            resultList:this.props.equipList,//筛选的数据
             searchContent:'',//搜索内容
             filterType:'按品牌',//按品牌还是按级别,
             HZZZList:[],//所有性质列表
@@ -40,7 +40,6 @@ var FileContent = React.createClass({
         }
     },
     componentDidMount:function(){
-        this.setState({resultList:this.props.equipList});
         this.getData(this.props.equipList);
     },
     componentWillReceiveProps:function(nextprops){

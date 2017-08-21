@@ -13,12 +13,9 @@ import './equip.less'
 var ConditionContent = React.createClass({
     getInitialState:function(){
         return{
-            conditionTitle:[],
-            conditionContent:[]
+            conditionTitle:this.props.conditionTitle,
+            conditionContent:this.props.conditionContent
         }
-    },
-    componentDidMount:function(){
-        this.setState({conditionTitle:this.props.conditionTitle,conditionContent:this.props.conditionContent});
     },
     componentWillReceiveProps:function(nextprops){
         this.setState({conditionTitle:nextprops.conditionTitle,conditionContent:nextprops.conditionContent});
@@ -68,13 +65,10 @@ var ConditionContent = React.createClass({
 var ConditionLi=React.createClass({
     getInitialState: function () {
         return {
-            content:[],
-            conditionTitle:[],
+            content:this.props.content,
+            conditionTitle:this.props.conditionTitle,
             selectedFlag:false
         }
-    },
-    componentDidMount: function () {
-        this.setState({content:this.props.content,conditionTitle:this.props.conditionTitle});
     },
     componentWillReceiveProps: function (nextProps) {
         this.setState({content:nextProps.content,conditionTitle:nextProps.conditionTitle});
@@ -202,7 +196,6 @@ var ConditionLi=React.createClass({
             return(<li onClick={this.selectedCellCondition}>{fileName}</li>)
         }
     }
-
 });
 
 export {ConditionContent as default}

@@ -13,11 +13,8 @@ import './equip.less';
 var contentBodyRowLeft = React.createClass({
     getInitialState: function () {
         return {
-            content:''
+            content:this.props.content
         }
-    },
-    componentDidMount: function () {
-        this.setState({content:this.props.content});
     },
     componentWillReceiveProps:function(nextprops){
         this.setState({content:nextprops.content,flag:nextprops.selectedSubFlag});
