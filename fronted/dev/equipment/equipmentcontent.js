@@ -38,7 +38,7 @@ var Content = React.createClass({
             addOrModifyModalVisible:false,
             calendarModal:false,
             //dateType:'year',
-            dateType:'quarter',
+            dateType:'month',
             //selectedCalendarDate:['2011~2013','2014~2016'],
             selectedCalendarDate:['201501~201503'],
             beginDate:'201302',
