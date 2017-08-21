@@ -13,18 +13,13 @@ import './equip.less'
 var contentBodyRowRight = React.createClass({
     getInitialState: function () {
         return {
-            content:[],
-            leftVaule:'',
-            leftProperty:'',
+            content:this.props.content,
+            leftVaule:this.props.leftVaule,
+            leftProperty:this.props.leftProperty,
             ModelList:[]
         }
     },
     componentDidMount: function () {
-        this.setState({
-            content:this.props.content,
-            leftVaule:this.props.leftVaule,
-            leftProperty:this.props.leftProperty
-        });
         this.loadData(this.props.content,this.props.leftVaule,this.props.leftProperty);
     },
     componentWillReceiveProps:function(nextprops){

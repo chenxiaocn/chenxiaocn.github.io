@@ -15,12 +15,11 @@ import './equip.less'
 var NavTitle = React.createClass({
     getInitialState: function () {
         return {
-            equipList:[],
+            equipList:this.props.equipList,
             segmentList:[]
         }
     },
     componentDidMount: function () {
-        this.setState({equipList:this.props.equipList});
         this.getSegmentList(this.props.equipList);
     },
     getSegmentList:function(equipList){
@@ -51,15 +50,14 @@ var NavTitle = React.createClass({
 var BodyLi = React.createClass({
     getInitialState: function () {
         return {
-            segment:[],
-            equipList:[],
+            segment:this.props.segment,
+            equipList:this.props.equipList,
             carList:[],
             subSegmentList:[]
         }
     },
 
     componentDidMount: function () {
-        this.setState({segment:this.props.segment,equipList:this.props.equipList});
         this.loadData(this.props.segment,this.props.equipList);
     },
 
