@@ -174,17 +174,39 @@ let Datadeal = {
         }
         return arr;
     },
-    //获取指定级别下的子级别
-    getSubSegList:function(list,seg){
-        let subSegList=[];
-        for(let i=0;i<list.length;i++){
-            if(list[i].Segment == seg){
-                subSegList.push(list[i].SubSegment);
+    //指定条件下的某指定属性
+    getChildPropertyList:function(list,parentProperty,parentValue,childProperty){
+        let arr=[];
+        for(let item in list){
+            for(let key in list[item]){
+                if(key==parentProperty){
+                    if(parentValue==list[item][key]){
+                        arr.push(list[item][childProperty]);
+                    }
+                }
             }
         }
-        subSegList=this.unique(subSegList);
-        return subSegList;
+        arr=this.unique(arr);
+        return arr;
     },
+
+    //指定某个条件某个值的查询
+    getPropertyVaule:function(list,property,vaule){
+        let dataList=list;
+        let arr=[];
+        for(let item in list){
+            for(let key in list[item]){
+                if(key==property){
+                    if(vaule==dataList[item][key]){
+                        arr.push(dataList[item]);
+                    }
+                }
+            }
+        }
+        arr=this.unique(arr);
+        return arr;
+    },
+
     //指定类
     getId:function(content){
         var arr='';
@@ -200,7 +222,7 @@ let Datadeal = {
         }
         return arr;
     },
-    //获取各种查询条件列表
+    //指定某个条件的查询
     getConditionList:function(list,keyWord){
         let arr=[];
         for(let item in list){

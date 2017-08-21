@@ -172,15 +172,15 @@ var ConditionLi=React.createClass({
     },
     render: function () {
         let conditionTitle=this.state.conditionTitle;
-        let content=this.state.content;
+        let fileName=this.state.content;
         let equipListConditions = store.getState().allEquipJsonDataState ;
         let equipList=equipListConditions.equipList;
-        let subSegList=DataDeal.getSubSegList(equipList,content);//获取该级别下的子级别
-        //let subSegList=DataDeal.getConditionList(equipList,content);//获取该级别下的子级别
+
+        let subSegList=DataDeal.getChildPropertyList(equipList,'Segment',fileName,'SubSegment');
         let menuItem=subSegList.map(function(content,index){
             return(
                 <Menu.Item key={index}>
-                    <p onClick={this.subSegChoose} data-parent={this.state.content}>{content}</p>
+                    <p onClick={this.subSegChoose} data-parent={fileName}>{content}</p>
                 </Menu.Item>
             );
         }.bind(this));
@@ -194,13 +194,13 @@ var ConditionLi=React.createClass({
         if(conditionTitle=="级别"){
             return(
                 <Dropdown overlay={menu} placement="bottomCenter">
-                    <li className="ant-dropdown-link" id={this.state.content} onClick={this.selectedCellCondition}>
-                        {this.state.content}
+                    <li className="ant-dropdown-link" id={fileName} onClick={this.selectedCellCondition}>
+                        {fileName}
                     </li>
                 </Dropdown>
             );
         }else{
-            return(<li onClick={this.selectedCellCondition}>{this.state.content}</li>)
+            return(<li onClick={this.selectedCellCondition}>{fileName}</li>)
         }
     }
 

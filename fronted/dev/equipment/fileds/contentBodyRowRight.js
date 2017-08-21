@@ -55,17 +55,7 @@ var contentBodyRowRight = React.createClass({
         this.props.modelChoose();
     },
     loadData:function(content,leftVaule,leftProperty){
-        let dataList=content;
-        let Model=[];
-        for(let item in dataList){
-            for(let key in dataList[item]){
-                if(key==leftProperty){
-                    if(leftVaule==dataList[item][key]){
-                       Model.push(dataList[item]);
-                    }
-                }
-            }
-        }
+        let Model=DataDeal.getPropertyVaule(content,leftProperty,leftVaule);
         //数组对象去重
         let hash = {};
         Model = Model.reduce(function(item, next) {
