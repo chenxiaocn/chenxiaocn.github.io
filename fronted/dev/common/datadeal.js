@@ -176,8 +176,8 @@ let Datadeal = {
     },
     //获取指定级别下的子级别
     getSubSegList:function(list,seg){
-        var subSegList=[];
-        for(var i=0;i<list.length;i++){
+        let subSegList=[];
+        for(let i=0;i<list.length;i++){
             if(list[i].Segment == seg){
                 subSegList.push(list[i].SubSegment);
             }
@@ -202,9 +202,9 @@ let Datadeal = {
     },
     //获取各种查询条件列表
     getConditionList:function(list,keyWord){
-        var arr=[];
-        for(var item in list){
-            for(var key in list[item]){
+        let arr=[];
+        for(let item in list){
+            for(let key in list[item]){
                 if(key==keyWord){
                     arr.push(list[item][key]);
                 }
@@ -219,20 +219,20 @@ let Datadeal = {
         selectedFlag==true?target.addClass(className):target.removeClass(className);
     },
     circleValue:function(value){
-        var arr=[];
-        for(var i=0;i<value;i++){
+        let arr=[];
+        for(let i=0;i<value;i++){
             arr.push(i+1);
         }
         return arr;
     },
     //获取时间段里所有月份
     getDateRangeList:function(beginDate,endDate){
-        var dateArry =[];
-        var mCount = 0;
-        var beginYear=parseInt(beginDate.substring(0,4));//截取开始年份
-        var endYear=parseInt(endDate.substring(0,4));//截取结束年份
-        var beginMonth=parseInt(beginDate.substring(beginDate.length-2));//截取开始月份
-        var endMonth=parseInt(endDate.substring(endDate.length-2));//截取结束月份
+        let dateArry =[];
+        let mCount = 0;
+        let beginYear=parseInt(beginDate.substring(0,4));//截取开始年份
+        let endYear=parseInt(endDate.substring(0,4));//截取结束年份
+        let beginMonth=parseInt(beginDate.substring(beginDate.length-2));//截取开始月份
+        let endMonth=parseInt(endDate.substring(endDate.length-2));//截取结束月份
 
         if(beginYear<endYear){
             mCount = (endYear - beginYear) * 12 + endMonth - beginMonth+1;
@@ -240,7 +240,7 @@ let Datadeal = {
             mCount = endMonth - beginMonth+1;
         }
         if (mCount > 0) {
-            for (var i = 0; i < mCount; i++) {
+            for (let i = 0; i < mCount; i++) {
                 if (beginMonth < 12) {
                     dateArry[i] = beginYear.toString() + (beginMonth>9 ? beginMonth.toString() : "0" + beginMonth.toString());
                     beginMonth += 1;
@@ -255,12 +255,12 @@ let Datadeal = {
     },
     //获取时间段里所有季度
     getQuarterRange:function(beginDate,endDate){
-        var dateArry =[];
-        var mCount = 0;
-        var beginYear=parseInt(beginDate.substring(0,4));//截取开始年份
-        var endYear=parseInt(endDate.substring(0,4));//截取结束年份
-        var beginQuarter=parseInt(beginDate.substring(beginDate.length-1));//截取开始月份
-        var endQuarter=parseInt(endDate.substring(endDate.length-1));//截取结束月份
+        let dateArry =[];
+        let mCount = 0;
+        let beginYear=parseInt(beginDate.substring(0,4));//截取开始年份
+        let endYear=parseInt(endDate.substring(0,4));//截取结束年份
+        let beginQuarter=parseInt(beginDate.substring(beginDate.length-1));//截取开始月份
+        let endQuarter=parseInt(endDate.substring(endDate.length-1));//截取结束月份
 
         if(beginYear<endYear){
             mCount = (endYear - beginYear) * 4 + endQuarter - beginQuarter+1;
@@ -268,7 +268,7 @@ let Datadeal = {
             mCount = endQuarter - beginQuarter+1;
         }
         if (mCount > 0) {
-            for (var i = 0; i < mCount; i++) {
+            for (let i = 0; i < mCount; i++) {
                 if (beginQuarter <4) {
                     dateArry[i] = beginYear.toString() + ("0" + beginQuarter.toString());
                     beginQuarter += 1;
@@ -291,12 +291,12 @@ let Datadeal = {
     //获取选中时间段数组列表
     getSelectedRangeArr:function(selectedList,dataType){
         let selectedArr=[];
-        for(var j=0;j<selectedList.length;j++){
+        for(let j=0;j<selectedList.length;j++){
             let selectedRangeItem=selectedList[j];
             //长度大于6是个区间范围
             if(selectedList[j].length>6){
-                var start=selectedRangeItem.split("~")[0];
-                var end=selectedRangeItem.split("~")[1];
+                let start=selectedRangeItem.split("~")[0];
+                let end=selectedRangeItem.split("~")[1];
                 if(dataType=='month'){
                     selectedRangeItem=this.getDateRangeList(start,end);
                 }

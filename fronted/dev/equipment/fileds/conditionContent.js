@@ -176,7 +176,7 @@ var ConditionLi=React.createClass({
         let equipListConditions = store.getState().allEquipJsonDataState ;
         let equipList=equipListConditions.equipList;
         let subSegList=DataDeal.getSubSegList(equipList,content);//获取该级别下的子级别
-
+        //let subSegList=DataDeal.getConditionList(equipList,content);//获取该级别下的子级别
         let menuItem=subSegList.map(function(content,index){
             return(
                 <Menu.Item key={index}>
