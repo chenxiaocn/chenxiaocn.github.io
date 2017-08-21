@@ -197,9 +197,6 @@ var FileContent = React.createClass({
         });
     },
     //选择车系
-    //chooseContent:function(chooseContent,flag){
-    //    this.setState({hasChooseList:chooseContent,selectedOrCancelflag:flag});
-    //},
     chooseContent:function(){
         let equipListConditions = store.getState().allEquipJsonDataState ;
         let selectedList=equipListConditions.selectedList;

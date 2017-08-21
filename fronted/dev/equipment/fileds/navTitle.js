@@ -24,11 +24,7 @@ var NavTitle = React.createClass({
         this.getSegmentList(this.props.equipList);
     },
     getSegmentList:function(equipList){
-        var segmentList=[];
-        for(var i=0;i<equipList.length;i++){
-            segmentList.push(equipList[i].Segment);
-        }
-        segmentList = DataDeal.unique(segmentList);
+        let segmentList=DataDeal.getConditionList(equipList,'Segment');
         this.setState({segmentList:segmentList});
     },
     componentWillReceiveProps:function(nextprops){
