@@ -7,6 +7,8 @@ import {Modal ,Button,message} from "antd";
 import InputComponent from'./inputComponent.js';
 import SelectComponent from'./selectComponent.js';
 import CheckboxComponent from'./checkboxComponent.js';
+import RealativeSelection from'../../common/relative/realativeSelection.js';
+import Datadeal from'../../common/datadeal.js';
 import Validation from'../validation.js';
 import $ from "jquery";
 import './table.less';
@@ -16,8 +18,138 @@ var EditTable = React.createClass({
         return {
             visible:false,selectedDetail:[],selectedId:this.props.selectedId,
             innerUserchecked: true,reStartchecked: false,
-            name: '',password:'',email:'',realName:'',sex:'',tel:'',company:'',period:'',userClass:'',role:''
+            name: '',password:'',email:'',realName:'',sex:'',tel:'',company:'',period:'',userClass:'',role:'',
+            users:[
+                {
+                    "companyName": 'CAM',
+                    "parts": [
+                        {
+                            "partsName":'技术部',
+                            "members": [
+                                {
+                                    "membersName":'张三',
+                                    "membersId":'01'
+                                },
+                                {
+                                    "membersName":'李四',
+                                    "membersId":'02'
+                                },
+                                {
+                                    "membersName":'王五',
+                                    "membersId":'03'
+                                }
+                            ]
+                        },
+                        {
+                            "partsName":'数据中心',
+                            "members": [
+                                {
+                                    "membersName":'丽丽',
+                                    "membersId":'04'
+                                },
+                                {
+                                    "membersName":'豆豆',
+                                    "membersId":'05'
+                                },
+                                {
+                                    "membersName":'花花',
+                                    "membersId":'06'
+                                }
+                            ]
+                        },
+                        {
+                            "partsName":'经管中心',
+                            "members": [
+                                {
+                                    "membersName":'东东',
+                                    "membersId":'04'
+                                },
+                                {
+                                    "membersName":'兰兰',
+                                    "membersId":'05'
+                                },
+                                {
+                                    "membersName":'嘻嘻',
+                                    "membersId":'06'
+                                }
+                            ]
+                        }
+
+                    ]
+                },
+                {
+                    "companyName": 'IBM',
+                    "parts": [
+                        {
+                            "partsName":'研发部',
+                            "members": [
+                                {
+                                    "membersName":'Jim',
+                                    "membersId":'01'
+                                },
+                                {
+                                    "membersName":'Jone',
+                                    "membersId":'02'
+                                },
+                                {
+                                    "membersName":'Jack',
+                                    "membersId":'03'
+                                }
+                            ]
+                        },
+                        {
+                            "partsName":'数据中心',
+                            "members": [
+                                {
+                                    "membersName":'Lily',
+                                    "membersId":'04'
+                                },
+                                {
+                                    "membersName":'Lucy',
+                                    "membersId":'05'
+                                },
+                                {
+                                    "membersName":'Kate',
+                                    "membersId":'06'
+                                }
+                            ]
+                        },
+                        {
+                            "partsName":'经管中心',
+                            "members": [
+                                {
+                                    "membersName":'Kevin',
+                                    "membersId":'04'
+                                },
+                                {
+                                    "membersName":'Mary',
+                                    "membersId":'05'
+                                },
+                                {
+                                    "membersName":'Rose',
+                                    "membersId":'06'
+                                }
+                            ]
+                        }
+
+                    ]
+                }
+            ],
+            firstLevelList:[],
+            secLevelList:[],
+            thirdLevelList:[]
+
         }
+    },
+    componentDidMount:function(){
+        let firstLevelList=Datadeal.getConditionList(this.state.users,'companyName');//一级列表
+        let firstLevelSecList=(Datadeal.getChildPropertyList(this.state.users,'companyName',firstLevelList[0],'parts'))[0];
+        let secLevelList=Datadeal.getConditionList(firstLevelSecList,'partsName');//二级列表
+
+        let secLevelThirdList=(Datadeal.getChildPropertyList(firstLevelSecList,'partsName',secLevelList[0],'members'))[0];
+        let thirdLevelList=Datadeal.getConditionList(secLevelThirdList,'membersName');//三级列表
+
+        this.setState({firstLevelList:firstLevelList,secLevelList:secLevelList,thirdLevelList:thirdLevelList});
     },
     handleCancel:function() {
         this.setState({visible: false});
@@ -59,15 +191,15 @@ var EditTable = React.createClass({
                 break;
             case "tel":
                 if(!Validation.isMobile(this.state.tel)){
-                message.error("联系电话格式不正确");
-                return;
-            }
+                    message.error("联系电话格式不正确");
+                    return;
+                }
                 break;
             case "email":
                 if(!Validation.isMail(this.state.email)){
-                message.error("邮箱格式不正确");
-                return;
-            }
+                    message.error("邮箱格式不正确");
+                    return;
+                }
                 break;
         }
     },
@@ -112,6 +244,7 @@ var EditTable = React.createClass({
                 ]}
                 >
                 <form className="addOrEdit">
+                    <RealativeSelection  firstLevelList={this.state.firstLevelList} secLevelList={this.state.secLevelList} thirdLevelList={this.state.thirdLevelList}/>
                     <InputComponent title="用户名" name="name"  value={this.state.name} handleChange={this.handleChange} onBlur={this.blur}/>
                     <InputComponent title="密码" name="password"  value={this.state.password} handleChange={this.handleChange} onBlur={this.blur}/>
                     <CheckboxComponent title="内部用户" name="innerUser"  checked={this.state.innerUserchecked} handleChangeCheckbox={this.handleChangeCheckbox}/>
