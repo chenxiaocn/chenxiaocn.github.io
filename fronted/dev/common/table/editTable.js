@@ -19,7 +19,7 @@ var EditTable = React.createClass({
             visible:false,selectedDetail:[],selectedId:this.props.selectedId,
             innerUserchecked: true,reStartchecked: false,
             name: '',password:'',email:'',realName:'',sex:'',tel:'',company:'',period:'',userClass:'',role:'',
-            users:[
+            relativeLists:[
                 {
                     "companyName": 'CAM',
                     "parts": [
@@ -137,16 +137,35 @@ var EditTable = React.createClass({
             ],
             firstLevelList:[],
             secLevelList:[],
-            thirdLevelList:[]
+            thirdLevelList:[],
+            levelNames:['公司','部门','用户名']
 
         }
     },
+    levelChange:function(level,levelValues){
+        this.getLevelList(this.state.relativeLists,level,levelValues);
+    },
     componentDidMount:function(){
-        let firstLevelList=Datadeal.getConditionList(this.state.users,'companyName');//一级列表
-        let firstLevelSecList=(Datadeal.getChildPropertyList(this.state.users,'companyName',firstLevelList[0],'parts'))[0];
+        this.getLevelList(this.state.relativeLists,'','');
+    },
+    getLevelList:function(relativeLists,level,levelValues){
+        let firstLevelSecList,secLevelThirdList;
+        let firstLevelList=Datadeal.getConditionList(relativeLists,'companyName');//一级列表
+
+        if(level){
+            firstLevelSecList=(Datadeal.getChildPropertyList(this.state.relativeLists,'companyName',levelValues[0],'parts'))[0];
+        }else{
+            firstLevelSecList=(Datadeal.getChildPropertyList(relativeLists,'companyName',firstLevelList[0],'parts'))[0];
+        }
+
         let secLevelList=Datadeal.getConditionList(firstLevelSecList,'partsName');//二级列表
 
-        let secLevelThirdList=(Datadeal.getChildPropertyList(firstLevelSecList,'partsName',secLevelList[0],'members'))[0];
+        if(level=='second'){
+            secLevelThirdList=(Datadeal.getChildPropertyList(firstLevelSecList,'partsName',levelValues[1],'members'))[0];
+        }else{
+            secLevelThirdList=(Datadeal.getChildPropertyList(firstLevelSecList,'partsName',secLevelList[0],'members'))[0];
+        }
+
         let thirdLevelList=Datadeal.getConditionList(secLevelThirdList,'membersName');//三级列表
 
         this.setState({firstLevelList:firstLevelList,secLevelList:secLevelList,thirdLevelList:thirdLevelList});
@@ -244,7 +263,7 @@ var EditTable = React.createClass({
                 ]}
                 >
                 <form className="addOrEdit">
-                    <RealativeSelection  firstLevelList={this.state.firstLevelList} secLevelList={this.state.secLevelList} thirdLevelList={this.state.thirdLevelList}/>
+                    <RealativeSelection  levelChange={this.levelChange} levelNames={this.state.levelNames} firstLevelList={this.state.firstLevelList} secLevelList={this.state.secLevelList} thirdLevelList={this.state.thirdLevelList}/>
                     <InputComponent title="用户名" name="name"  value={this.state.name} handleChange={this.handleChange} onBlur={this.blur}/>
                     <InputComponent title="密码" name="password"  value={this.state.password} handleChange={this.handleChange} onBlur={this.blur}/>
                     <CheckboxComponent title="内部用户" name="innerUser"  checked={this.state.innerUserchecked} handleChangeCheckbox={this.handleChangeCheckbox}/>
