@@ -263,7 +263,9 @@ var EditTable = React.createClass({
                 ]}
                 >
                 <form className="addOrEdit">
-                    <RealativeSelection  levelChange={this.levelChange} levelNames={this.state.levelNames} firstLevelList={this.state.firstLevelList} secLevelList={this.state.secLevelList} thirdLevelList={this.state.thirdLevelList}/>
+                    <RealativeSelection  levelChange={this.levelChange}  levelNames={this.state.levelNames} firstLevelList={this.state.firstLevelList} secLevelList={this.state.secLevelList} thirdLevelList={this.state.thirdLevelList}/>
+                    <br/>
+
                     <InputComponent title="用户名" name="name"  value={this.state.name} handleChange={this.handleChange} onBlur={this.blur}/>
                     <InputComponent title="密码" name="password"  value={this.state.password} handleChange={this.handleChange} onBlur={this.blur}/>
                     <CheckboxComponent title="内部用户" name="innerUser"  checked={this.state.innerUserchecked} handleChangeCheckbox={this.handleChangeCheckbox}/>
