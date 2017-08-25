@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="../js/include.js"></script>
+	</head>
+	<body>
+	<!--	<include src="../public/header.html"></include>-->
+		<div style="width: 300px;height: 300px;border: 1px solid #ddd;">
+			<button id="go">Go</button>
+			<input type="text"  id='test'/>
+		</div>
+		<script src="../js/jquery.1.9.1.min.js"></script>
+		<script type="text/javascript">
+			var value=localStorage.getItem('value');
+			if(value){
+				$('#test').val(value);
+			}
+			else
+			{
+				$('#test').val("测试");
+			}
+				$('#go').click(function(){
+				window.location.href="next.html";
+			});
+		</script>
+	</body>
+</html>

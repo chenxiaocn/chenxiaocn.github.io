@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>销量</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/common.css">
+		<script type="text/javascript" src="../js/include.js"></script>
+	</head>
+
+	<body>
+		<!--<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">数据下载</h1>
+		</header>-->
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		</header>
+		<div class="mui-content">
+			<!--列表-->
+			<ul class="mui-table-view">
+				<!--全选-->
+				<li class="mui-table-view-cell all-li"></li>
+			</ul>
+
+			<!--完成-->
+			<include src="../public/finish.html"></include>
+
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery.1.9.1.min.js"></script>
+		<script type="text/javascript">
+			localStorage.setItem('switchName','全选');
+			$('.all-li').load('../public/switch.html');
+		</script>
+	</body>
+</html>
