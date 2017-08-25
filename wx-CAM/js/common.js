@@ -1,3 +1,4 @@
+///////////全选或无线开关//////////
 mui.init({
 	swipeBack: true //启用右滑关闭功能
 });
@@ -12,4 +13,22 @@ mui('.mui-switch').each(function() { //循环所有toggle
 	//			//event.detail.isActive 可直接获取当前状态
 	////			this.parentNode.querySelector('span').innerText = '状态';
 	//		});
+});
+
+///////////页面跳转//////////
+mui('.mui-content').on('tap', '.go-next', function(e) {
+	var thisValue = $(this).attr('data-value');
+	var url = 'sales.html';
+	switch(thisValue) {
+		case "选车":
+			url = 'chooseCar.html';
+			break;
+		default:
+			url = 'sales.html';
+			break;
+	}
+	mui.openWindow({
+		url:url,
+		id:url
+	});
 });

@@ -11,6 +11,11 @@
 		<link rel="stylesheet" href="../css/mui.min.css">
 		<link rel="stylesheet" href="../css/common.css">
 		<script type="text/javascript" src="../js/include.js"></script>
+		<style type="text/css">
+			.mui-card {
+				margin: 10px 0px;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -27,6 +32,23 @@
 				<li class="mui-table-view-cell all-li"></li>
 			</ul>
 
+			<div class="mui-card">
+				<form class="mui-input-group">
+					<div class="mui-input-row mui-checkbox">
+						<label>checked：false</label>
+						<input name="checkbox1" value="Item 3" type="checkbox">
+					</div>
+					<div class="mui-input-row mui-checkbox">
+						<label>checked：true</label>
+						<input name="checkbox1" value="Item 4" type="checkbox" checked>
+					</div>
+					<div class="mui-input-row mui-checkbox mui-disabled">
+						<label>disabled checkbox</label>
+						<input name="checkbox1" type="checkbox" disabled="disabled">
+					</div>
+				</form>
+			</div>
+
 			<!--完成-->
 			<include src="../public/finish.html"></include>
 
@@ -34,8 +56,9 @@
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/jquery.1.9.1.min.js"></script>
 		<script type="text/javascript">
-			localStorage.setItem('switchName','全选');
+			localStorage.setItem('switchName', '全选');
 			$('.all-li').load('../public/switch.html');
 		</script>
 	</body>
+
 </html>
