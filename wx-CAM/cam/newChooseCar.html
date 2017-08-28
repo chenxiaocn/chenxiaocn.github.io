@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>选车</title>
+		<title>Hello MUI</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -11,6 +11,31 @@
 		<link rel="stylesheet" href="../css/common.css">
 		<link rel="stylesheet" href="css/newChooseCar.css">
 		<script type="text/javascript" src="../js/include.js"></script>
+		<style>
+			.mui-row.mui-fullscreen>[class*="mui-col-"] {
+				height: 100%;
+			}
+			
+			.mui-col-xs-3,
+			.mui-col-xs-9 {
+				overflow-y: auto;
+				height: 100%;
+			}
+			
+			.mui-segmented-control .mui-control-item {
+				line-height: 50px;
+				width: 100%;
+			}
+			
+			.mui-control-content {
+				display: block;
+			}
+			.mui-popover{width: 100%;left: 0px !important;border-radius: 0px;}
+			 
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				background-color: #fff;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -19,46 +44,49 @@
 			<h1 class="mui-title">新增</h1>
 		</header>
 		<div class="mui-content">
-			<!--弹框-->
-			<div class="ui-flex">
-				<div class="ui-flex-item">
-					<a href="#popover" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined">性质</a>
-				</div>
-				<div class="ui-flex-item">
-					<a href="#specialPopover" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined">级别</a>
-				</div>
-				<div class="ui-flex-item">
-					<a href="#popover" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined">车身</a>
-				</div>
-				<div class="ui-flex-item">
-					<a href="#popover" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined">派系</a>
-				</div>
-				<div class="ui-flex-item">
-					<a href="#popoverr" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined">燃油</a>
+			<div class="mui-content">
+				<!--弹框-->
+				<div class="ui-flex">
+					<div class="ui-flex-item">
+						<a href="#popover" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined">性质</a>
+					</div>
+					<div class="ui-flex-item">
+						<a href="#specialPopover" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined">级别</a>
+					</div>
+					<div class="ui-flex-item">
+						<a href="#popover" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined">车身</a>
+					</div>
+					<div class="ui-flex-item">
+						<a href="#popover" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined">派系</a>
+					</div>
+					<div class="ui-flex-item">
+						<a href="#popoverr" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined">燃油</a>
+					</div>
+
 				</div>
 
+				<ul class="mui-table-view mui-table-view-chevron ul-item">
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right go-next" data-value="选车">品牌
+							<label class="mui-pull-right text-overflow" for="">奥迪</label>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right go-next" href="#">厂商
+							<label class="mui-pull-right text-overflow" for="">现代</label>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right go-next" href="#">车系
+							<label class="mui-pull-right text-overflow" for="">现代</label>
+						</a>
+					</li>
+				</ul>
+
+				<!--完成-->
+				<include src="../public/finish.html"></include>
 			</div>
 
-			<ul class="mui-table-view mui-table-view-chevron ul-item">
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right go-next" data-value="选车">品牌
-						<label class="mui-pull-right text-overflow" for="">奥迪</label>
-					</a>
-				</li>
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right go-next" href="#">厂商
-						<label class="mui-pull-right text-overflow" for="">现代</label>
-					</a>
-				</li>
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right go-next" href="#">车系
-						<label class="mui-pull-right text-overflow" for="">现代</label>
-					</a>
-				</li>
-			</ul>
-
-			<!--完成-->
-			<include src="../public/finish.html"></include>
 		</div>
 
 		<!--弹框-->
@@ -102,68 +130,44 @@
 			</div>
 		</div>
 
-<!--级别弹框-->
 		<div id="specialPopover" class="mui-popover">
 			<div class="mui-popover-arrow"></div>
-			<div class="mui-scroll-wrapper">
-				<div class="mui-scroll">
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell">
-							<a href="#">自主</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a href="#">合资</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a href="#">Item3</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a href="#">Item4</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a href="#">Item5</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a href="#">Item6</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a href="#">Item7</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a href="#">Item8</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a href="#">Item9</a>
-						</li>
-						<li class="mui-table-view-cell">
-							<a href="#">Item10</a>
-						</li>
-					</ul>
+			<div class="mui-row mui-fullscreen">
+				<div class="mui-col-xs-3">
+					<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+					</div>
+					<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+						<a class="mui-control-item mui-active" data-index="0" href="#">选项1</a>
+						<a class="mui-control-item" data-index="1" href="#">选项2</a>
+						<a class="mui-control-item" data-index="2" href="#">选项3</a>
+						<a class="mui-control-item" data-index="3" href="#">选项4</a>
+						<a class="mui-control-item" data-index="4" href="#">选项5</a>
+						<a class="mui-control-item" data-index="5" href="#">选项6</a>
+						<a class="mui-control-item" data-index="6" href="#">选项7</a>
+						<a class="mui-control-item" data-index="7" href="#">选项8</a>
+						<a class="mui-control-item" data-index="8" href="#">选项9</a>
+					</div>
+				</div>
+				<div id="segmentedControlContents" class="mui-col-xs-9" style="border-left: 1px solid #c8c7cc;">
+					<div id="content" class="mui-control-content">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell">第1个选项卡子项-1</li>
+							<li class="mui-table-view-cell">第1个选项卡子项-2</li>
+							<li class="mui-table-view-cell">第1个选项卡子项-3</li>
+							<li class="mui-table-view-cell">第1个选项卡子项-4</li>
+							<li class="mui-table-view-cell">第1个选项卡子项-5</li>
+							<li class="mui-table-view-cell">第1个选项卡子项-6</li>
+							<li class="mui-table-view-cell">第1个选项卡子项-7</li>
+							<li class="mui-table-view-cell">第1个选项卡子项-8</li>
+							<li class="mui-table-view-cell">第1个选项卡子项-9</li>
+					</div>
 				</div>
 			</div>
 		</div>
-
-
 		<script src="../js/mui.min.js"></script>
-		<script src="../js/jquery.1.9.1.min.js"></script>
-		<script src="../js/common.js"></script>
+
 		<script>
 			mui.init();
-
-			mui.plusReady(function() {
-				//				var view = plus.nativeObj.View.getViewById("title");
-				//				
-				//				var bitmap = new plus.nativeObj.Bitmap("back");
-				//				bitmap.loadBase64Data("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAb1BMVEUAAAAAev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8AAACubimgAAAAI3RSTlMAGfUTGfQTGPMSGPIYGhgaGBsXGxcbFxwXHBccFhwWHRYdHWufDPQAAAABYktHRACIBR1IAAAAB3RJTUUH4QETEBwooeTlkQAAAJVJREFUSMft1EkSgkAQRNFGUXFWHBDBibr/HTUwD5B/48Ig1y+io7u6MqUhf5hsNEY+j5hMgZ/FJ8Xc9ovos3T96utjbfqN/Nb0O/m96Uv5g+mP8ifTn+Ur01/ka9Nf5RvTt/I309/lH6Z/yr9Mn+Q71/MT8B34K/E58Enzv8R/K98HvnF8p3lr8F7izce7lbf3kJ/lDQp9HdBhgg3PAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE3LTAxLTE5VDE2OjI4OjQwKzA4OjAwpTDFwQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxNy0wMS0xOVQxNjoyODo0MCswODowMNRtfX0AAAAASUVORK5CYII=");
-				//				view.drawBitmap(bitmap, {}, {
-				//					top: "10px",
-				//					left: "10px",
-				//					width: "24px",
-				//					height: "24px"
-				//				});
-				//				
-				//				view.setTouchEventRect({top:"0px",left:"0px",width:"44px",height:"100%"});
-			});
 
 			mui('.mui-scroll-wrapper').scroll();
 			mui('body').on('shown', '.mui-popover', function(e) {
@@ -172,7 +176,13 @@
 			mui('body').on('hidden', '.mui-popover', function(e) {
 				//console.log('hidden', e.detail.id);//detail为当前popover元素
 			});
+			
+			//
+				mui('#segmentedControls').on('tap', '.mui-control-item', function(e) {
+					var dataIndex=this.getAttribute('data-index');
+				});
 		</script>
+
 	</body>
 
 </html>
