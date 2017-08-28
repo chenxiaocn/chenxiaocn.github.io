@@ -8,6 +8,7 @@
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link href="../css/mui.indexedlist.css" rel="stylesheet" />
 		<link href="../css/common.css" rel="stylesheet" />
+		
 		<style>
 			html,
 			body {
@@ -15,21 +16,35 @@
 				overflow: hidden;
 			}
 			
-			.mui-indexed-list-inner,.mui-indexed-list-bar{margin-top: 50px;}
+			.mui-indexed-list-inner,
+			.mui-indexed-list-bar {
+				margin-top: 15px;
+			}
 		</style>
 	</head>
 
-	<body>		
+	<body>
 		<div class="mui-content">
-			<div id='list' class="mui-indexed-list">	
+			<div id='list' class="mui-indexed-list">
 				<header class="mui-bar mui-bar-nav">
 					<div class="ui-flex mui-bar mui-bar-nav">
 						<a class="mui-action-back mui-icon mui-icon-left-nav"></a>
 						<div class="mui-indexed-list-search mui-input-row mui-search ui-flex-item">
-							<input type="search" class="mui-input-clear mui-indexed-list-search-input mui-pull-right" placeholder="搜索机场">
+							<input type="search" class="mui-input-clear mui-indexed-list-search-input mui-pull-right" placeholder="搜索内容">
 						</div>
 					</div>
 				</header>
+			
+				<ul class="mui-table-view" style="margin-top: 50px;">
+					<!--不限-->
+					<li class="mui-table-view-cell all-li">
+						<span>不限</span>
+						<div class="mui-switch">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>
+				</ul>
+
 				<div class="mui-indexed-list-bar">
 					<a>A</a>
 					<a>B</a>
@@ -408,19 +423,17 @@
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/mui.indexedlist.js"></script>
-		<!--<script src="../js/mui.grouplist.testdata.js"></script>-->
+		<script src="../js/jquery.1.9.1.min.js"></script>
+		<script src="../js/common.js"></script>
+	
 		<script type="text/javascript" charset="utf-8">
 			mui.init();
 			mui.ready(function() {
-//				var header = document.querySelector('header.mui-bar');
 				var list = document.getElementById('list');
-				//calc hieght
 				list.style.height = (document.body.offsetHeight) + 'px';
-				//create
 				window.indexedList = new mui.IndexedList(list);
 				mui('.mui-indexed-list-inner').on('change', 'input', function() {
 					var count = list.querySelectorAll('input[type="checkbox"]:checked').length;
-					var value = count ? "完成(" + count + ")" : "完成";
 				});
 			});
 		</script>
