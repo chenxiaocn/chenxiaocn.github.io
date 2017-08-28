@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>日历示例</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui" />
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/calendar/reset.css" />
+		<link rel="stylesheet" type="text/css" href="../css/calendar/calendar.css" />
+
+		<style>
+			.cal-ul li {text-align: center;margin-top: 10px;margin-bottom: 10px;}
+			
+			.selected:before{
+				top: -6px;
+				left: 50%;
+				margin-left: -15px;
+				position: absolute;
+				z-index: -1;
+				content: "";
+				width: 35px;
+				height: 35px;
+				border-radius: 50%;
+				background: #d2cccd;
+				opacity: .5;
+				-webkit-box-shadow: 0 0 0px #d2cccd;
+				box-shadow: 0 0 0px #d2cccd;
+				-webkit-animation: p1_lantern .6s infinite alternate;
+				animation: p1_lantern .6s infinite alternate;
+			}
+				.selected {
+				position: relative;
+				z-index: 3;
+				webkit-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="dataDownLoad.html"></a>
+		</header>
+
+		<div class="wrap">
+			<div id="calendar">
+				<div class="cal-wrap">
+					<h2>2015年</h2>
+				
+					<ul class="mui-row cal-ul">
+						<li class="mui-col-sm-3 mui-col-xs-3 selected">
+							1月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							2月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							3月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							4月
+						</li>
+							<li class="mui-col-sm-3 mui-col-xs-3 selected">
+							1月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							2月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							3月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							4月
+						</li>
+							<li class="mui-col-sm-3 mui-col-xs-3 selected">
+							1月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							2月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							3月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							4月
+						</li>
+					</ul>
+
+				</div>
+					<div class="cal-wrap">
+					<h2>2015年</h2>
+				
+					<ul class="mui-row cal-ul">
+						<li class="mui-col-sm-3 mui-col-xs-3 selected">
+							1月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							2月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							3月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							4月
+						</li>
+							<li class="mui-col-sm-3 mui-col-xs-3 selected">
+							1月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							2月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							3月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							4月
+						</li>
+							<li class="mui-col-sm-3 mui-col-xs-3 selected">
+							1月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							2月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							3月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							4月
+						</li>
+					</ul>
+
+				</div>
+			
+					<div class="cal-wrap">
+					<h2>2015年</h2>
+				
+					<ul class="mui-row cal-ul">
+						<li class="mui-col-sm-3 mui-col-xs-3 selected">
+							1月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							2月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							3月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							4月
+						</li>
+							<li class="mui-col-sm-3 mui-col-xs-3 selected">
+							1月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							2月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							3月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							4月
+						</li>
+							<li class="mui-col-sm-3 mui-col-xs-3 selected">
+							1月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							2月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							3月
+						</li>
+						<li class="mui-col-sm-3 mui-col-xs-3">
+							4月
+						</li>
+					</ul>
+
+				</div>
+			
+			</div>
+
+			<script src="../js/calendar/jqmobi.js"></script>
+			<!--<script src="../js/calendar/calendarMonth.js"></script>-->
+
+			<script>
+				(function() {
+
+				})();
+			</script>
+
+	</body>
+
+</html>

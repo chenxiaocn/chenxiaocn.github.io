@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>日历示例</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui" />
+    <link rel="stylesheet" href="../css/mui.min.css">
     <link rel="stylesheet" type="text/css" href="../css/calendar/reset.css" />
     <link rel="stylesheet" type="text/css" href="../css/calendar/calendar.css" />
 
@@ -22,10 +23,9 @@
 
 <body>
 
-<div class="head">
-    <h1>选择日期</h1>
-    <i class="ic-back"></i>
-</div>
+	<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="dataDownLoad.html"></a>
+		</header>
 
 <div class="wrap">
     <ul class="week-f">
@@ -47,7 +47,7 @@
 </div>
 
 <script src="../js/calendar/jqmobi.js"></script>
-<script src="../js/calendar/calendar.js"></script>
+<script src="../js/calendar/calendarDay.js"></script>
 
 <script>
     (function() {
