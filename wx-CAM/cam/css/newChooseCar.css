@@ -1,0 +1,31 @@
+.mui-popover {
+	height: 300px;
+}
+
+.mui-btn-outlined.mui-btn-primary {
+	color: black;
+}
+
+.ui-flex {
+	margin-top: 15px;
+	margin-bottom: 10px;
+	background: #fff;
+}
+
+.ui-flex-item {
+	margin-right: 5px;
+}
+
+.ui-flex-item:first-child {
+	margin-left: 5px;
+}
+
+.ui-flex-item a {
+	border-radius: 60%;
+	padding: 10px 0px;
+	width: 45px;
+	border: none;
+	background: #efeff4;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
