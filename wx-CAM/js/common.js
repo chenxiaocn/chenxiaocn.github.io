@@ -23,12 +23,15 @@ mui('.mui-content').on('tap', '.go-next', function(e) {
 		case "选车":
 			url = 'chooseCar.html';
 			break;
+		case "newIndexedList":
+			url = 'indexedList.html';
+			break;
 		default:
 			url = 'sales.html';
 			break;
 	}
 	mui.openWindow({
-		url:url,
-		id:url
+		url: url,
+		id: url
 	});
 });
