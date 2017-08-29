@@ -50,9 +50,7 @@ function getMonthList(){
 }
 
 
-/**
- * 下拉刷新具体业务实现
- */
+/** 下拉刷新具体业务实现*/
 function pulldownRefresh() {
 	setTimeout(function() {
 		var firstChild=$($(".cal-wrap")[0]);
@@ -63,9 +61,7 @@ function pulldownRefresh() {
 	}, 300);
 }
 
-/**
- * 上拉加载具体业务实现
- */
+/*** 上拉加载具体业务实现*/
 function pullupRefresh() {
 	var count = 0;
 	setTimeout(function() {
