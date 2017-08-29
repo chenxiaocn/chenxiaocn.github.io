@@ -5,6 +5,7 @@ var endYear='';//截止时间年份
 mui.ready(function() {
 	getCalendarParms();
 	getCalendarList();
+	setSelectedAndClickable();//设置选中样式
 	
 	//上拉加载，下拉刷新
 	mui.init({
@@ -19,6 +20,7 @@ mui.ready(function() {
 			}
 		}
 	});
+
 });
 
 function  getCalendarParms(){
@@ -67,9 +69,25 @@ function getMonthList(year){
 	return list;
 }
 
+function setSelectedAndClickable(){
+	 for(var i=0;i<$('li').length;i++){
+	 	var liValue=$($('li')[i]).attr('value');
+	 	//选中
+	 	for(var j=0;j<selectedRange.length;j++){
+	 		if(liValue==selectedRange[j]){
+	 			$($('li')[i]).addClass('selected');
+	 		}
+	 	}
+	 	//可选
+	 	for(var k=0;k<dateClickRange.length;k++){
+	 		if(liValue==dateClickRange[k]){
+	 			$($('li')[i]).addClass('clickable');
+	 		}
+	 	}
+	 }
+}
 /** 下拉刷新具体业务实现*/
 function pulldownRefresh() {
-	alert('aa');
 	setTimeout(function() {
 		var firstChild=$($(".cal-wrap")[0]);
 		var firstChildId=firstChild.attr('data-id');
@@ -90,4 +108,56 @@ function pullupRefresh() {
 		var upCell=getCalWrapCell(parseInt(lastChildId)+1);
 		$('#calendar').append(upCell);
 	}, 300);
+}
+//选中点击事件
+mui('body').on('tap', '.clickable', function(e) {
+	var thisValue = $(this).attr('value');
+	var thisIndex,beginIndex,endIndex,beginDateValue,endDateValue;
+	if($(this).hasClass('selected')) {
+		if(selectedRange.length <= 1) {
+			$(this).removeClass('selected');
+			selectedRange = [];
+		} 
+		else {
+			$('.selected').removeClass('selected');
+			$(this).addClass('selected');
+			selectedRange = [thisValue];
+		}
+	}
+	
+	else{
+		if(selectedRange.length <1){
+			$(this).addClass('selected');
+			selectedRange = [thisValue];
+		}
+		else{
+			thisIndex=getIndex($('.clickable'),thisValue);
+			var selectedValue=$('.selected').attr('value');
+			var selectedIndex=getIndex($('.clickable'),selectedValue);
+			
+			if(thisIndex<selectedIndex){
+				beginIndex=thisIndex;
+				endIndex=selectedIndex;
+				beginDateValue=thisValue;
+				endDateValue=selectedValue;
+			}else{
+				beginIndex=selectedIndex;
+				endIndex=thisIndex;
+				beginDateValue=selectedValue;
+				endDateValue=thisValue;
+			}
+		
+		}
+	}
+});
+
+function getIndex(list, value) {
+	var index;
+	for(var i = 0; i < list.length; i++) {
+		var liValue = $(list[i]).attr('value');
+		if(liValue == value) {
+			index = i;
+		}
+	}
+	return index;
 }

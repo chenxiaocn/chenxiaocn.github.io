@@ -13,12 +13,14 @@
 		<style>
 			.cal-ul li {
 				text-align: center;
-				margin-top: 10px;
-				margin-bottom: 10px;
+				padding-top: 10px;
+				padding-bottom: 10px;
+				margin: 10px;
+				background: #f9f9f9;
 			}
 			
 			.selected:before {
-				top: -6px;
+				top: 3px;
 				left: 50%;
 				margin-left: -15px;
 				position: absolute;
@@ -27,19 +29,15 @@
 				width: 35px;
 				height: 35px;
 				border-radius: 50%;
-				background: #d2cccd;
+				background: #999;
 				opacity: .5;
 				-webkit-box-shadow: 0 0 0px #d2cccd;
 				box-shadow: 0 0 0px #d2cccd;
 				
 			}
-			
-			.selected {
-				position: relative;
-				z-index: 3;
-				webkit-box-sizing: border-box;
-				box-sizing: border-box;
-			}
+			.mui-col-xs-3{width:18%;}
+			.clickable{background: #efefef !important;}
+			.selected {position: relative;z-index: 3;webkit-box-sizing: border-box;box-sizing: border-box;background: #999 !important;color: white;}
 		</style>
 	</head>
 
