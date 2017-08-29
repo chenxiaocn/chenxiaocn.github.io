@@ -11,9 +11,13 @@
 		<link rel="stylesheet" type="text/css" href="../css/calendar/calendar.css" />
 
 		<style>
-			.cal-ul li {text-align: center;margin-top: 10px;margin-bottom: 10px;}
+			.cal-ul li {
+				text-align: center;
+				margin-top: 10px;
+				margin-bottom: 10px;
+			}
 			
-			.selected:before{
+			.selected:before {
 				top: -6px;
 				left: 50%;
 				margin-left: -15px;
@@ -30,7 +34,8 @@
 				-webkit-animation: p1_lantern .6s infinite alternate;
 				animation: p1_lantern .6s infinite alternate;
 			}
-				.selected {
+			
+			.selected {
 				position: relative;
 				z-index: 3;
 				webkit-box-sizing: border-box;
@@ -46,149 +51,12 @@
 		</header>
 
 		<div class="wrap">
-			<div id="calendar">
-				<div class="cal-wrap">
-					<h2>2015年</h2>
-				
-					<ul class="mui-row cal-ul">
-						<li class="mui-col-sm-3 mui-col-xs-3 selected">
-							1月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							2月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							3月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							4月
-						</li>
-							<li class="mui-col-sm-3 mui-col-xs-3 selected">
-							1月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							2月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							3月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							4月
-						</li>
-							<li class="mui-col-sm-3 mui-col-xs-3 selected">
-							1月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							2月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							3月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							4月
-						</li>
-					</ul>
-
-				</div>
-					<div class="cal-wrap">
-					<h2>2015年</h2>
-				
-					<ul class="mui-row cal-ul">
-						<li class="mui-col-sm-3 mui-col-xs-3 selected">
-							1月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							2月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							3月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							4月
-						</li>
-							<li class="mui-col-sm-3 mui-col-xs-3 selected">
-							1月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							2月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							3月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							4月
-						</li>
-							<li class="mui-col-sm-3 mui-col-xs-3 selected">
-							1月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							2月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							3月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							4月
-						</li>
-					</ul>
-
-				</div>
-			
-					<div class="cal-wrap">
-					<h2>2015年</h2>
-				
-					<ul class="mui-row cal-ul">
-						<li class="mui-col-sm-3 mui-col-xs-3 selected">
-							1月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							2月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							3月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							4月
-						</li>
-							<li class="mui-col-sm-3 mui-col-xs-3 selected">
-							1月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							2月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							3月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							4月
-						</li>
-							<li class="mui-col-sm-3 mui-col-xs-3 selected">
-							1月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							2月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							3月
-						</li>
-						<li class="mui-col-sm-3 mui-col-xs-3">
-							4月
-						</li>
-					</ul>
-
-				</div>
-			
-			</div>
-
+			<div id="calendar"></div>
+           
+           <script src="../js/mui.min.js"></script>
 			<script src="../js/calendar/jqmobi.js"></script>
-			<!--<script src="../js/calendar/calendarMonth.js"></script>-->
-
-			<script>
-				(function() {
-
-				})();
-			</script>
-
+			<!--<script src="../js/common.js"></script>-->
+			<script src="../js/calendar/calendarMonth.js"></script>
 	</body>
 
 </html>
