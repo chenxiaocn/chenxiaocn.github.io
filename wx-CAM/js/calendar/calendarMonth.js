@@ -16,7 +16,6 @@ mui.ready(function() {
 	});
 });
 
-
 function getCalendarList() {
 	var list='',calWrap='';
 	for(var i=2017-2;i<=2017;i++){
@@ -48,7 +47,6 @@ function getMonthList(){
 	}
 	return list;
 }
-
 
 /** 下拉刷新具体业务实现*/
 function pulldownRefresh() {
