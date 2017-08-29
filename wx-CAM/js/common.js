@@ -26,6 +26,9 @@ mui('.mui-content').on('tap', '.go-next', function(e) {
 		case "newIndexedList":
 			url = 'indexedList.html';
 			break;
+		case "month":
+			url = '../public/calendar/calendarMonth.html';
+			break;
 		default:
 			url = 'sales.html';
 			break;
@@ -35,3 +38,4 @@ mui('.mui-content').on('tap', '.go-next', function(e) {
 		id: url
 	});
 });
+ 
