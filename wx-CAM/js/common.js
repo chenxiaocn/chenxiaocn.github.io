@@ -23,6 +23,9 @@ mui('.mui-content').on('tap', '.go-next', function(e) {
 		case "选车":
 			url = 'chooseCar.html';
 			break;
+		case "newChooseCar":
+			url = 'newChooseCar.html';
+			break;
 		case "newIndexedList":
 			url = 'indexedList.html';
 			break;
@@ -38,4 +41,3 @@ mui('.mui-content').on('tap', '.go-next', function(e) {
 		id: url
 	});
 });
- 
