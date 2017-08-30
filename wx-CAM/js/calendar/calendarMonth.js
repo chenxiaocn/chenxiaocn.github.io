@@ -112,41 +112,48 @@ function pullupRefresh() {
 //选中点击事件
 mui('body').on('tap', '.clickable', function(e) {
 	var thisValue = $(this).attr('value');
-	var thisIndex,beginIndex,endIndex,beginDateValue,endDateValue;
+	var thisIndex,beginIndex,endIndex;
 	if($(this).hasClass('selected')) {
 		if(selectedRange.length <= 1) {
 			$(this).removeClass('selected');
 			selectedRange = [];
-		} 
+		}
 		else {
 			$('.selected').removeClass('selected');
 			$(this).addClass('selected');
 			selectedRange = [thisValue];
 		}
 	}
-	
 	else{
-		if(selectedRange.length <1){
-			$(this).addClass('selected');
-			selectedRange = [thisValue];
-		}
-		else{
-			thisIndex=getIndex($('.clickable'),thisValue);
-			var selectedValue=$('.selected').attr('value');
-			var selectedIndex=getIndex($('.clickable'),selectedValue);
-			
-			if(thisIndex<selectedIndex){
-				beginIndex=thisIndex;
-				endIndex=selectedIndex;
-				beginDateValue=thisValue;
-				endDateValue=selectedValue;
-			}else{
-				beginIndex=selectedIndex;
-				endIndex=thisIndex;
-				beginDateValue=selectedValue;
-				endDateValue=thisValue;
-			}
-		
+		switch (selectedRange.length){
+			case 0:
+				$(this).addClass('selected');
+				selectedRange = [thisValue];
+				break;
+			case 1:
+				thisIndex=getIndex($('.clickable'),thisValue);
+				var selectedValue=$('.selected').attr('value');
+				var selectedIndex=getIndex($('.clickable'),selectedValue);
+
+				if(thisIndex<selectedIndex){
+					beginIndex=thisIndex;
+					endIndex=selectedIndex;
+				}else{
+					beginIndex=selectedIndex;
+					endIndex=thisIndex;
+				}
+
+				for(var i=beginIndex;i<=endIndex;i++){
+					$($('.clickable')[i]).addClass('selected');
+					selectedRange.push($($('.clickable')[i]).attr('value'));
+				}
+
+				break;
+			default :
+				$('.selected').removeClass('selected');
+				$(this).addClass('selected');
+				selectedRange = [thisValue];
+				break;
 		}
 	}
 });
@@ -161,3 +168,21 @@ function getIndex(list, value) {
 	}
 	return index;
 }
+
+//返回
+mui('body').on('tap', '.mui-icon-left-nav', function(e){
+	var length=$('.selected').length;
+	var selectedCalendarDate,beginDateValue,endDateValue;
+	if(length==1){
+		selectedCalendarDate=$('.selected').attr('value');
+	}
+	if(length>1){
+		 beginDateValue=$($('.selected')[0]).attr('value');
+		 endDateValue=$($('.selected')[length-1]).attr('value');
+		selectedCalendarDate=beginDateValue+"~"+endDateValue;
+	}
+	localStorage.setItem('selectedCalendarDate',selectedCalendarDate);
+	localStorage.setItem('backFlag',true);
+	window.history.go(-1);
+
+});
