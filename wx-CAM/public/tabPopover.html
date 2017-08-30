@@ -2,8 +2,6 @@
 <html>
 
 	<head>
-		<meta charset="UTF-8">
-		<title></title>
 	</head>
 
 	<body>
@@ -39,7 +37,10 @@
 				</div>
 			</div>
 		</div>
-
+		<script type="text/javascript">
+			var left = localStorage.getItem('left');
+			$('.mui-popover-arrow').css('left', left);
+		</script>
 	</body>
 
 </html>
