@@ -26,3 +26,4 @@
 .btn-finished{position: fixed;bottom: 0px;margin-bottom: 0px;}
 .mui-table-view-cell a{padding-right: 35px !important;}
 .text-overflow{max-width: 50%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.tick{display: none;width: 20px;}

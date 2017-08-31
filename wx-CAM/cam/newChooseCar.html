@@ -50,22 +50,30 @@
 		</header>
 		<div class="mui-content">
 			<div class="mui-content">
-				<!--弹框-->
-				<div class="ui-flex" id="ui-nav">
-					<!--<div class="ui-flex-item">
-						<a href="#popover" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined">性质</a>
+				<!--条件-->
+				<div class="condition-area">
+					<div class="ui-flex" id="ui-nav"></div>
+
+					<!--性质、车身、派系、燃油弹框-->
+					<div id="popover" class="mui-popover">
+						<div class="mui-popover-arrow"></div>
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view condition-ul"></ul>
+							</div>
+						</div>
 					</div>
-					<div class="ui-flex-item">
-						<a href="#tabPopover" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined">级别</a>
-					</div>-->
 				</div>
+
+				<!--级别弹框-->
+				<div id="tabPopover" class="mui-popover"></div>
 
 				<ul class="mui-table-view mui-table-view-chevron ul-item">
 					<li class="mui-table-view-cell">
 						<a class="mui-navigate-right go-next" data-value="选车" href="indexedList.html">品牌
 							<label class="mui-pull-right text-overflow" for="">奥迪</label>
 						</a>
-					</li> 
+					</li>
 					<li class="mui-table-view-cell">
 						<a class="mui-navigate-right go-next" href="indexedList.html">厂商
 							<label class="mui-pull-right text-overflow" for="">现代</label>
@@ -81,20 +89,15 @@
 				<!--完成-->
 				<include src="../public/finish.html"></include>
 			</div>
-
 		</div>
 
-		<!--性质、车身、派系、燃油弹框-->
-		<div id="popover" class="mui-popover"></div>
-		<!--级别弹框-->
-		<div id="tabPopover" class="mui-popover"></div>
-		
-		
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/jquery.1.9.1.min.js"></script>
 		<script src="js/equipData.js"></script>
 		<script src="js/newChooseCar.js"></script>
-
+		<script src="js/equipData.js"></script>
+		<script src="../js/dataDeal.js"></script>
+		<script src="../js/condition.js"></script>
 	</body>
 
 </html>

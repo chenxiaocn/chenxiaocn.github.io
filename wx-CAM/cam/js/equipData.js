@@ -1,4 +1,5 @@
-var data = [
+function getEquipData(){
+	var data = [
 	["HZZZ", "Segment", "SubSegment", "BodyType", "OEM", "Brand", "Model", "OEMID", "BrandPrefix", "ModelID", "Fuel"],
 	[{
 			"HZZZ": "合资",
@@ -33906,3 +33907,7 @@ var data = [
 		}
 	]
 ]
+
+    return data;
+};
+
