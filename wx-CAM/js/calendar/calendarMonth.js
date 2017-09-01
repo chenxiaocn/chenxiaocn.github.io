@@ -147,7 +147,6 @@ mui('body').on('tap', '.clickable', function(e) {
 					$($('.clickable')[i]).addClass('selected');
 					selectedRange.push($($('.clickable')[i]).attr('value'));
 				}
-
 				break;
 			default :
 				$('.selected').removeClass('selected');

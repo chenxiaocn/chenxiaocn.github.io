@@ -56,15 +56,15 @@ function sortArr(arr, sortStr) {
 	}
 }
 //数组对象相减
-function sorSplice(arr1, arr2) {
-	for(var i = 0; i < arr1.length; i++) {
-		for(var j = 0; j < arr2.length; j++) {
-			if(arr1[i].dataId == arr2[j].dataId) {
-				arr1.splice(i, 1);
+function sorSplice(list,type) {
+	for(var item in list){
+		for(var key in list[item]){
+			if(key==type){
+				list.splice(item,1);
 			}
 		}
 	}
-	return arr1;
+	return list;
 }
 //数组相减
 function sortMinus(b, c) {
@@ -74,7 +74,6 @@ function sortMinus(b, c) {
 			a[b[i]] = true;
 		}
 	}
-
 	for(var i = 0; i < c.length; i++) {
 		if(a[c[i]]) {
 			c.splice(i, 1); /*从一个数组中第i位移除一个或多个元素*/
@@ -124,7 +123,7 @@ function selectedModel(target, className) {
 }
 
 //条件多选
-function selectedCondition(arr, data) {
+function selectedCondition(arr, data){
 	var tmpData = data;
 	for(var i = 0; i < arr.length; i++) {
 		for(var key in arr[i]) {
@@ -137,9 +136,9 @@ function selectedCondition(arr, data) {
 }
 
 function myFunction(type, conArray, dataArray) {
-	let res = new Array();
-	for(let item in dataArray) {
-		for(let item1 in conArray) {
+	var res = new Array();
+	for(var item in dataArray) {
+		for(var item1 in conArray) {
 			if(dataArray[item][type] == conArray[item1]) {
 				res.push(dataArray[item]);
 			}
