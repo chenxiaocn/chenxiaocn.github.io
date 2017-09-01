@@ -111,15 +111,12 @@ function allOrCancel(segTitle, target) {
 	return flag;
 }
 //单个车系选中
-function selectedModel(target, className) {
-	var flag = 0;
+function targetSelectedCss(target, className) {
 	if(target.hasClass(className)) {
 		target.removeClass(className);
 	} else {
 		target.addClass(className);
-		flag = 1
 	}
-	return flag;
 }
 
 //条件多选

@@ -48,12 +48,12 @@ function showPopover() {
 	mui('.mui-scroll-wrapper').scroll();
 	
 	mui('body').on('shown', '.mui-popover', function(e) {
-		var list = '',conditionContent=[];
+		var conditionContent=[];
 		var thisId = localStorage.getItem('thisId'); //条件名称 如性质
 		var thisLevelIndex = localStorage.getItem('thisLevelIndex'); //该条件所属索引
 		var initConditionContent=(getConditionList(allConditionList, thisId))[0]; //初始该类型下所有的集合
 		var thisTypeSelectedList=(getConditionList(searchList,thisId))[0];//该类型下是否有选中的单个条件
-	 
+ 
 		//上下级选中，本类型下列表
 	    if(parseInt(lastClickLevelIndex) < parseInt(thisLevelIndex)) {//随父集查询元素变化（把自己及子集所属下的查询条件剔除）
 			var parentSearchList=getParentSelectedList(thisLevelIndex);
@@ -68,27 +68,56 @@ function showPopover() {
 		}
 
         allConditionList = changeAllConditionList(thisId, conditionContent);
-		//填充
-		for(var i = 0; i < conditionContent.length; i++) {
-			var item = '<li class="mui-table-view-cell condition-li" data-value=' + conditionContent[i] + ' data-type='+thisId+'>'
-					   +'<a href="#">' + conditionContent[i] + '<img class="tick mui-pull-right" src="../image/tick.png" />'
-					   +'</a>'
-					   +'</li>';
-			list += item;
-		}
-		$('.condition-ul').append(list);
-
-		//选中样式
-		 if(searchList.length>0){
-		 	setSelected(thisTypeSelectedList);
-		 }
+        
+        if(thisId=="Segment"){
+        	loadTabPopover(thisId,conditionContent,thisTypeSelectedList);   	
+        }else{
+        	loadPopover(thisId,conditionContent,thisTypeSelectedList);
+        }      
 	});
+	
 	mui('body').on('hidden', '.mui-popover', function(e) {
 		$('.condition-ul').empty();
 		lastClickConditionId = localStorage.getItem('thisId'); //条件名称 如性质		
 		lastClickLevelIndex = localStorage.getItem('thisLevelIndex'); //条件索引	
 	});
 }
+
+function loadPopover(thisId, conditionContent, thisTypeSelectedList) {
+	var list = '';
+	//填充
+	for(var i = 0; i < conditionContent.length; i++) {
+		var item = '<li class="mui-table-view-cell condition-li" data-value=' + conditionContent[i] + ' data-type=' + thisId + '>' 
+                    + conditionContent[i] 
+                    + '<img class="tick mui-pull-right" src="../image/tick.png" />'
+                    +'</li>';
+		list += item;
+	}
+	$('.condition-ul').append(list);
+
+	//选中样式
+	if(searchList.length > 0) {
+		setSelected(thisTypeSelectedList);
+	}
+
+}
+
+function loadTabPopover(thisId, conditionContent, thisTypeSelectedList) {
+	var list = '';
+	//填充
+	for(var i = 0; i <conditionContent.length; i++) {
+		var item = '<a class="mui-control-item condition-item"  href="#" data-value=' + conditionContent[i] + ' data-type=' + thisId + '>' +conditionContent[i]+'</a>'
+		list += item;
+	}
+	$('#segmentedControls').append(list);
+	
+	//右边默认加载第一个级别下的所有子级别
+	var thisValue=$($('.condition-item')[0]).attr('data-value');
+	var thisType=$($('.condition-item')[0]).attr('data-type');
+	//加载右边子内容
+	loadRight(thisType,thisValue,'SubSegment');
+}
+
 
 function getParentSelectedList(thisLevelIndex){
 	var uiNav=$("#ui-nav a");
@@ -165,6 +194,8 @@ mui('body').on('tap', '.condition-li', function() {
 		searchList=delThisValue(thisType,searchList,dataValue);//获取所有选中的查询条件
 	}
     conditionList=selectedCondition(searchList,equipData);//查询选中条件下的车
+    
+    
 });
 ///////////////////点击性质、级别、、、、、、
 mui('body').on('tap', '#ui-nav .ui-flex-item a', function() {
@@ -172,4 +203,41 @@ mui('body').on('tap', '#ui-nav .ui-flex-item a', function() {
 	var thisLevelIndex=$(this).parent().index();
 	localStorage.setItem('thisId', thisId);
 	localStorage.setItem('thisLevelIndex', thisLevelIndex);
+});
+///点击级别///
+mui('#segmentedControls').on('tap','.condition-item',function(){
+	$('.condition-ul').empty();
+	
+	$('.condition-item').removeClass('mui-active');
+	targetSelectedCss($(this),'mui-active');
+	
+	var thisType=$(this).attr('data-type');
+	var thisValue=$(this).text();
+	//加载右边子内容
+	loadRight(thisType,thisValue,'SubSegment');	
+	//判断右边选中的个数
+	var conditionLi=$('#segmentedControlContents .selected');
+	if(conditionLi.length>0){
+		$(this).addClass('selected');
+	}
+	
+})
+
+function loadRight(type,value,subType){
+	var res=getChildPropertyList(equipData, type, value,subType);
+	var thisTypeSelectedList=(getConditionList(searchList,subType))[0];
+	loadPopover(subType, res, thisTypeSelectedList);
+};
+
+//点击子级别
+mui('#segmentedControlContents').on('tap','.condition-li',function(){
+//	设置左边样式
+	if($(this).hasClass('selected')){
+		if($('#segmentedControlContents .selected').length==1){
+			$('#segmentedControls .mui-active').removeClass('selected');
+		}	
+	}else{
+		$('#segmentedControls .mui-active').addClass('selected');	
+	}
+	
 });

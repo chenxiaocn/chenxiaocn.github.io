@@ -27,3 +27,20 @@
 .mui-table-view-cell a{padding-right: 35px !important;}
 .text-overflow{max-width: 50%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 .tick{display: none;width: 20px;}
+#tabPopover #segmentedControls .selected {position: relative;z-index: 3;webkit-box-sizing: border-box;box-sizing: border-box;}
+	
+#tabPopover #segmentedControls .selected:before{
+				top:6px;
+				left: 48%;
+				margin-left: -15px;
+				position: absolute;
+				/*z-index: -1;*/
+				content: "";
+				width: 35px;
+				height: 35px;
+				border-radius: 50%;
+				background: #b3b3b3;
+				opacity: .5;
+				-webkit-box-shadow: 0 0 0px #d2cccd;
+				box-shadow: 0 0 0px #d2cccd;		
+}
