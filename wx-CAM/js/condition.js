@@ -241,3 +241,21 @@ mui('#segmentedControlContents').on('tap','.condition-li',function(){
 	}
 	
 });
+
+
+
+/////////////////////品牌、厂商、车系 //////////
+mui('.field-ul').on('tap','.field-li',function(){
+	var thisType=$(this).attr('data-type');
+	var searchListArr=JSON.stringify(searchList);
+	var conditionListArr=JSON.stringify(conditionList);
+	
+	localStorage.setItem('fieldType',thisType);
+	localStorage.setItem('searchList', searchListArr);
+	localStorage.setItem('conditionList',conditionListArr);
+	
+	mui.openWindow({
+		url: 'indexedList.html',
+		id: 'indexedList.html'
+	});
+});

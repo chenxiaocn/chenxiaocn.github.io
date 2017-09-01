@@ -1,5 +1,11 @@
+var calcFieldData=[];//计算项数据
+var wordFieldData=[];//字段数据
+
 mui.ready(function() {
 	getCalendarParms(); //日历参数
+	getCalcField();//计算项参数
+	getWordField();//字段参数
+	loadCalcField();//加载计算项目
 });
 
 function getCalendarParms() {
@@ -39,3 +45,147 @@ function getCalendarParms() {
     var calendarParms=JSON.stringify(arry);
     localStorage.setItem('calendarParms',calendarParms);
 }
+
+function getCalcField(){
+    calcFieldData=[
+        {
+            "Name": "销量",
+            "Fields": [
+                {
+                    "ID": 2,
+                    "Name": "CAM CPCA",
+                    "FormatType": 10
+                }
+            ]
+        },
+        {
+            "Name": "价格", 
+            "Fields": [
+                {
+                    "ID": 0,
+                    "Name": "MSRP",
+                    "FormatType": 9
+                },
+                {
+                    "ID": 0,
+                    "Name": "TP",
+                    "FormatType": 9
+                },
+                {
+                    "ID": 0,
+                    "Name": "最小MSRP",
+                    "FormatType": 9
+                },
+                {
+                    "ID": 0,
+                    "Name": "最小TP",
+                    "FormatType": 9
+                },
+                {
+                    "ID": 0,
+                    "Name": "最大MSRP",
+                    "FormatType": 9
+                },
+                {
+                    "ID": 0,
+                    "Name": "最大TP",
+                    "FormatType": 9
+                }
+            ]
+        }
+    ]
+}
+
+function getWordField(){
+	wordFieldData= [
+	{
+			"FieldID": 2433,
+			"Name": "合资自主"
+		},
+		{
+			"FieldID": 48,
+			"Name": "车身形式"
+		},
+		{
+			"FieldID": 7,
+			"Name": "车型级别"
+		},
+		{
+			"FieldID": 50,
+			"Name": "车型子级别"
+		},
+		{
+			"FieldID": 1,
+			"Name": "制造商"
+		},
+		{
+			"FieldID": 2,
+			"Name": "品牌"
+		},
+		{
+			"FieldID": 3,
+			"Name": "车系"
+		},
+		{
+			"FieldID": 12,
+			"Name": "车型派系"
+		},
+		{
+			"FieldID": 384,
+			"Name": "燃油种类"
+		},
+		{
+			"FieldID": 47,
+			"Name": "排量"
+		},
+		{
+			"FieldID": 898,
+			"Name": "变速箱形式"
+		},
+		{
+			"FieldID": 44,
+			"Name": "型号/车型名称"
+		},
+		{
+			"FieldID": 45,
+			"Name": "车型编号"
+		}
+	]
+}
+
+function loadCalcField(){
+	var list=[];
+	var calNameList=getConditionList(calcFieldData,'Name');
+	
+	for(var i=0;i<calcFieldData.length;i++){
+		var itemHtml='<li class="mui-table-view-cell field-li" data-type='+calNameList[i]+'>'
+					 +'<a class="mui-navigate-right" href="#">'+calNameList[i]
+					 +'<label class="mui-pull-right text-overflow" for=""></label>'
+					 +'</a>'
+					 +'</li>'
+			list+=itemHtml;
+	}
+	$('.calcField-ul').append(list);
+}
+
+mui('body').on('tap', '.field-li', function() {
+	var dataType = $(this).attr('data-type');
+	var fieldsList=[];
+	if(dataType=="字段"){
+		fieldsList=wordFieldData;
+	}
+	else{
+		fieldsList=getChildPropertyList(calcFieldData, "Name", dataType, 'Fields');
+	}
+	
+	fieldsList=JSON.stringify(fieldsList);
+	localStorage.setItem('dataType',dataType);
+	localStorage.setItem('fieldsList',fieldsList);
+
+	mui.openWindow({
+		url: 'field.html',
+		id: 'field.html'
+	});
+});
+
+
