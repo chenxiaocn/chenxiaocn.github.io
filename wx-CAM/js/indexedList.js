@@ -153,14 +153,11 @@ mui('body').on('tap','.mui-icon-left-nav',function(){
 	var bodySearchListArr=JSON.stringify(bodySearchList);
 	var navSearchListArr=JSON.stringify(navSearchList);
 
-	//var goFlag=false;
-//	localStorage.setItem('goFlag',false);//上上一页跳过来的标志
-//	var goFlag=localStorage.getItem('goFlag');
 	localStorage.setItem('searchList',searchListArr);
 	localStorage.setItem('bodySearchList',bodySearchListArr);
 	localStorage.setItem('navSearchList',navSearchListArr);
-	localStorage.setItem('thisTypeSelcted',thisTypeSelcted);
-	localStorage.setItem('thisBackType',fieldType);
+//	localStorage.setItem('thisTypeSelcted',thisTypeSelcted);
+//	localStorage.setItem('thisBackType',fieldType);
 	window.history.go(-1);
 });
 

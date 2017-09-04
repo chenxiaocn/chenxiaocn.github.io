@@ -1,13 +1,15 @@
 var calcFieldData=[];//计算项数据
 var wordFieldData=[];//字段数据
 var fileds=[];//条件
-
+var bodySearchList=JSON.parse(localStorage.getItem('carSearchList'));
+console.log(bodySearchList);
 mui.ready(function() {
 	getCalendarParms(); //日历参数
 	getCalcField();//计算项参数
 	getWordField();//字段参数
 	loadCalcField();//加载计算项目;
 	fillField();//返回回来的字段选中内容填充；
+	fillChooseCar();//填充选车
 });
 
 function getCalendarParms() {
@@ -217,6 +219,25 @@ function fillField(){
 		}
 	}
 }
+
+function fillChooseCar(){
+	var list='';
+	for(var item in bodySearchList){
+		var itemStr='';
+		for(var key in bodySearchList[item]){
+			var keyStr='';
+			for(var cell in bodySearchList[item][key]){
+				var str=bodySearchList[item][key][cell]+',';
+				keyStr+=str;
+				keyStr = keyStr.substr(0,keyStr.length-1);
+			}
+				itemStr=key+':'+keyStr+',';
+		}
+	list+=itemStr;
+	list = list.substr(0,list.length-1);
+	}
+	$('.chooseCar-label').text(list);
+};
 
 mui('body').on('tap', '.field-li', function() {
 	var dataType = $(this).attr('data-type');

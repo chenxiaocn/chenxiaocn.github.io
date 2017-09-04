@@ -1,13 +1,7 @@
-//var goFlag=localStorage.getItem('goFlag');//上一页跳过来的标志
-var editList=JSON.parse(localStorage.getItem('editList'));//上一页跳过来的选中结果
+var bodySearchList=JSON.parse(localStorage.getItem('bodySearchList'));
 
 mui.ready(function(){
 	loadCondition();//条件
-//	if(goFlag=='false'){
-//
-//	}else{
-//		fillField();//返回回来的字段选中内容填充；
-//	}
 	fillField();//返回回来的字段选中内容填充；
 });
 
@@ -25,10 +19,9 @@ function loadCondition() {
 }
 
 function fillField(){
-	var thisTypeSelcted=localStorage.getItem('thisTypeSelcted');
-	var thisBackType=localStorage.getItem('thisBackType');
-	var bodySearchList=JSON.parse(localStorage.getItem('bodySearchList'));
-
+//	var thisTypeSelcted=localStorage.getItem('thisTypeSelcted');
+//	var thisBackType=localStorage.getItem('thisBackType');
+//	
 	var fieldLi=$('.field-li');
 	for(var i=0;i<fieldLi.length;i++){
 		var dataTypeCell=$($(fieldLi[i])).attr('data-type');
