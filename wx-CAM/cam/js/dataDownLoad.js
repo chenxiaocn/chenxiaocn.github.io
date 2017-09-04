@@ -2,7 +2,7 @@ var calcFieldData=[];//计算项数据
 var wordFieldData=[];//字段数据
 var fileds=[];//条件
 var bodySearchList=JSON.parse(localStorage.getItem('carSearchList'));
-console.log(bodySearchList);
+
 mui.ready(function() {
 	getCalendarParms(); //日历参数
 	getCalcField();//计算项参数

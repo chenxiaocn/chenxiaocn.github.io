@@ -18,20 +18,22 @@ function loadCondition() {
 function loadChooseList(){
 	if(bodySearchList){
 		var list='';
-		for(var item in bodySearchList ){
-			for(var key in bodySearchList[item]){
-				for(var cell in bodySearchList[item][key]){
-						var cell='<li class="mui-table-view-cell  choose-li"  data-type='+key+'>'
-							+'<div class="mui-slider-right mui-disabled">'
-							+'<a class="mui-btn mui-btn-red" data-value='+bodySearchList[item][key][cell]+' data-type='+key+'>删除</a>'
-							+'</div>'
-							+'<div class="mui-slider-handle mui-navigate-right">'
-							+key+':'+bodySearchList[item][key][cell]
-							+'</div>'
-							+'</li>';
-				list+=cell;
-				}			
-			}
+		if(bodySearchList){
+			for(var item in bodySearchList ){
+				for(var key in bodySearchList[item]){
+					for(var cell in bodySearchList[item][key]){
+							var cell='<li class="mui-table-view-cell  choose-li"  data-type='+key+'>'
+								+'<div class="mui-slider-right mui-disabled">'
+								+'<a class="mui-btn mui-btn-red" data-value='+bodySearchList[item][key][cell]+' data-type='+key+'>删除</a>'
+								+'</div>'
+								+'<div class="mui-slider-handle mui-navigate-right">'
+								+key+':'+bodySearchList[item][key][cell]
+								+'</div>'
+								+'</li>';
+					list+=cell;
+					}			
+				}
+		    }  
 		}
 		$('.choose-ul').append(list);
 	}

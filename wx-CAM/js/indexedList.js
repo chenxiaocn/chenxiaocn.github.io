@@ -108,7 +108,7 @@ function setSelected(){
 		for(var j=0;j<listCheckboxs.length;j++){
 			var value=$(listCheckboxs[j]).attr('data-value');
 			if(thisTypeSelcted[i]==value){
-				$(listCheckboxs[j]).attr('checked','checked');
+				$(listCheckboxs[j]).attr('checked',true);
 			}
 		}
 	}
@@ -129,26 +129,20 @@ function getPreFixList(thisTypeList){
 }
 
 mui('.mui-indexed-list-inner').on('change', 'input', function() {
-	var flag=$(this).is(':checked');
-	var value=$(this).parent().text();
+	var flag = $(this).is(':checked');
+	var value = $(this).parent().text();
 
-	if(flag){
-		thisTypeSelcted.push(value);
-		searchList=getSelectedList(fieldType,searchList,value);//获取所有选中的查询条件
-		bodySearchList=getSelectedList(fieldName,bodySearchList,value);
-		console.log(bodySearchList);
-	}else{
-		for(var i=0;i<thisTypeSelcted.length;i++){
-			if(thisTypeSelcted[i]==value){
-				thisTypeSelcted.splice(i,1);
-			}
-		}
-		searchList=delThisValue(fieldType,searchList,value);//获取所有选中的查询条件
-		bodySearchList=delThisValue(fieldName,bodySearchList,value);
+	if(flag) {
+		searchList = getSelectedList(fieldType, searchList, value); //获取所有选中的查询条件
+		bodySearchList = getSelectedList(fieldName, bodySearchList, value);
+
+	} else {
+		searchList = delThisValue(fieldType, searchList, value); //获取所有选中的查询条件
+		bodySearchList = delThisValue(fieldName, bodySearchList, value);
 	}
 });
 
-mui('body').on('tap','.mui-icon-left-nav',function(){
+mui('body').on('tap','.mui-icon-left-nav,.btn-finished',function(){
 	var searchListArr=JSON.stringify(searchList);
 	var bodySearchListArr=JSON.stringify(bodySearchList);
 	var navSearchListArr=JSON.stringify(navSearchList);
@@ -156,8 +150,32 @@ mui('body').on('tap','.mui-icon-left-nav',function(){
 	localStorage.setItem('searchList',searchListArr);
 	localStorage.setItem('bodySearchList',bodySearchListArr);
 	localStorage.setItem('navSearchList',navSearchListArr);
-//	localStorage.setItem('thisTypeSelcted',thisTypeSelcted);
-//	localStorage.setItem('thisBackType',fieldType);
 	window.history.go(-1);
+});
+
+//全选
+mui('body').on('tap','.all',function(){
+	if($(this).hasClass('allSelected')){
+		$(this).removeClass('allSelected');
+		//checkbox全取消
+		var  listCheckboxs=$('.field-list-checkbox');
+		for(var j=0;j<listCheckboxs.length;j++){
+			$(listCheckboxs[j]).removeAttr('checked');
+			var value=$(listCheckboxs[j]).attr('data-value');
+		    searchList=delThisValue(fieldType,searchList,value);//获取所有选中的查询条件
+			bodySearchList=delThisValue(fieldName,bodySearchList,value);//获取所有选中的查询条件	
+		}
+		
+	}else{
+		$(this).addClass('allSelected');
+		//checkbox全选中
+		var  listCheckboxs=$('.field-list-checkbox');
+		for(var j=0;j<listCheckboxs.length;j++){
+			$(listCheckboxs[j]).attr('checked',true);
+			var value=$(listCheckboxs[j]).attr('data-value');
+			searchList=getSelectedList(fieldType,searchList,value);//获取所有选中的查询条件
+			bodySearchList=getSelectedList(fieldName,bodySearchList,value);//获取所有选中的查询条件				
+		}
+	}
 });
 
