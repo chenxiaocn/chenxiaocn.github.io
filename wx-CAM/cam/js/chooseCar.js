@@ -3,20 +3,22 @@ mui.ready(function(){
 });
 
 function loadChooseList(){
- var chooseList=JSON.parse(localStorage.getItem('chooseList'));
+ var chooseList=JSON.parse(localStorage.getItem('bodySearchList'));
 	if(chooseList){
 		var list='';
 		for(var item in chooseList ){
 			for(var key in chooseList[item]){
-				var cell='<li class="mui-table-view-cell  choose-li"  data-type='+key+'>'
+				for(var cell in chooseList[item][key]){
+						var cell='<li class="mui-table-view-cell  choose-li"  data-type='+key+'>'
 							+'<div class="mui-slider-right mui-disabled">'
 							+'<a class="mui-btn mui-btn-red">删除</a>'
 							+'</div>'
 							+'<div class="mui-slider-handle mui-navigate-right">'
-							+chooseList[item][key]
+							+key+':'+chooseList[item][key][cell]
 							+'</div>'
 							+'</li>';
 				list+=cell;
+				}			
 			}
 		}
 		$('.choose-ul').append(list);
@@ -65,3 +67,4 @@ function loadChooseList(){
 			id: 'newChooseCar.html'
 		});
 	});
+	

@@ -1,4 +1,5 @@
 var fieldType = localStorage.getItem('fieldType');
+var fieldName = localStorage.getItem('fieldName');
 var searchList = JSON.parse(localStorage.getItem('searchList')); //查询条件集合
 var conditionList = JSON.parse(localStorage.getItem('conditionList')); //查询条件下的结果集合
 var navSearchList = JSON.parse(localStorage.getItem('navSearchList')); //表头条件集合
@@ -134,7 +135,7 @@ mui('.mui-indexed-list-inner').on('change', 'input', function() {
 	if(flag){
 		thisTypeSelcted.push(value);
 		searchList=getSelectedList(fieldType,searchList,value);//获取所有选中的查询条件
-		bodySearchList=getSelectedList(fieldType,bodySearchList,value);
+		bodySearchList=getSelectedList(fieldName,bodySearchList,value);
 		console.log(bodySearchList);
 	}else{
 		for(var i=0;i<thisTypeSelcted.length;i++){
@@ -143,7 +144,7 @@ mui('.mui-indexed-list-inner').on('change', 'input', function() {
 			}
 		}
 		searchList=delThisValue(fieldType,searchList,value);//获取所有选中的查询条件
-		bodySearchList=delThisValue(fieldType,bodySearchList,value);
+		bodySearchList=delThisValue(fieldName,bodySearchList,value);
 	}
 });
 

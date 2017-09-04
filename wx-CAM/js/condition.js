@@ -225,6 +225,7 @@ mui('#segmentedControlContents').on('tap','.condition-li',function(){
 /////////////////////品牌、厂商、车系 //////////
 mui('.field-ul').on('tap','.field-li',function(){
 	var thisType=$(this).attr('data-type');
+	var thisName=$(this).attr('data-name');
 	var thisValue=$(this).find('label').text();
 	//去冒号
 	var reg = /[^:]*:([^:]*)/;
@@ -235,6 +236,7 @@ mui('.field-ul').on('tap','.field-li',function(){
 	var navSearchListArr=JSON.stringify(navSearchList);
 	
 	localStorage.setItem('fieldType',thisType);
+	localStorage.setItem('fieldName',thisName);
 	localStorage.setItem('searchList', searchListArr);
 	localStorage.setItem('conditionList',conditionListArr);
 	localStorage.setItem('fieldCellSelcted',thisValue);
