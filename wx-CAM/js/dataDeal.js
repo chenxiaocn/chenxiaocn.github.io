@@ -1,4 +1,24 @@
+//删除取消的选中条件
+function delThisValue(type,searchList,keyWord){
+	for(var item in searchList){
+		for(var key in searchList[item]){
+			if(key==type){
+				var arr=searchList[item][key];
+				for(var i=0;i<arr.length;i++){
+					if(arr[i]==keyWord){
+						arr.splice(i,1);
+						searchList[item][key]=arr;
+						break;
+					}
+				}
+			}
+		}
+	}
+	return searchList;
+}
+
 function getSelectedList(type, selectedList, keyWord) {
+	if(selectedList==null){selectedList=[]};
 	var hasThisType = false,list = [];
 	for(var item in selectedList) {
 		for(var key in selectedList[item]) {
@@ -55,7 +75,7 @@ function sortArr(arr, sortStr) {
 		arr.sort(bySort(arr[i][sortStr]));
 	}
 }
-//数组对象相减
+//数组删除指定元素
 function sorSplice(list,type) {
 	for(var item in list){
 		for(var key in list[item]){
@@ -136,6 +156,8 @@ function myFunction(type, conArray, dataArray) {
 	var res = new Array();
 	for(var item in dataArray) {
 		for(var item1 in conArray) {
+			console.log(dataArray[item][type]);
+			console.log(conArray[item1]);
 			if(dataArray[item][type] == conArray[item1]) {
 				res.push(dataArray[item]);
 			}
@@ -197,6 +219,7 @@ function getPropertyVaule(list, property, propertyVaule) {
 	return arr;
 }
 
+//
 //指定类
 function getId(content) {
 	var arr = '';
@@ -229,6 +252,19 @@ function getConditionList(list, keyWord) {
 	arr = unique(arr);
 	return arr;
 }
+
+function getTypeList(list, keyWord) {
+	var arr = [];
+	for(var item in list) {
+		for(var key in list[item]) {
+			if(key == keyWord) {
+				arr.push(list[item][key]);
+			}
+		}
+	}
+	return arr;
+}
+
 //指定某个条件所有查询结果
 function getConditionResults(list, keyWord) {
 	var arr = [];

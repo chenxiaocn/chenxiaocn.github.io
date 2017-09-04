@@ -2,10 +2,10 @@ var allJsonData = getEquipData();
 var equipData = allJsonData[1];
 var lastClickConditionId = ''; //弹框上一次被打开，条件的id
 var lastClickLevelIndex =-1; //弹框上一次被打开，条件的索引
-var searchList=[];//查询集合。如性质、级别
+var searchList=JSON.parse(localStorage.getItem('searchList'));//查询集合。如性质、级别
 var conditionList=equipData;//查询选中条件下的车
 var allConditionList=[];//所有条件集合
-
+var navSearchList=JSON.parse(localStorage.getItem('navSearchList'));//表头的五种选中条件集合
 mui.ready(function() {
 	var conditionParms = JSON.parse(localStorage.getItem('conditionParms'));
 	getAllConditionList(conditionParms);//或得所有条件
@@ -96,7 +96,7 @@ function loadPopover(thisId, conditionContent, thisTypeSelectedList) {
 	$('.condition-ul').append(list);
 
 	//选中样式
-	if(searchList.length > 0) {
+	if(thisTypeSelectedList) {
 		setSelected(thisTypeSelectedList);
 	}
 
@@ -117,7 +117,6 @@ function loadTabPopover(thisId, conditionContent, thisTypeSelectedList) {
 	//加载右边子内容
 	loadRight(thisType,thisValue,'SubSegment');
 }
-
 
 function getParentSelectedList(thisLevelIndex){
 	var uiNav=$("#ui-nav a");
@@ -160,24 +159,6 @@ function setSelected(thisTypeSelectedList){
 	}
 }
 
-function delThisValue(type,searchList,keyWord){
-	for(var item in searchList){
-		for(var key in searchList[item]){
-			if(key==type){
-				var arr=searchList[item][key];
-				for(var i=0;i<arr.length;i++){
-					if(arr[i]==keyWord){
-						arr.splice(i,1);
-						searchList[item][key]=arr;
-						break;
-					}
-				}
-			}
-		}
-	}
-	return searchList;
-}
-
 ////////////点击某个条件，如合资/////////////
 mui('body').on('tap', '.condition-li', function() {
 	var dataValue=$(this).attr('data-value');
@@ -193,9 +174,9 @@ mui('body').on('tap', '.condition-li', function() {
 		$(this).removeClass('selected');
 		searchList=delThisValue(thisType,searchList,dataValue);//获取所有选中的查询条件
 	}
+
+	navSearchList=searchList;
     conditionList=selectedCondition(searchList,equipData);//查询选中条件下的车
-    
-    
 });
 ///////////////////点击性质、级别、、、、、、
 mui('body').on('tap', '#ui-nav .ui-flex-item a', function() {
@@ -220,8 +201,7 @@ mui('#segmentedControls').on('tap','.condition-item',function(){
 	if(conditionLi.length>0){
 		$(this).addClass('selected');
 	}
-	
-})
+});
 
 function loadRight(type,value,subType){
 	var res=getChildPropertyList(equipData, type, value,subType);
@@ -242,18 +222,24 @@ mui('#segmentedControlContents').on('tap','.condition-li',function(){
 	
 });
 
-
-
 /////////////////////品牌、厂商、车系 //////////
 mui('.field-ul').on('tap','.field-li',function(){
 	var thisType=$(this).attr('data-type');
+	var thisValue=$(this).find('label').text();
+	//去冒号
+	var reg = /[^:]*:([^:]*)/;
+	thisValue=thisValue.replace(reg,"$1");
+
 	var searchListArr=JSON.stringify(searchList);
 	var conditionListArr=JSON.stringify(conditionList);
+	var navSearchListArr=JSON.stringify(navSearchList);
 	
 	localStorage.setItem('fieldType',thisType);
 	localStorage.setItem('searchList', searchListArr);
 	localStorage.setItem('conditionList',conditionListArr);
-	
+	localStorage.setItem('fieldCellSelcted',thisValue);
+	localStorage.setItem('navSearchList',navSearchListArr);
+
 	mui.openWindow({
 		url: 'indexedList.html',
 		id: 'indexedList.html'
