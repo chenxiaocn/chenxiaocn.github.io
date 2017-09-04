@@ -66,40 +66,51 @@ function loadIndexedList(){
 			rangeList=selectedCondition(navSearchList,equipData);
 		}
 	}
-
-	var thisTypeList=getConditionList(rangeList, fieldType);//品牌集合
-	var preFixList=getPreFixList(thisTypeList);//首字母集合
-
-	var ch_big = 'A',list='';
-	for(var i = 0; i < 26; i++) {
-		var letterCellHtmls='';//单个大写字母下品牌集合
-
-		var letterCell=String.fromCharCode(ch_big.charCodeAt(0) + i);
-
-		var letterCellLiList='';
-	    for(var item in preFixList){
-			for(var key in preFixList[item]){
-				if(preFixList[item][key]==letterCell){
-					var getFullChars=pinyin.getFullChars(key);
-					var typeCellFullChars=getFullChars.replace(/(^\s*)|(\s*$)/g, "");
-
-					var indexedLi='<li data-value='+key+'  data-tags='+typeCellFullChars+'  class="mui-table-view-cell mui-indexed-list-item mui-checkbox mui-left">'
-						                    +'<input type="checkbox" data-value='+key+' class="field-list-checkbox" />' +key
-						                    + '</li>';
-					letterCellLiList+=indexedLi;
+   
+   if(rangeList.length>0){//有数据，加载列表
+   		$('.no-data').hide();
+   		$('.mui-indexed-list-bar').show();
+   		
+	   	var thisTypeList=getConditionList(rangeList, fieldType);//品牌集合
+		var preFixList=getPreFixList(thisTypeList);//首字母集合
+	
+		var ch_big = 'A',list='';
+		for(var i = 0; i < 26; i++) {
+			var letterCellHtmls='';//单个大写字母下品牌集合
+	
+			var letterCell=String.fromCharCode(ch_big.charCodeAt(0) + i);
+	
+			var letterCellLiList='';
+		    for(var item in preFixList){
+				for(var key in preFixList[item]){
+					if(preFixList[item][key]==letterCell){
+						var getFullChars=pinyin.getFullChars(key);
+						var typeCellFullChars=getFullChars.replace(/(^\s*)|(\s*$)/g, "");
+	
+						var indexedLi='<li data-value='+key+'  data-tags='+typeCellFullChars+'  class="mui-table-view-cell mui-indexed-list-item mui-checkbox mui-left">'
+							                    +'<input type="checkbox" data-value='+key+' class="field-list-checkbox" />' +key
+							                    + '</li>';
+						letterCellLiList+=indexedLi;
+					}
 				}
 			}
+			//该大写字母下有就填充。无，不填充，该大写也不显示
+			if(letterCellLiList){
+				letterCellHtmls='<li data-group='+letterCell+' class="mui-table-view-divider mui-indexed-list-group">' +letterCell
+										+'</li>'
+										+letterCellLiList;
+			}
+			list+=letterCellHtmls;
 		}
-		//该大写字母下有就填充。无，不填充，该大写也不显示
-		if(letterCellLiList){
-			letterCellHtmls='<li data-group='+letterCell+' class="mui-table-view-divider mui-indexed-list-group">' +letterCell
-									+'</li>'
-									+letterCellLiList;
-		}
-		list+=letterCellHtmls;
-	}
-	$('.indexed-ul').append(list);
-	setSelected();
+		$('.indexed-ul').append(list);
+		setSelected();
+   }
+   else{//无数据，给提示
+   	$('.no-data').show();
+   	$('.mui-indexed-list-bar').hide();
+   }
+
+
 }
 
 function setSelected(){
