@@ -6,6 +6,7 @@ var searchList=JSON.parse(localStorage.getItem('searchList'));//查询集合。�
 var conditionList=equipData;//查询选中条件下的车
 var allConditionList=[];//所有条件集合
 var navSearchList=JSON.parse(localStorage.getItem('navSearchList'));//表头的五种选中条件集合
+
 mui.ready(function() {
 	var conditionParms = JSON.parse(localStorage.getItem('conditionParms'));
 	getAllConditionList(conditionParms);//或得所有条件
@@ -112,6 +113,7 @@ function loadTabPopover(thisId, conditionContent, thisTypeSelectedList) {
 	$('#segmentedControls').append(list);
 	
 	//右边默认加载第一个级别下的所有子级别
+	$($('.condition-item')[0]).addClass('mui-active');
 	var thisValue=$($('.condition-item')[0]).attr('data-value');
 	var thisType=$($('.condition-item')[0]).attr('data-type');
 	//加载右边子内容
@@ -159,23 +161,28 @@ function setSelected(thisTypeSelectedList){
 	}
 }
 
+function addOrDelSelected(target, flag) {
+	var dataValue = target.attr('data-value');
+	var thisType = target.attr('data-type');
+
+	target.find('.tick').toggle();
+
+	if(flag) {
+		target.addClass('selected');
+		searchList = getSelectedList(thisType, searchList, dataValue); //获取所有选中的查询条件
+		navSearchList = getSelectedList(thisType, navSearchList, dataValue); //
+	} else {
+		target.removeClass('selected');
+		searchList = delThisValue(thisType, searchList, dataValue); //获取所有选中的查询条件
+		navSearchList = delThisValue(thisType, navSearchList, dataValue); //
+	}
+};
+
 ////////////点击某个条件，如合资/////////////
 mui('body').on('tap', '.condition-li', function() {
-	var dataValue=$(this).attr('data-value');
-	var thisType=$(this).attr('data-type');
-	
 	//该项被选中样式
-	$(this).find('.tick').toggle();
 	var tickVisible = $(this).find('.tick').is(':visible');
-	if(tickVisible){
-		$(this).addClass('selected');
-		searchList=getSelectedList(thisType,searchList,dataValue);//获取所有选中的查询条件
-	} else {
-		$(this).removeClass('selected');
-		searchList=delThisValue(thisType,searchList,dataValue);//获取所有选中的查询条件
-	}
-
-	navSearchList=searchList;
+	addOrDelSelected($(this),!tickVisible) ;
     conditionList=selectedCondition(searchList,equipData);//查询选中条件下的车
 });
 ///////////////////点击性质、级别、、、、、、
@@ -199,14 +206,16 @@ mui('#segmentedControls').on('tap','.condition-item',function(){
 	//判断右边选中的个数
 	var conditionLi=$('#segmentedControlContents .selected');
 	if(conditionLi.length>0){
-		$(this).addClass('selected');
+		 $(this).addClass('selected');
 	}
 });
 
 function loadRight(type,value,subType){
 	var res=getChildPropertyList(equipData, type, value,subType);
-	var thisTypeSelectedList=(getConditionList(searchList,subType))[0];
+	var thisTypeSelectedList=(getConditionList(searchList,subType))[0];	
 	loadPopover(subType, res, thisTypeSelectedList);
+	var allHtml='<li class="mui-table-view-cell all"  data-type='+subType+'>全选<img class="tick mui-pull-right" src="../image/tick.png"></li>';
+	$('.condition-ul').prepend(allHtml);
 };
 
 //点击子级别
@@ -215,11 +224,29 @@ mui('#segmentedControlContents').on('tap','.condition-li',function(){
 	if($(this).hasClass('selected')){
 		if($('#segmentedControlContents .selected').length==1){
 			$('#segmentedControls .mui-active').removeClass('selected');
-		}	
+		}
 	}else{
 		$('#segmentedControls .mui-active').addClass('selected');	
 	}
 	
+});
+
+//点击子级别全选
+mui('#segmentedControlContents').on('tap','.all',function(){
+	var conditionLi=$('.condition-li');
+	var flag=false;
+	
+	if($(this).hasClass('allSelected')){
+		$(this).removeClass('allSelected');
+	}else{
+		flag=true;
+		$(this).addClass('allSelected');
+	}
+	
+	for(var i=0;i<conditionLi.length;i++){
+		addOrDelSelected($(conditionLi[i]),flag);
+	}
+    conditionList=selectedCondition(searchList,equipData);//查询选中条件下的车
 });
 
 /////////////////////品牌、厂商、车系 //////////
@@ -247,3 +274,5 @@ mui('.field-ul').on('tap','.field-li',function(){
 		id: 'indexedList.html'
 	});
 });
+
+

@@ -87,5 +87,10 @@ mui('.mui-content').on('tap', '.plus,.choose-li', function(e) {
 mui('body').on('tap','.mui-icon-left-nav', function() {
 	var carSearchList=JSON.stringify(bodySearchList);
 	localStorage.setItem('carSearchList', carSearchList);
-   	window.history.go(-1);
+	
+	mui.openWindow({
+		url:'dataDownLoad.html',
+		id: 'dataDownLoad.html',
+	});
+// 	window.history.go(-1);
 });

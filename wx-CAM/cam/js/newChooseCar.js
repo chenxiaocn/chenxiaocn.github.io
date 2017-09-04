@@ -43,5 +43,9 @@ function fillField(){
 //返回、完成
 mui('body').on('tap','.mui-icon-left-nav,.btn-finished',function(){
 	localStorage.setItem('goFlag',false);//上一页跳过来的标志
-	window.history.go(-1);
+	
+	mui.openWindow({
+		url:'chooseCar.html',
+		id: 'chooseCar.html',
+	});
 });

@@ -263,4 +263,17 @@ mui('body').on('tap', '.field-li', function() {
 	});
 });
 
+//选车
+mui('body').on('tap', '.choose-car-li', function(){
+	var value = $(this).find('label').text();
+	var url = "chooseCar.html";
 
+	if(!value) {
+		url = "newChooseCar.html";
+	}
+
+	mui.openWindow({
+		url: url,
+		id: url
+	});
+});
