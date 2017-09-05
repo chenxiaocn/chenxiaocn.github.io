@@ -54,7 +54,7 @@ mui('.mui-input-group').on('change', 'input', function() {
 	addOrdelSelected($(this),flag);
 });
 
-mui('body').on('tap','.mui-icon-left-nav',function(){
+mui('body').on('tap','.mui-icon-left-nav,.btn-finished',function(){
 	var fieldSearchListArr=JSON.stringify(fieldSearchList);
 
 	localStorage.setItem('fieldSearchList',fieldSearchListArr);
