@@ -1,3 +1,4 @@
+var calendarParms=JSON.parse(localStorage.getItem('calendarParms'));
 var dateClickRange=[];//可选时间范围
 var selectedRange=[];//选中时间范围
 var endYear='';//截止时间年份
@@ -24,11 +25,10 @@ mui.ready(function() {
 });
 
 function  getCalendarParms(){
-	var calendarParms=JSON.parse(localStorage.getItem('calendarParms'));
 	var beginDate=calendarParms[0].beginDate;
 	var endDate=calendarParms[0].endDate;
     dateClickRange=getDateRangeList(beginDate,endDate);
-    if(calendarParms[0].selectedCalendarDate[0].length>1){
+    if(calendarParms[0].selectedCalendarDate.length>=1){
     	selectedRange=getSelectedRangeArr(calendarParms[0].selectedCalendarDate,'month');
     }
     endYear=endDate.substring(0,4);//截取截止日期年份
@@ -111,49 +111,59 @@ function pullupRefresh() {
 	}, 300);
 }
 //选中点击事件
-mui('body').on('tap', '.clickable', function(e) {
+mui('body').on('tap', '.clickable', function() {
 	var thisValue = $(this).attr('value');
 	var thisIndex,beginIndex,endIndex;
-	if($(this).hasClass('selected')) {
-		if(selectedRange.length <= 1) {
-			$(this).removeClass('selected');
-			selectedRange = [];
-		}
-		else {
-			$('.selected').removeClass('selected');
-			$(this).addClass('selected');
-			selectedRange = [thisValue];
-		}
-	}
-	else{
-		switch (selectedRange.length){
-			case 0:
-				$(this).addClass('selected');
-				selectedRange = [thisValue];
-				break;
-			case 1:
-				thisIndex=getIndex($('.clickable'),thisValue);
-				var selectedValue=$('.selected').attr('value');
-				var selectedIndex=getIndex($('.clickable'),selectedValue);
-
-				if(thisIndex<selectedIndex){
-					beginIndex=thisIndex;
-					endIndex=selectedIndex;
-				}else{
-					beginIndex=selectedIndex;
-					endIndex=thisIndex;
-				}
-
-				for(var i=beginIndex;i<=endIndex;i++){
-					$($('.clickable')[i]).addClass('selected');
-					selectedRange.push($($('.clickable')[i]).attr('value'));
-				}
-				break;
-			default :
+	//如果是范围
+	if(calendarParms[0].dateRangeEndbled) {
+		if($(this).hasClass('selected')) {
+			if(selectedRange.length <= 1) {
+				$(this).removeClass('selected');
+				selectedRange = [];
+			} else {
 				$('.selected').removeClass('selected');
 				$(this).addClass('selected');
 				selectedRange = [thisValue];
-				break;
+			}
+		} else {
+			switch(selectedRange.length) {
+				case 0:
+					$(this).addClass('selected');
+					selectedRange = [thisValue];
+					break;
+				case 1:
+					thisIndex = getIndex($('.clickable'), thisValue);
+					var selectedValue = $('.selected').attr('value');
+					var selectedIndex = getIndex($('.clickable'), selectedValue);
+	
+					if(thisIndex < selectedIndex) {
+						beginIndex = thisIndex;
+						endIndex = selectedIndex;
+					} else {
+						beginIndex = selectedIndex;
+						endIndex = thisIndex;
+					}
+	
+					for(var i = beginIndex; i <= endIndex; i++) {
+						$($('.clickable')[i]).addClass('selected');
+						selectedRange.push($($('.clickable')[i]).attr('value'));
+					}
+					break;
+				default:
+					$('.selected').removeClass('selected');
+					$(this).addClass('selected');
+					selectedRange = [thisValue];
+					break;
+			}
+		}
+    }
+	if(calendarParms[0].single){
+		if($(this).hasClass('selected')) {
+			$(this).removeClass('selected');
+			selectedRange=sorSplice(selectedRange,thisValue);			
+		}else{
+			$(this).addClass('selected');
+			selectedRange.push(thisValue);
 		}
 	}
 });
@@ -170,19 +180,38 @@ function getIndex(list, value) {
 }
 
 //返回
-mui('body').on('tap', '.mui-icon-left-nav', function(e){
-	var length=$('.selected').length;
-	var selectedCalendarDate='',beginDateValue,endDateValue;
-	if(length==1){
-		selectedCalendarDate=$('.selected').attr('value');
+mui('body').on('tap', '.mui-icon-left-nav', function() {
+	var selecteList=$('.selected');
+	var length = $('.selected').length;
+	var selectedCalendarDate = '',
+		beginDateValue, endDateValue;
+		var arr=[];
+
+	if(length == 1) {
+		selectedCalendarDate = $('.selected').attr('value');
 	}
-	if(length>1){
-		 beginDateValue=$($('.selected')[0]).attr('value');
-		 endDateValue=$($('.selected')[length-1]).attr('value');
-		selectedCalendarDate=beginDateValue+"~"+endDateValue;
+	if(length > 1) {
+		if(calendarParms[0].dateRangeEndbled) {
+			beginDateValue = $($('.selected')[0]).attr('value');
+			endDateValue = $($('.selected')[length - 1]).attr('value');
+			selectedCalendarDate = beginDateValue + "~" + endDateValue;
+			selectedRange = [selectedCalendarDate];
+		}
+		if(calendarParms[0].single) {
+			for(var i=0;i<length;i++){
+				var value=$(selecteList[i]).attr('value');
+				arr.push(value);
+			}
+			selectedRange=arr;
+			selectedCalendarDate=selectedRange.join(',');
+		}
 	}
-	localStorage.setItem('selectedCalendarDate',selectedCalendarDate);
-	localStorage.setItem('backFlag',true);
+
+	var selectedRangeArr = JSON.stringify(selectedRange);
+	localStorage.setItem('selectedRange', selectedRangeArr);
+	localStorage.setItem('selectedCalendarDate', selectedCalendarDate);
+	localStorage.setItem('selectedCalendarDate', selectedCalendarDate);
+	localStorage.setItem('backFlag', true);
 	window.history.go(-1);
 
 });
