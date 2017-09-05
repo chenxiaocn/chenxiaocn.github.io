@@ -35,21 +35,17 @@ function getCalendarParms() {
 		}else{
 			selectedCalendarDate=[];
 		}
-		arry = [
-			{
-				dateType: 'month',
-				selectedCalendarDate:[selectedCalendarDate],
-				beginDate: '201302',
-				endDate: '201703',
-				dateRangeEndbled: true,
-				single: false
+		
+		for(var item in arry){
+			for(var key in arry[item]){
+				if(key=="selectedCalendarDate"){
+					arry[item][key]=[selectedCalendarDate];
+				}
 			}
-		]
+		}
 	}
 
     $('#time').find('label').text(selectedCalendarDate);
-
-	
     $('#time').attr('data-value',dateType);
     
     var calendarParms=JSON.stringify(arry);
