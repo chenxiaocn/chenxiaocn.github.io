@@ -30,6 +30,11 @@ function getCalendarParms() {
 
 	if(backFlag){
 		selectedCalendarDate=localStorage.getItem('selectedCalendarDate');
+		if(selectedCalendarDate){
+			selectedCalendarDate=selectedCalendarDate;
+		}else{
+			selectedCalendarDate=[];
+		}
 		arry = [
 			{
 				dateType: 'month',
@@ -42,8 +47,9 @@ function getCalendarParms() {
 		]
 	}
 
+    $('#time').find('label').text(selectedCalendarDate);
 
-	$('#time').find('label').text(selectedCalendarDate);
+	
     $('#time').attr('data-value',dateType);
     
     var calendarParms=JSON.stringify(arry);

@@ -28,8 +28,9 @@ function  getCalendarParms(){
 	var beginDate=calendarParms[0].beginDate;
 	var endDate=calendarParms[0].endDate;
     dateClickRange=getDateRangeList(beginDate,endDate);
-    selectedRange=getSelectedRangeArr(calendarParms[0].selectedCalendarDate,'month');
-    
+    if(calendarParms[0].selectedCalendarDate[0].length>1){
+    	selectedRange=getSelectedRangeArr(calendarParms[0].selectedCalendarDate,'month');
+    }
     endYear=endDate.substring(0,4);//截取截止日期年份
     endYear=parseInt(endYear);
 }
@@ -171,7 +172,7 @@ function getIndex(list, value) {
 //返回
 mui('body').on('tap', '.mui-icon-left-nav', function(e){
 	var length=$('.selected').length;
-	var selectedCalendarDate,beginDateValue,endDateValue;
+	var selectedCalendarDate='',beginDateValue,endDateValue;
 	if(length==1){
 		selectedCalendarDate=$('.selected').attr('value');
 	}
