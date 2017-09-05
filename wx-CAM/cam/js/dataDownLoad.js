@@ -16,12 +16,12 @@ function getCalendarParms() {
 	var arry = [
 	{
 		dateType: 'month',
-//		selectedCalendarDate: ['201501','201503'],
-		selectedCalendarDate: ['201501~201503'],
+		selectedCalendarDate: ['201501','201503'],
+//		selectedCalendarDate: ['201501~201503'],
 		beginDate: '201302',
 		endDate: '201703',
-		dateRangeEndbled: true,
-		single: false
+		dateRangeEndbled: false,
+		single: true
 	 }
     ];
     var selectedCalendarDate=(arry[0].selectedCalendarDate).join(',');

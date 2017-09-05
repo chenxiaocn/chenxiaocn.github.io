@@ -143,7 +143,7 @@ mui('body').on('tap', '.clickable', function() {
 						beginIndex = selectedIndex;
 						endIndex = thisIndex;
 					}
-	
+
 					for(var i = beginIndex; i <= endIndex; i++) {
 						$($('.clickable')[i]).addClass('selected');
 						selectedRange.push($($('.clickable')[i]).attr('value'));
@@ -198,11 +198,6 @@ mui('body').on('tap', '.mui-icon-left-nav', function() {
 			selectedRange = [selectedCalendarDate];
 		}
 		if(calendarParms[0].single) {
-			for(var i=0;i<length;i++){
-				var value=$(selecteList[i]).attr('value');
-				arr.push(value);
-			}
-			selectedRange=arr;
 			selectedCalendarDate=selectedRange.join(',');
 		}
 	}
