@@ -77,11 +77,9 @@ function sortArr(arr, sortStr) {
 }
 //数组删除指定元素
 function sorSplice(list,type) {
-	for(var item in list){
-		for(var key in list[item]){
-			if(key==type){
-				list.splice(item,1);
-			}
+	for(var i=0;i<list.length;i++){
+		if(list[i]==type){
+			list.splice(i,1);
 		}
 	}
 	return list;

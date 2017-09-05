@@ -19,9 +19,6 @@ function loadCondition() {
 }
 
 function fillField(){
-//	var thisTypeSelcted=localStorage.getItem('thisTypeSelcted');
-//	var thisBackType=localStorage.getItem('thisBackType');
-//	
 	var fieldLi=$('.field-li');
 	for(var i=0;i<fieldLi.length;i++){
 		var dataTypeCell=$($(fieldLi[i])).attr('data-type');

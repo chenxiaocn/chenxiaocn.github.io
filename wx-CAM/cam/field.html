@@ -15,6 +15,8 @@
 			.mui-card {
 				margin: 10px 0px;
 			}
+			.all{font-size: inherit;  padding: 10px;  line-height: 25px;}
+			.all:hover{cursor: pointer;}
 		</style>
 	</head>
 
@@ -24,17 +26,19 @@
 		</header>-->
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<p class="mui-pull-right all">全选</p>
+
 		</header>
 		<div class="mui-content">
 			<!--全选-->
-			<ul class="mui-table-view">
-				<li class="mui-table-view-cell all-li">
-					<span>全选</span>
-					<div class="mui-switch">
-						<div class="mui-switch-handle"></div>
-					</div>
-				</li>
-			</ul>
+			<!--<ul class="mui-table-view">-->
+				<!--<li class="mui-table-view-cell all-li">-->
+					<!--<span>全选</span>-->
+					<!--<div class="mui-switch">-->
+						<!--<div class="mui-switch-handle"></div>-->
+					<!--</div>-->
+				<!--</li>-->
+			<!--</ul>-->
 
 			<div class="mui-card">
 				<form class="mui-input-group field-list-form"></form>
@@ -46,6 +50,7 @@
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/jquery.1.9.1.min.js"></script>
+		<script src="../js/dataDeal.js"></script>
 		<script src='../js/field.js'></script>
 	</body>
 

@@ -1,7 +1,7 @@
 var calcFieldData=[];//计算项数据
 var wordFieldData=[];//字段数据
-var fileds=[];//条件
 var bodySearchList=JSON.parse(localStorage.getItem('carSearchList'));
+var fieldSearchList=JSON.parse(localStorage.getItem('fieldSearchList'));
 
 mui.ready(function() {
 	getCalendarParms(); //日历参数
@@ -173,47 +173,17 @@ function loadCalcField(){
 }
 
 function fillField(){
-	var fieldSelctedList=localStorage.getItem('fieldSelctedList');
-	var backFieldType=localStorage.getItem('backFieldType');
-
-	fileds=JSON.parse(localStorage.getItem('allFieldsSelected'));
-	if(fileds==null){fileds=[];}
-
-	var obj = {};
-	obj[backFieldType] =fieldSelctedList;
-	//判断是否有返回的类，有，改变改类下的选中数组。无，添加
-	var flag=false;
-	for(var item in fileds){
-		for(var key in fileds[item]){
-			if(key==backFieldType){
-				flag=true;
-			}
-		}
-	}
-
-	if(flag){
-		for(var item in fileds){
-			for(var key in fileds[item]){
-				if(key==backFieldType){
-					fileds[item][key]=fieldSelctedList;
-				}
-			}
-		}
-	}else{
-		fileds.push(obj);
-	}
-
-	var allFieldsSelected=JSON.stringify(fileds);
-	localStorage.setItem('allFieldsSelected',allFieldsSelected);
-
 	var fieldLi=$('.field-li');
 	for(var i=0;i<fieldLi.length;i++){
 		var dataTypeCell=$($(fieldLi[i])).attr('data-type');
-		for(var item in fileds){
-			for(var key in fileds[item]){
+
+		for(var item in fieldSearchList){
+			for(var key in fieldSearchList[item]){
 				if(key==dataTypeCell){
-					var fieldItemKey=fileds[item][key];
-					$(fieldLi[i]).find('label').text(fieldItemKey);
+					var fieldItemKey=(fieldSearchList[item][key]).join(',');
+					if(fieldItemKey){
+						$(fieldLi[i]).find('label').text(fieldItemKey);
+					}
 				}
 			}
 		}

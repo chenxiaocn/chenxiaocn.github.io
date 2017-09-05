@@ -66,7 +66,8 @@ function loadIndexedList(){
 			rangeList=selectedCondition(navSearchList,equipData);
 		}
 	}
-   
+	
+   //加载列表
    if(rangeList.length>0){//有数据，加载列表
    		$('.no-data').hide();
    		$('.mui-indexed-list-bar').show();
@@ -103,20 +104,25 @@ function loadIndexedList(){
 			list+=letterCellHtmls;
 		}
 		$('.indexed-ul').append(list);
-		setSelected();
+		setSelected();//设置选中的样式
+		//设置全选样式
+	   var a=$('.field-list-checkbox').length;
+		if(thisTypeSelcted.length==a){
+			$('.all').addClass('allSelected');
+	    }else{
+			$('.all').removeClass('allSelected');
+	    }
    }
    else{//无数据，给提示
-   	$('.no-data').show();
-   	$('.mui-indexed-list-bar').hide();
+	   	$('.no-data').show();
+	   	$('.mui-indexed-list-bar').hide();
    }
-
-
 }
 
 function setSelected(){
 	var  listCheckboxs=$('.field-list-checkbox');
 	for(var i=0;i<thisTypeSelcted.length;i++){
-		for(var j=0;j<listCheckboxs.length;j++){
+	for(var j=0;j<listCheckboxs.length;j++){
 			var value=$(listCheckboxs[j]).attr('data-value');
 			if(thisTypeSelcted[i]==value){
 				$(listCheckboxs[j]).attr('checked',true);
@@ -141,16 +147,7 @@ function getPreFixList(thisTypeList){
 
 mui('.mui-indexed-list-inner').on('change', 'input', function() {
 	var flag = $(this).is(':checked');
-	var value = $(this).parent().text();
-
-	if(flag) {
-		searchList = getSelectedList(fieldType, searchList, value); //获取所有选中的查询条件
-		bodySearchList = getSelectedList(fieldName, bodySearchList, value);
-
-	} else {
-		searchList = delThisValue(fieldType, searchList, value); //获取所有选中的查询条件
-		bodySearchList = delThisValue(fieldName, bodySearchList, value);
-	}
+	addOrdelSelected( $(this),flag);
 });
 
 mui('body').on('tap','.mui-icon-left-nav,.btn-finished',function(){
@@ -166,27 +163,31 @@ mui('body').on('tap','.mui-icon-left-nav,.btn-finished',function(){
 
 //全选
 mui('body').on('tap','.all',function(){
+	var flag=false;
 	if($(this).hasClass('allSelected')){
-		$(this).removeClass('allSelected');
-		//checkbox全取消
-		var  listCheckboxs=$('.field-list-checkbox');
-		for(var j=0;j<listCheckboxs.length;j++){
-			$(listCheckboxs[j]).removeAttr('checked');
-			var value=$(listCheckboxs[j]).attr('data-value');
-		    searchList=delThisValue(fieldType,searchList,value);//获取所有选中的查询条件
-			bodySearchList=delThisValue(fieldName,bodySearchList,value);//获取所有选中的查询条件	
-		}
-		
+		$(this).removeClass('allSelected');	
 	}else{
 		$(this).addClass('allSelected');
-		//checkbox全选中
-		var  listCheckboxs=$('.field-list-checkbox');
-		for(var j=0;j<listCheckboxs.length;j++){
-			$(listCheckboxs[j]).attr('checked',true);
-			var value=$(listCheckboxs[j]).attr('data-value');
-			searchList=getSelectedList(fieldType,searchList,value);//获取所有选中的查询条件
-			bodySearchList=getSelectedList(fieldName,bodySearchList,value);//获取所有选中的查询条件				
-		}
+		flag=true;		
+	}
+
+	var listCheckboxs = $('.field-list-checkbox');
+	for(var j = 0; j < listCheckboxs.length; j++) {
+		addOrdelSelected( $(listCheckboxs[j]),flag);
 	}
 });
 
+function addOrdelSelected(target,flag) {
+	//checkbox全选中
+		var value = target.attr('data-value');
+		if(flag) {
+			target.prop('checked', true);
+			searchList = getSelectedList(fieldType, searchList, value); //获取所有选中的查询条件
+			bodySearchList = getSelectedList(fieldName, bodySearchList, value); //获取所有选中的查询条件
+		} 
+		else {
+			target.prop("checked",false);
+			searchList = delThisValue(fieldType, searchList, value); //获取所有选中的查询条件
+			bodySearchList = delThisValue(fieldName, bodySearchList, value); //获取所有选中的查询条件
+		}
+}
