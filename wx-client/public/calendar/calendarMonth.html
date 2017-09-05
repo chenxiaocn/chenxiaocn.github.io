@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>日历示例</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui" />
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/calendar/reset.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/calendar/calendar.css" />
+
+		<style>
+			.cal-ul li {
+				text-align: center;
+				padding-top: 10px;
+				padding-bottom: 10px;
+				margin: 10px;
+				background: #f9f9f9;
+			}
+			
+			.selected:before {
+				top: 3px;
+				left: 50%;
+				margin-left: -15px;
+				position: absolute;
+				z-index: -1;
+				content: "";
+				width: 35px;
+				height: 35px;
+				border-radius: 50%;
+				background: #999;
+				opacity: .5;
+				-webkit-box-shadow: 0 0 0px #d2cccd;
+				box-shadow: 0 0 0px #d2cccd;
+				
+			}
+			.mui-col-xs-3{width:18%;}
+			.clickable{background: #efefef !important;}
+			.selected {position: relative;z-index: 3;webkit-box-sizing: border-box;box-sizing: border-box;background: #999 !important;color: white;}
+		</style>
+	</head>
+
+	<body>
+
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+		</header>
+
+		<div id="pullrefresh" class="wrap mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div id="calendar"></div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/calendar/jqmobi.js"></script>
+		<script src="../../js/jquery.1.9.1.min.js"></script>
+		<script src="../../js/dataDeal.js"></script>
+		<script src="../../js/dataDeal.js"></script>
+		<script src="../../js/calendar/calendarMonth.js"></script>
+	</body>
+
+</html>
