@@ -210,7 +210,6 @@ mui('body').on('tap', '.mui-icon-left-nav', function() {
 	var selectedRangeArr = JSON.stringify(selectedRange);
 	localStorage.setItem('selectedRange', selectedRangeArr);
 	localStorage.setItem('selectedCalendarDate', selectedCalendarDate);
-	localStorage.setItem('selectedCalendarDate', selectedCalendarDate);
 	localStorage.setItem('backFlag', true);
 	window.history.go(-1);
 
