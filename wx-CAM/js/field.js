@@ -2,14 +2,8 @@ var selctedList =[];
 var dataType=localStorage.getItem('dataType');//
 var fieldSearchList = JSON.parse(localStorage.getItem('fieldSearchList')); //字段、销量、价格选中集合
 var fieldsCellSelcteds=localStorage.getItem('fieldsCellSelcteds');//选中的
-if(fieldsCellSelcteds==null||fieldsCellSelcteds==''){
-	selctedList=[];
-}else{
-	if(fieldsCellSelcteds.indexOf(',')>-1){//多个
-		selctedList=fieldsCellSelcteds.split(',');//转化成数组；
-	}else{//1个
-		selctedList=[fieldsCellSelcteds];
-	}
+if(fieldsCellSelcteds){
+	selctedList=fieldsCellSelcteds.split(',');//转化成数组；
 }
 
 mui.ready(function(){
