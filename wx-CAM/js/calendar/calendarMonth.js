@@ -144,6 +144,7 @@ mui('body').on('tap', '.clickable', function() {
 						endIndex = thisIndex;
 					}
 
+                     selectedRange=[];
 					for(var i = beginIndex; i <= endIndex; i++) {
 						$($('.clickable')[i]).addClass('selected');
 						selectedRange.push($($('.clickable')[i]).attr('value'));
@@ -181,30 +182,20 @@ function getIndex(list, value) {
 
 //返回
 mui('body').on('tap', '.mui-icon-left-nav', function() {
-	var selecteList=$('.selected');
-	var length = $('.selected').length;
-	var selectedCalendarDate = '',
-		beginDateValue, endDateValue;
-		var arr=[];
+	var length = selectedRange.length;
+	var beginDateValue, endDateValue;
 
-	if(length == 1) {
-		selectedCalendarDate = $('.selected').attr('value');
-	}
-	if(length > 1) {
-		if(calendarParms[0].dateRangeEndbled) {
-			beginDateValue = $($('.selected')[0]).attr('value');
-			endDateValue = $($('.selected')[length - 1]).attr('value');
-			selectedCalendarDate = beginDateValue + "~" + endDateValue;
-			selectedRange = [selectedCalendarDate];
-		}
-		if(calendarParms[0].single) {
-			selectedCalendarDate=selectedRange.join(',');
+	if(calendarParms[0].dateRangeEndbled) {
+		if(length>1){
+			beginDateValue = selectedRange[0];
+			endDateValue = selectedRange[length - 1];
+			var range = beginDateValue + "~" + endDateValue;
+			selectedRange = [range];
 		}
 	}
-
+	
 	var selectedRangeArr = JSON.stringify(selectedRange);
 	localStorage.setItem('selectedRange', selectedRangeArr);
-	localStorage.setItem('selectedCalendarDate', selectedCalendarDate);
 	localStorage.setItem('backFlag', true);
 	window.history.go(-1);
 

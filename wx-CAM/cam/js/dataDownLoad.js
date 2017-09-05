@@ -16,27 +16,30 @@ function getCalendarParms() {
 	var arry = [
 	{
 		dateType: 'month',
-		selectedCalendarDate: ['201501','201503'],
-//		selectedCalendarDate: ['201501~201503'],
+//		selectedCalendarDate: ['201501','201503'],
+		selectedCalendarDate: ['201501~201503'],
 		beginDate: '201302',
 		endDate: '201703',
-		dateRangeEndbled: false,
-		single: true
+		dateRangeEndbled: true,
+		single: false
 	 }
     ];
-    var selectedCalendarDate=(arry[0].selectedCalendarDate).join(',');
+
     var dateType=arry[0].dateType;
 	//判断时间返回的值
 	var backFlag=localStorage.getItem('backFlag');
 	var selectedRange=JSON.parse(localStorage.getItem('selectedRange'));
+	var selectedRangeStr=(arry[0].selectedCalendarDate).join(',');
 
 	if(backFlag){
 		selectedCalendarDate=localStorage.getItem('selectedCalendarDate');
 		
-		if(selectedCalendarDate){
+		if(selectedRange.length>0){
 			selectedRange=selectedRange;
+			selectedRangeStr=selectedRange.join(',')
 		}else{
 			selectedRange=[];
+			selectedRangeStr='';
 		}
 		
 		for(var item in arry){
@@ -48,7 +51,7 @@ function getCalendarParms() {
 		}
 	}
 
-    $('#time').find('label').text(selectedCalendarDate);
+    $('#time').find('label').text(selectedRangeStr);
     $('#time').attr('data-value',dateType);
     
     var calendarParms=JSON.stringify(arry);
