@@ -1,30 +1,22 @@
 var fieldType = localStorage.getItem('fieldType');
-var fieldName = localStorage.getItem('fieldName');
+var equipData =JSON.parse(localStorage.getItem('equipData'));
 var searchList = JSON.parse(localStorage.getItem('searchList')); //查询条件集合
-var conditionList = JSON.parse(localStorage.getItem('conditionList')); //查询条件下的结果集合
-var navSearchList = JSON.parse(localStorage.getItem('navSearchList')); //表头条件集合
+var parentSearchList = JSON.parse(localStorage.getItem('parentSearchList')); //父查询条件集合
 var bodySearchList = JSON.parse(localStorage.getItem('bodySearchList')); //表中条件集合（如品牌、厂商、车系）
 
 var thisTypeSelcted =[];
 var fieldCellSelcted=localStorage.getItem('fieldCellSelcted');//选中的
-if(fieldCellSelcted==null||fieldCellSelcted==''){
-	thisTypeSelcted=[];
-}else{
-	if(fieldCellSelcted.indexOf(',')>-1){//多个
-		thisTypeSelcted=fieldCellSelcted.split(',');//转化成数组；
-	}else{//1个
-		thisTypeSelcted=[fieldCellSelcted];
-	}
+if(fieldCellSelcted){
+	thisTypeSelcted=fieldCellSelcted.split(',');//转化成数组；
 }
 
 console.log(fieldType);
 console.log(searchList);
-console.log(conditionList);
 
 mui.ready(function() {
 	loadIndexedListBar();
 	initBodyList();
-	loadIndexedList()
+	loadIndexedList();
 });
 
 function loadIndexedListBar(){
@@ -45,27 +37,7 @@ function initBodyList() {
 
 function loadIndexedList(){
 	$('.indexed-ul').empty();
-
-	var allJsonData = getEquipData();
-	var equipData = allJsonData[1];
-	var rangeList=[];
-
-	if(fieldType=="Model"){//查询条件把自己剔除
-		for(var item in searchList){
-			for(var key in searchList[item]){
-				if(key=="Model"){
-					searchList.splice(item,1);
-				}
-			}
-		}
-		rangeList=selectedCondition(searchList,equipData);
-	}else{//品牌、厂商查询条件为navSearchList
-		if(navSearchList==null){
-			rangeList=equipData;
-		}else{
-			rangeList=selectedCondition(navSearchList,equipData);
-		}
-	}
+	var rangeList=selectedCondition(parentSearchList,equipData);
 	
    //加载列表
    if(rangeList.length>0){//有数据，加载列表
@@ -153,11 +125,9 @@ mui('.mui-indexed-list-inner').on('change', 'input', function() {
 mui('body').on('tap','.mui-icon-left-nav,.btn-finished',function(){
 	var searchListArr=JSON.stringify(searchList);
 	var bodySearchListArr=JSON.stringify(bodySearchList);
-	var navSearchListArr=JSON.stringify(navSearchList);
-
+	
 	localStorage.setItem('searchList',searchListArr);
 	localStorage.setItem('bodySearchList',bodySearchListArr);
-	localStorage.setItem('navSearchList',navSearchListArr);
 	window.history.go(-1);
 });
 
@@ -183,11 +153,11 @@ function addOrdelSelected(target,flag) {
 		if(flag) {
 			target.prop('checked', true);
 			searchList = getSelectedList(fieldType, searchList, value); //获取所有选中的查询条件
-			bodySearchList = getSelectedList(fieldName, bodySearchList, value); //获取所有选中的查询条件
+			bodySearchList = getSelectedList(fieldType, bodySearchList, value); //获取所有选中的查询条件
 		} 
 		else {
 			target.prop("checked",false);
 			searchList = delThisValue(fieldType, searchList, value); //获取所有选中的查询条件
-			bodySearchList = delThisValue(fieldName, bodySearchList, value); //获取所有选中的查询条件
+			bodySearchList = delThisValue(fieldType, bodySearchList, value); //获取所有选中的查询条件
 		}
 }

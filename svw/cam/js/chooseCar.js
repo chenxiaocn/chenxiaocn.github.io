@@ -3,17 +3,8 @@
 var conditionType=[];
 
 mui.ready(function(){
-	loadCondition();//名称和类型对应
 	loadChooseList();	
 });
-
-function loadCondition() {
-    conditionType=[
-	{"Brand":"品牌"},
-	{"Model_brand":"车系"},
-	{"Manufacturer":"厂商"}
-	];
-}
 
 function loadChooseList(){
 	if(bodySearchList){
@@ -49,18 +40,8 @@ mui('body').on('tap', '.mui-btn', function(event) {
 	mui.confirm('', '确认删除该条记录？', btnArray, function(e) {
 		if(e.index == 0) {
 			li.parentNode.removeChild(li);
-			bodySearchList = delThisValue(dataType, bodySearchList, dataValue);		
-			var dataTypeEn='';//获取品牌对应的英文名
-			
-			for(var item in conditionType){
-				for(var key in conditionType[item]){
-					if(dataType==conditionType[item][key]){
-						dataTypeEn=key;
-					}
-				}
-			}
-			
-			searchList = delThisValue(dataTypeEn, searchList, dataValue);///有问题
+			bodySearchList = delThisValue(dataType, bodySearchList, dataValue);					
+			searchList = delThisValue(dataType, searchList, dataValue);
 		} else {
 			setTimeout(function() {
 				mui.swipeoutClose(li);

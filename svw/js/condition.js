@@ -48,7 +48,8 @@ function showPopover() {
  
 		//上下级选中，本类型下列表
 	    if(parseInt(lastClickLevelIndex) < parseInt(thisLevelIndex)) {//随父集查询元素变化（把自己及子集所属下的查询条件剔除）
-			var parentSearchList=getParentSelectedList(thisLevelIndex);
+			var uiNav=$("#ui-nav a");
+			var parentSearchList=getParentSelectedList(thisLevelIndex,uiNav);
 			var res=selectedCondition(parentSearchList,equipData);
 			if(parentSearchList.length==0){
 				conditionContent = getConditionList(conditionList, thisId);
@@ -90,11 +91,10 @@ function loadPopover(thisId, conditionContent, thisTypeSelectedList) {
 
 }
 
-function getParentSelectedList(thisLevelIndex){
-	var uiNav=$("#ui-nav a");
+function getParentSelectedList(thisLevelIndex,target){
 	var list=[];
 	for(var i=0;i<parseInt(thisLevelIndex);i++){
-		var parentCellId=$(uiNav[i]).attr('id');
+		var parentCellId=$(target[i]).attr('id');
 		var cell=getConditionResults(searchList, parentCellId);
 		if(cell.length>0){
 			list.push(cell[0]);
@@ -146,6 +146,9 @@ function addOrDelSelected(target, flag) {
 		searchList = delThisValue(thisType, searchList, dataValue); //获取所有选中的查询条件
 		navSearchList = delThisValue(thisType, navSearchList, dataValue); //
 	}
+	
+	var navSearchListArr=JSON.stringify(navSearchList);
+	localStorage.setItem('navSearchList',navSearchListArr);
 };
 
 ////////////点击某个条件，如合资/////////////
@@ -166,22 +169,28 @@ mui('body').on('tap', '#ui-nav .flex-item a', function() {
 /////////////////////品牌、厂商、车系 //////////
 mui('.field-ul').on('tap','.field-li',function(){
 	var thisType=$(this).attr('data-type');
-	var thisName=$(this).attr('data-name');
 	var thisValue=$(this).find('label').text();
+	var thisIndex=$(this).index();
+	var parentSearchListTmp=getParentSelectedList(thisIndex,$('.field-li'));
+	var parentSearchList=[];
+	if(navSearchList==null){
+		parentSearchList=parentSearchListTmp;
+	}else{
+		parentSearchList=navSearchList.concat(parentSearchListTmp);
+	}
 	//去冒号
 	var reg = /[^:]*:([^:]*)/;
 	thisValue=thisValue.replace(reg,"$1");
 
 	var searchListArr=JSON.stringify(searchList);
 	var conditionListArr=JSON.stringify(conditionList);
-	var navSearchListArr=JSON.stringify(navSearchList);
+	var parentSearchListArr=JSON.stringify(parentSearchList);
 	
 	localStorage.setItem('fieldType',thisType);
-	localStorage.setItem('fieldName',thisName);
 	localStorage.setItem('searchList', searchListArr);
 	localStorage.setItem('conditionList',conditionListArr);
 	localStorage.setItem('fieldCellSelcted',thisValue);
-	localStorage.setItem('navSearchList',navSearchListArr);
+	localStorage.setItem('parentSearchList',parentSearchListArr);
 
 	mui.openWindow({
 		url: 'indexedList.html',
