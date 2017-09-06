@@ -1,22 +1,22 @@
 var bodySearchList=JSON.parse(localStorage.getItem('bodySearchList'));
 
 mui.ready(function(){
-	loadCondition();//条件
+//	loadCondition();//条件
 	fillField();//返回回来的字段选中内容填充；
 });
 
-function loadCondition() {
-	var conditionType=[
-	{"HZZZ":"性质"},
-	{"Segment":"级别"},
-	{"BodyType":"车身"},
-	{"Model":"派系"},
-	{"Fuel":"燃油"}
-	];//假数据
-	
-	conditionParms=JSON.stringify(conditionType);
-	localStorage.setItem('conditionParms',conditionParms);
-}
+//function loadCondition() {
+//	var conditionType=[
+//	{"HZZZ":"性质"},
+//	{"Segment":"级别"},
+//	{"BodyType":"车身"},
+//	{"Model":"派系"},
+//	{"Fuel":"燃油"}
+//	];//假数据
+//	
+//	conditionParms=JSON.stringify(conditionType);
+//	localStorage.setItem('conditionParms',conditionParms);
+//}
 
 function fillField(){
 	var fieldLi=$('.field-li');

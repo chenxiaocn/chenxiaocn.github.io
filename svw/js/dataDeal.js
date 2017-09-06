@@ -1,13 +1,13 @@
 function arrToJson(equipDataTmp,fieldsNav){
-	var equipData=[];
+	var arr=[];
 	for(var i=0;i<equipDataTmp.length;i++){
 		var json={};
 		for(var j=0;j<equipDataTmp[i].length;j++){
 			json[fieldsNav[j]]=equipDataTmp[i][j];			
 		}
-		equipData.push(json);
+		arr.push(json);
 	}
-	return equipData;
+	return arr;
 }
 
 //删除取消的选中条件

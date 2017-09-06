@@ -1,5 +1,4 @@
-var allJsonData = getEquipData();
-var equipData = allJsonData[1];
+var equipData =JSON.parse(localStorage.getItem('equipData'));
 var lastClickConditionId = ''; //弹框上一次被打开，条件的id
 var lastClickLevelIndex =-1; //弹框上一次被打开，条件的索引
 var searchList=JSON.parse(localStorage.getItem('searchList'));//查询集合。如性质、级别
@@ -8,39 +7,31 @@ var allConditionList=[];//所有条件集合
 var navSearchList=JSON.parse(localStorage.getItem('navSearchList'));//表头的五种选中条件集合
 
 mui.ready(function() {
-	var conditionParms = JSON.parse(localStorage.getItem('conditionParms'));
-	getAllConditionList(conditionParms);//或得所有条件
-	getConditionNav(conditionParms);//获得几大条件类型标题
+	var fieldsNav = JSON.parse(localStorage.getItem('fieldsNav'));
+	getAllConditionList(fieldsNav);//获取所有条件
+	getConditionNav(fieldsNav);//获得几大条件类型标题
 	showPopover();
 });
 
 function getAllConditionList(conditionParms){
 	var list=[];
-	for(var item in conditionParms){
-		for(var key in conditionParms[item]){
-			var res= getConditionList(equipData, key); 
-			var obj = {};
-		    obj[key] = res;	
-		    list.push(obj);
-		}
+	for(var i=0;i<conditionParms.length-4;i++){
+		var res= getConditionList(equipData, conditionParms[i]); 
+		var obj = {};
+	    obj[conditionParms[i]] = res;	
+	    list.push(obj);
 	}
 	allConditionList=list;
 }
 
 function getConditionNav(conditionType) {
 	var list = '';
-	for(var key in conditionType) {
-		var item = '';
-		for(var cell in conditionType[key]) {
-			var href = "#popover";
-			if(cell == "Segment") {
-				href = "#tabPopover"
-			}
-			item = '<div class="ui-flex-item">' +
-				'<a class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined" href=' + href + ' id=' + cell + '>' + conditionType[key][cell] + '</a>' +
-				'</div>';
-			list += item;
-		}
+	for(var i=0;i<conditionType.length-4;i++) {
+		var href = "#popover";
+		var item = '<div class="mui-col-sm-3 mui-col-xs-3 flex-item">' +
+			'<a class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined" href="#popover" id='+ conditionType[i] + '>' + conditionType[i] + '</a>' +
+			'</div>';
+		list += item;
 	}
 	$('#ui-nav').append(list);
 }
@@ -70,14 +61,10 @@ function showPopover() {
 
         allConditionList = changeAllConditionList(thisId, conditionContent);
         
-        if(thisId=="Segment"){
-        	loadTabPopover(thisId,conditionContent,thisTypeSelectedList);   	
-        }else{
-        	loadPopover(thisId,conditionContent,thisTypeSelectedList);
-        }      
-	});
-	
-	mui('body').on('hidden', '.mui-popover', function(e) {
+        loadPopover(thisId,conditionContent,thisTypeSelectedList);
+   });
+   
+    mui('body').on('hidden', '.mui-popover', function(e) {
 		$('.condition-ul').empty();
 		lastClickConditionId = localStorage.getItem('thisId'); //条件名称 如性质		
 		lastClickLevelIndex = localStorage.getItem('thisLevelIndex'); //条件索引	
@@ -101,23 +88,6 @@ function loadPopover(thisId, conditionContent, thisTypeSelectedList) {
 		setSelected(thisTypeSelectedList);
 	}
 
-}
-
-function loadTabPopover(thisId, conditionContent, thisTypeSelectedList) {
-	var list = '';
-	//填充
-	for(var i = 0; i <conditionContent.length; i++) {
-		var item = '<a class="mui-control-item condition-item"  href="#" data-value=' + conditionContent[i] + ' data-type=' + thisId + '>' +conditionContent[i]+'</a>'
-		list += item;
-	}
-	$('#segmentedControls').append(list);
-	
-	//右边默认加载第一个级别下的所有子级别
-	$($('.condition-item')[0]).addClass('mui-active');
-	var thisValue=$($('.condition-item')[0]).attr('data-value');
-	var thisType=$($('.condition-item')[0]).attr('data-type');
-	//加载右边子内容
-	loadRight(thisType,thisValue,'SubSegment');
 }
 
 function getParentSelectedList(thisLevelIndex){
@@ -186,67 +156,11 @@ mui('body').on('tap', '.condition-li', function() {
     conditionList=selectedCondition(searchList,equipData);//查询选中条件下的车
 });
 ///////////////////点击性质、级别、、、、、、
-mui('body').on('tap', '#ui-nav .ui-flex-item a', function() {
+mui('body').on('tap', '#ui-nav .flex-item a', function() {
 	var thisId = $(this).attr('id');
 	var thisLevelIndex=$(this).parent().index();
 	localStorage.setItem('thisId', thisId);
 	localStorage.setItem('thisLevelIndex', thisLevelIndex);
-});
-///点击级别///
-mui('#segmentedControls').on('tap','.condition-item',function(){
-	$('.condition-ul').empty();
-	
-	$('.condition-item').removeClass('mui-active');
-	targetSelectedCss($(this),'mui-active');
-	
-	var thisType=$(this).attr('data-type');
-	var thisValue=$(this).text();
-	//加载右边子内容
-	loadRight(thisType,thisValue,'SubSegment');	
-	//判断右边选中的个数
-	var conditionLi=$('#segmentedControlContents .selected');
-	if(conditionLi.length>0){
-		 $(this).addClass('selected');
-	}
-});
-
-function loadRight(type,value,subType){
-	var res=getChildPropertyList(equipData, type, value,subType);
-	var thisTypeSelectedList=(getConditionList(searchList,subType))[0];	
-	loadPopover(subType, res, thisTypeSelectedList);
-	var allHtml='<li class="mui-table-view-cell all"  data-type='+subType+'>全选<img class="tick mui-pull-right" src="../image/tick.png"></li>';
-	$('.condition-ul').prepend(allHtml);
-};
-
-//点击子级别
-mui('#segmentedControlContents').on('tap','.condition-li',function(){
-//	设置左边样式
-	if($(this).hasClass('selected')){
-		if($('#segmentedControlContents .selected').length==1){
-			$('#segmentedControls .mui-active').removeClass('selected');
-		}
-	}else{
-		$('#segmentedControls .mui-active').addClass('selected');	
-	}
-	
-});
-
-//点击子级别全选
-mui('#segmentedControlContents').on('tap','.all',function(){
-	var conditionLi=$('.condition-li');
-	var flag=false;
-	
-	if($(this).hasClass('allSelected')){
-		$(this).removeClass('allSelected');
-	}else{
-		flag=true;
-		$(this).addClass('allSelected');
-	}
-	
-	for(var i=0;i<conditionLi.length;i++){
-		addOrDelSelected($(conditionLi[i]),flag);
-	}
-    conditionList=selectedCondition(searchList,equipData);//查询选中条件下的车
 });
 
 /////////////////////品牌、厂商、车系 //////////

@@ -10,9 +10,9 @@ mui.ready(function(){
 function loadCondition() {
     conditionType=[
 	{"Brand":"品牌"},
-	{"Model":"车系"},
-	{"OEM":"厂商"}
-	];//假数据
+	{"Model_brand":"车系"},
+	{"Manufacturer":"厂商"}
+	];
 }
 
 function loadChooseList(){

@@ -6,27 +6,27 @@
 	color: black;
 }
 
-.ui-flex {
+#ui-nav{
 	margin-top: 15px;
 	margin-bottom: 10px;
 	background: #fff;
 }
 
-.ui-flex-item {
+.condition-area .flex-item {
 	margin-right: 5px;
-}
-
-.ui-flex-item:first-child {
+	width: 30%;
 	margin-left: 5px;
 }
 
-.ui-flex-item a {
-	border-radius: 60%;
+.condition-area .flex-item:nth-child(4){width:47%;}
+.condition-area .flex-item:last-child{width:46%;}
+
+.condition-area a {
 	padding: 10px 0px;
-	width: 45px;
 	border: none;
 	background: #efeff4;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	font-size: initial;
 }
 .condition-ul .selected{color:#007aff};
