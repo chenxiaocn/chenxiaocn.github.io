@@ -22,7 +22,7 @@
 .condition-area .flex-item:last-child{width:46%;}
 
 .condition-area a {
-	padding: 10px 0px;
+	padding: 5px 0px;
 	border: none;
 	background: #efeff4;
 	margin-top: 5px;
@@ -30,3 +30,5 @@
 	font-size: initial;
 }
 .condition-ul .selected{color:#007aff};
+
+.condition-area .selected{background: #999 !important;color: white !important;}

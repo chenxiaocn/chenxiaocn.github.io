@@ -66,9 +66,20 @@ function showPopover() {
    });
    
     mui('body').on('hidden', '.mui-popover', function(e) {
-		$('.condition-ul').empty();
-		lastClickConditionId = localStorage.getItem('thisId'); //条件名称 如性质		
+    	lastClickConditionId = localStorage.getItem('thisId'); //条件名称 如性质		
 		lastClickLevelIndex = localStorage.getItem('thisLevelIndex'); //条件索引	
+		
+    	var length=$('.condition-ul .selected').length;
+    	var index=parseInt(lastClickLevelIndex);
+    	if(length>0){
+    		$($('.flex-item')[index]).find('a').css('background','#999');
+    		$($('.flex-item')[index]).find('a').css('color','white');
+    	}else{
+    		$($('.flex-item')[index]).find('a').css('background','#efeff4');
+    		$($('.flex-item')[index]).find('a').css('color','black');   	
+    	}
+    
+		$('.condition-ul').empty();
 	});
 }
 
