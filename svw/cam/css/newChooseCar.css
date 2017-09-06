@@ -32,3 +32,5 @@
 .condition-ul .selected{color:#007aff};
 
 .condition-area .selected{background: #999 !important;color: white !important;}
+.field-ul{margin-top: 15px;}
+.noLimitSelected{color: #007aff;}

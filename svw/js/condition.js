@@ -44,8 +44,7 @@ function showPopover() {
 		var thisId = localStorage.getItem('thisId'); //条件名称 如性质
 		var thisLevelIndex = localStorage.getItem('thisLevelIndex'); //该条件所属索引
 		var initConditionContent=(getConditionList(allConditionList, thisId))[0]; //初始该类型下所有的集合
-		var thisTypeSelectedList=(getConditionList(searchList,thisId))[0];//该类型下是否有选中的单个条件
- 
+		var thisTypeSelectedList=thisTypeSelectedList=(getConditionList(searchList,thisId))[0];//该类型下是否有选中的单个条件
 		//上下级选中，本类型下列表
 	    if(parseInt(lastClickLevelIndex) < parseInt(thisLevelIndex)) {//随父集查询元素变化（把自己及子集所属下的查询条件剔除）
 			var uiNav=$("#ui-nav a");
@@ -78,7 +77,7 @@ function showPopover() {
     		$($('.flex-item')[index]).find('a').css('background','#efeff4');
     		$($('.flex-item')[index]).find('a').css('color','black');   	
     	}
-    
+   
 		$('.condition-ul').empty();
 	});
 }
@@ -93,13 +92,20 @@ function loadPopover(thisId, conditionContent, thisTypeSelectedList) {
                     +'</li>';
 		list += item;
 	}
-	$('.condition-ul').append(list);
+	
+	var noLimitHtml='<li class="mui-table-view-cell noLimit noLimitSelected">不限</li>'
+	$('.condition-ul').append(noLimitHtml+list);
 
 	//选中样式
-	if(thisTypeSelectedList) {
-		setSelected(thisTypeSelectedList);
+	if(thisTypeSelectedList==undefined){
+		thisTypeSelectedList=[];
 	}
-
+	if(thisTypeSelectedList.length>0) {
+		setSelected(thisTypeSelectedList);
+		$('.noLimit').removeClass('noLimitSelected');//不限
+	}else{
+		$('.noLimit').addClass('noLimitSelected');//不限
+	}
 }
 
 function getParentSelectedList(thisLevelIndex,target){
@@ -149,7 +155,8 @@ function addOrDelSelected(target, flag) {
 	target.find('.tick').toggle();
 
 	if(flag) {
-		target.addClass('selected');
+		target.addClass('selected'); 
+		$('.noLimit').removeClass('noLimitSelected');
 		searchList = getSelectedList(thisType, searchList, dataValue); //获取所有选中的查询条件
 		navSearchList = getSelectedList(thisType, navSearchList, dataValue); //
 	} else {
@@ -168,6 +175,9 @@ mui('body').on('tap', '.condition-li', function() {
 	var tickVisible = $(this).find('.tick').is(':visible');
 	addOrDelSelected($(this),!tickVisible) ;
     conditionList=selectedCondition(searchList,equipData);//查询选中条件下的车
+    if($('.condition-ul .selected').length==0){
+    	$('.noLimit').addClass('noLimitSelected');
+    }
 });
 ///////////////////点击性质、级别、、、、、、
 mui('body').on('tap', '#ui-nav .flex-item a', function() {
@@ -208,5 +218,21 @@ mui('.field-ul').on('tap','.field-li',function(){
 		id: 'indexedList.html'
 	});
 });
-
+////////////////不限/////////////
+mui('body').on('tap','.noLimit',function(){
+	if($(this).hasClass('noLimitSelected')){
+		$(this).removeClass('noLimitSelected');
+	}else{
+		var conditionUlSelcted=$('.condition-ul .selected');
+		for(var i=0;i<conditionUlSelcted.length;i++){
+			var dataValue=$(conditionUlSelcted[i]).attr('data-value');
+			var thisType=$(conditionUlSelcted[i]).attr('data-type');
+			searchList = delThisValue(thisType, searchList, dataValue); //获取所有选中的查询条件
+		    navSearchList = delThisValue(thisType, navSearchList, dataValue); //
+		}
+		$(this).addClass('noLimitSelected');
+		$('.tick').hide();
+		$('.condition-li').removeClass('selected');
+	}
+});
 
