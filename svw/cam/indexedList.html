@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>品牌</title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/mui.indexedlist.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<script type="text/javascript" src="../js/include.js"></script>
+		<style>
+			html,
+			body {
+				height: 100%;
+				overflow: hidden;
+			}
+			
+			.mui-indexed-list-inner {
+				margin-top: 50px;
+			}
+			.mui-indexed-list-bar{margin-top: 44px;}
+			.all{line-height: 40px;font-size: 18px;color: black;margin-left: 10px;}	
+			.btn-finished{right: 22px;}	    
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div id='list' class="mui-indexed-list">
+				<header class="mui-bar mui-bar-nav">
+					<div class="ui-flex mui-bar mui-bar-nav">
+						<a class="mui-icon mui-icon-left-nav"></a>
+						<div class="mui-indexed-list-search mui-input-row mui-search ui-flex-item">
+							<input type="search" class="mui-input-clear mui-indexed-list-search-input mui-pull-right" placeholder="搜索内容">
+						</div>
+						<p class="all">全选</p>
+					</div>
+				</header>
+			
+				<div class="mui-indexed-list-bar"></div>
+				<div class="mui-indexed-list-alert"></div>
+				<div class="mui-indexed-list-inner">
+					<div class="mui-indexed-list-empty-alert no-data">没有数据</div>
+					<ul class="mui-table-view indexed-ul">
+						<!--<li data-group="A" class="mui-table-view-divider mui-indexed-list-group">A</li>-->
+						<!--<li data-value="AKU" data-tags="AKeSu" class="mui-table-view-cell mui-indexed-list-item mui-checkbox mui-left">-->
+							<!--<input type="checkbox" />阿克苏机场</li>-->
+					</ul>
+				</div>
+			</div>
+			
+				<!--完成-->
+			<include src="../public/finish.html"></include>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.indexedlist.js"></script>
+		<script src="../js/jquery.1.9.1.min.js"></script>
+		<script src="js/equipData.js"></script>
+		<script src="../js/common.js"></script>
+		<script src="../js/dataDeal.js"></script>
+		<script src="../js/pinyin.js"></script>
+		<script src="../js/indexedList.js"></script>
+	</body>
+
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+	</head>
+
+	<body>
+		<!--条件-->
+		<div class="ui-flex" id="ui-nav">
+			<!--<div class="ui-flex-item">
+						<a href="#popover" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined">性质</a>
+					</div>
+					<div class="ui-flex-item">
+						<a href="#tabPopover" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined">级别</a>
+					</div>-->
+		</div>
+
+		<!--性质、车身、派系、燃油弹框-->
+		<div id="popover" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell">
+							<a href="#">自主</a>
+						</li>
+						<li class="mui-table-view-cell">
+							<a href="#">合资</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!--级别弹框-->
+		<div id="tabPopover" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-row mui-fullscreen">
+				<div class="mui-col-xs-3">
+					<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+					</div>
+					<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+						<a class="mui-control-item mui-active" data-index="0" href="#">选项1</a>
+						<a class="mui-control-item" data-index="1" href="#">选项2</a>
+						<a class="mui-control-item" data-index="2" href="#">选项3</a>
+						<a class="mui-control-item" data-index="3" href="#">选项4</a>
+						<a class="mui-control-item" data-index="4" href="#">选项5</a>
+						<a class="mui-control-item" data-index="5" href="#">选项6</a>
+						<a class="mui-control-item" data-index="6" href="#">选项7</a>
+						<a class="mui-control-item" data-index="7" href="#">选项8</a>
+						<a class="mui-control-item" data-index="8" href="#">选项9</a>
+					</div>
+				</div>
+				<div id="segmentedControlContents" class="mui-col-xs-9" style="border-left: 1px solid #c8c7cc;">
+					<div id="content" class="mui-control-content">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell">第1个选项卡子项-1</li>
+							<li class="mui-table-view-cell">第1个选项卡子项-2</li>
+							<li class="mui-table-view-cell">第1个选项卡子项-3</li>
+							<li class="mui-table-view-cell">第1个选项卡子项-4</li>
+							<li class="mui-table-view-cell">第1个选项卡子项-5</li>
+							<li class="mui-table-view-cell">第1个选项卡子项-6</li>
+							<li class="mui-table-view-cell">第1个选项卡子项-7</li>
+							<li class="mui-table-view-cell">第1个选项卡子项-8</li>
+							<li class="mui-table-view-cell">第1个选项卡子项-9</li>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+       
+        <script src="../../cam/js/equipData.js"></script>
+        <script src="../../js/dataDeal.js"></script>
+        <!--<script src="condition.js"></script>-->
+        
+		<script type="text/javascript">
+	        var equipData=getEquipData();
+			
+			
+			var conditionType = JSON.parse(localStorage.getItem('conditionParms'));
+			getConditionNav(conditionType); //获取条件列表
+
+			function getConditionNav(conditionType) {
+				var list = '';
+
+				for(var key in conditionType) {
+					var item = '';
+					for(var cell in conditionType[key]) {
+						var href = "#popover";
+						if(cell == "Segment") {
+							href = "#tabPopover"
+						}
+
+						item = '<div class="ui-flex-item">' +
+							'<a class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined" href=' + href + ' id=' + cell + '>' + conditionType[key][cell] + '</a>' +
+							'</div>';
+						list += item;
+					}
+				}
+				$('#ui-nav').append(list);
+			}
+
+           ///////////////////点击性质、级别、、、、、、
+			mui('body').on('tap', '#ui-nav .ui-flex-item a', function() {
+				var thisId = $(this).attr('id');
+				localStorage.setItem('thisId', thisId);
+
+				if(thisId == 'Segment') {
+					$(this).attr('href', '#tabPopover');
+				} else {
+					$(this).attr('href', '#popover');
+				}
+			});
+		
+
+            ////////////////弹框弹出///////////////////////
+			mui('.mui-scroll-wrapper').scroll();
+			mui('body').on('shown', '.mui-popover', function(e) {
+				var thisId = localStorage.getItem('thisId');
+				
+				var conditionContent=getConditionList(equipData,thisId);
+				console.log(conditionContent);
+//				getConditionList();
+				//console.log('shown', e.detail.id);//detail为当前popover元素
+			});
+			mui('body').on('hidden', '.mui-popover', function(e) {
+				//console.log('hidden', e.detail.id);//detail为当前popover元素
+			});
+			//
+			mui('#segmentedControls').on('tap', '.mui-control-item', function(e) {
+				var dataIndex = this.getAttribute('data-index');
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+	</head>
+
+	<body>
+		<div class="mui-popover-arrow"></div>
+		<div class="mui-row mui-fullscreen">
+			<div class="mui-col-xs-3">
+				<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+				</div>
+				<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+					<a class="mui-control-item mui-active" data-index="0" href="#">选项1</a>
+					<a class="mui-control-item" data-index="1" href="#">选项2</a>
+					<a class="mui-control-item" data-index="2" href="#">选项3</a>
+					<a class="mui-control-item" data-index="3" href="#">选项4</a>
+					<a class="mui-control-item" data-index="4" href="#">选项5</a>
+					<a class="mui-control-item" data-index="5" href="#">选项6</a>
+					<a class="mui-control-item" data-index="6" href="#">选项7</a>
+					<a class="mui-control-item" data-index="7" href="#">选项8</a>
+					<a class="mui-control-item" data-index="8" href="#">选项9</a>
+				</div>
+			</div>
+			<div id="segmentedControlContents" class="mui-col-xs-9" style="border-left: 1px solid #c8c7cc;">
+				<div id="content" class="mui-control-content">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell">第1个选项卡子项-1</li>
+						<li class="mui-table-view-cell">第1个选项卡子项-2</li>
+						<li class="mui-table-view-cell">第1个选项卡子项-3</li>
+						<li class="mui-table-view-cell">第1个选项卡子项-4</li>
+						<li class="mui-table-view-cell">第1个选项卡子项-5</li>
+						<li class="mui-table-view-cell">第1个选项卡子项-6</li>
+						<li class="mui-table-view-cell">第1个选项卡子项-7</li>
+						<li class="mui-table-view-cell">第1个选项卡子项-8</li>
+						<li class="mui-table-view-cell">第1个选项卡子项-9</li>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var left = localStorage.getItem('left');
+			$('.mui-popover-arrow').css('left', left);
+		</script>
+	</body>
+
+</html>
