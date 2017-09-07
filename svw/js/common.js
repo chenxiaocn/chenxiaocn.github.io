@@ -18,7 +18,7 @@ mui('.mui-switch').each(function() { //循环所有toggle
 ///////////页面跳转//////////
 mui('.mui-content').on('tap', '.go-next', function(e) {
 	var thisValue = $(this).attr('data-value');
-	var url = 'sales.html';
+	var url ='';
 	switch(thisValue) {
 		case "month":
 			url = '../public/calendar/calendarMonth.html';

@@ -9,7 +9,7 @@ var fieldsNav=[];
 mui.ready(function() {
 	loadData();
 	getCalendarParms(); //日历参数
-	getCalcField();//计算项参数
+//	getCalcField();//计算项参数
 //	getWordField();//字段参数
 //	loadCalcField();//加载计算项目;
 //	fillField();//返回回来的字段选中内容填充；
@@ -33,44 +33,42 @@ function loadData() {
     localStorage.setItem('equipData',equipDataArr);
 	
 	
-	
-//	var path='http://svw.chinaautomarket.com/api/AnalysisField';
-//	mui.ajax(path, {
-//		data: {},
-//		dataType: 'json', //服务器返回json格式数据
-//		type: 'get', //HTTP请求类型
-//		timeout: 10000, //超时时间设置为10秒；
-//		headers: {
-//			'Content-Type': 'application/json'
-//		},
-//		success: function(data) {
-//			console.log(data);
-////			if(data.error) {
-////				mui.toast(data.error);
-////			} else {				
-////			}
-//		},
-//		error: function(xhr, type, errorThrown) {
-//			//异常处理；
-//			console.log(type);
-//		}
-//	});	
+	var path='http://svw.chinaautomarket.com/api/AnalysisField';
+	mui.ajax(path, {
+		data: {},
+		dataType: 'json', //服务器返回json格式数据
+		type: 'get', //HTTP请求类型
+		timeout: 10000, //超时时间设置为10秒；
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		success: function(data) {
+			console.log(data);
+//			if(data.error) {
+//				mui.toast(data.error);
+//			} else {				
+//			}
+		},
+		error: function(xhr, type, errorThrown) {
+			//异常处理；
+			console.log(type);
+		}
+	});	
 }
 
 
 
-function getCalendarParms() {
-	var arry = [
-	{
-		dateType: 'month',
-//		selectedCalendarDate: ['201501','201503'],
-		selectedCalendarDate: ['201501~201503'],
-		beginDate: '201302',
-		endDate: '201703',
-		dateRangeEndbled: true,
-		single: false
-	 }
-    ];
+function getCalendarParms() {  
+    var data = {
+		"result":"OK",
+		"data":{"beginDate":"201301","endDate":"201707"},
+		"message":null
+	}
+    var obj={'dateType':'month','selectedCalendarDate':[],'beginDate':data.data.beginDate,'endDate':data.data.endDate,
+             'dateRangeEndbled':false,'single':true
+           };
+
+    var arry=[obj];
 
     var dateType=arry[0].dateType;
 	//判断时间返回的值
