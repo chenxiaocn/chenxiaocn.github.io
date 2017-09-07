@@ -13607,3 +13607,101 @@ function getEquipData() {
 	}
 	return data;
 }
+
+queryStr: {
+    "SelectedSFG": {
+        "Type": 1,
+        "listSFG": [
+            {
+                "listSFG": [
+                    {
+                        "listSF": [
+                            {
+                                "Field": "DomesticImported",
+                                "Values": [
+                                    "CKD"
+                                ]
+                            }
+                        ],
+                        "Type": 0
+                    },
+                    {
+                        "listSF": [
+                            {
+                                "Field": "Segment",
+                                "Values": [
+                                    "A",
+                                    "B"
+                                ]
+                            }
+                        ],
+                        "Type": 0
+                    },
+                    {
+                        "listSF": [
+                            {
+                                "Field": "Bodytype",
+                                "Values": [
+                                    "HB",
+                                    "SUV"
+                                ]
+                            }
+                        ],
+                        "Type": 0
+                    },
+                    {
+                        "listSF": [
+                            {
+                                "Field": "BrandIndicator",
+                                "Values": [
+                                    "Premium",
+                                    "Economy"
+                                ]
+                            }
+                        ],
+                        "Type": 0
+                    },
+                    {
+                        "listSF": [
+                            {
+                                "Field": "NewSubsegment",
+                                "Values": [
+                                    "Premium",
+                                    "NEV"
+                                ]
+                            }
+                        ],
+                        "Type": 0
+                    },
+                    {
+                        "listSF": [
+                            {
+                                "Field": "Brand",
+                                "Values": [
+                                    "Audi",
+                                    "Acura"
+                                ]
+                            }
+                        ],
+                        "Type": 0
+                    },
+                    {
+                        "listSF": [
+                            {
+                                "Field": "Model_brand",
+                                "Values": [
+                                    "Audi Q3",
+                                    "Audi Q5",
+                                    "CDX"
+                                ]
+                            }
+                        ],
+                        "Type": 0
+                    }
+                ]
+            }
+        ]
+    },
+    "BeginDate": "201707",
+    "EndDate": "201707"
+}

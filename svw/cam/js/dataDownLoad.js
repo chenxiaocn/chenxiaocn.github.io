@@ -2,6 +2,8 @@ var calcFieldData=[];//计算项数据
 var wordFieldData=[];//字段数据
 var bodySearchList=JSON.parse(localStorage.getItem('carSearchList'));
 var fieldSearchList=JSON.parse(localStorage.getItem('fieldSearchList'));
+var searchList = JSON.parse(localStorage.getItem('searchList')); //查询条件集合
+var selectedRangeStr='';//时间
 
 var fieldsNav=[];
 
@@ -40,7 +42,6 @@ function getCalendarParms() {
     Ajax(path,'daterange');
 
     var data=JSON.parse(localStorage.getItem('daterange'));
-	var fields=data.data.fields;
 
     var obj={'dateType':'month','selectedCalendarDate':[],'beginDate':data.data.beginDate,'endDate':data.data.endDate,
              'dateRangeEndbled':false,'single':true
@@ -52,7 +53,7 @@ function getCalendarParms() {
 	//判断时间返回的值
 	var backFlag=localStorage.getItem('backFlag');
 	var selectedRange=JSON.parse(localStorage.getItem('selectedRange'));
-	var selectedRangeStr=(arry[0].selectedCalendarDate).join(',');
+	selectedRangeStr=(arry[0].selectedCalendarDate).join(',');
 
 	if(backFlag){
 		selectedCalendarDate=localStorage.getItem('selectedCalendarDate');
@@ -84,7 +85,7 @@ function getCalendarParms() {
 function Ajax(path,type) {
 	var obj = {};
 	mui.ajax(path, {
-		data: {},
+//		data:'',
 		dataType: 'json', //服务器返回json格式数据
 		type: 'get', //HTTP请求类型
 		timeout: 3000, //超时时间设置为3秒；
@@ -102,6 +103,9 @@ function Ajax(path,type) {
 				if(type=='daterange'){
 				    localStorage.setItem('daterange', dataObj);
 				}
+				if(type=='dataquery'){
+					
+				}
 				
 			}
 		},
@@ -111,7 +115,6 @@ function Ajax(path,type) {
 		}
 	});
 }
-
 
 function getCalcField(){
     calcFieldData=[
@@ -309,4 +312,39 @@ mui('body').on('tap', '.choose-car-li', function(){
 		url: url,
 		id: url
 	});
+});
+
+//查询
+mui('body').on('tap', '.search-btn', function() {
+    var listSFG=[];
+    var listSFGCel={};
+    for(var item in searchList){
+    	var listSF={};
+    	for(var key in searchList[item]){   		
+    		listSF={'Field':key,'Values':searchList[item][key]};
+    	}
+    	listSFGCel={'listSF':[listSF],"Type": 0};
+    	listSFG.push(listSFGCel);
+    }
+     
+	var queryStr = {
+		"SelectedSFG": {
+			"Type": 1,
+			"listSFG": [{
+				"listSFG": listSFG
+			}]
+		},
+		"BeginDate":selectedRangeStr,
+		"EndDate": selectedRangeStr
+	};
+	
+	console.log(queryStr);
+	var params=JSON.stringify(queryStr);
+   var path="http://svw.chinaautomarket.com/api/dataquery/"+params;
+   console.log(params);
+    console.log(path);
+   Ajax(path,'dataquery');
+   
+	
+//  console.log(queryStr);
 });

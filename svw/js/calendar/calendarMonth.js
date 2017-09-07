@@ -164,8 +164,10 @@ mui('body').on('tap', '.clickable', function() {
 			$(this).removeClass('selected');
 			selectedRange=sorSplice(selectedRange,thisValue);			
 		}else{
+			$('.cal-ul li').removeClass('selected');//单选
 			$(this).addClass('selected');
-			selectedRange.push(thisValue);
+			selectedRange=[thisValue];//单选
+//			selectedRange.push(thisValue);//多选
 		}
 	}
 });
