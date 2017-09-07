@@ -81,13 +81,13 @@ function loadIndexedList(){
    }
 }
 
-function setSelected(){
-	var  listCheckboxs=$('.field-list-checkbox');
-	for(var i=0;i<thisTypeSelcted.length;i++){
-	for(var j=0;j<listCheckboxs.length;j++){
-			var value=$(listCheckboxs[j]).attr('data-value');
-			if(thisTypeSelcted[i]==value){
-				$(listCheckboxs[j]).attr('checked',true);
+function setSelected() {
+	var listCheckboxs = $('.field-list-checkbox');
+	for(var i = 0; i < thisTypeSelcted.length; i++) {
+		for(var j = 0; j < listCheckboxs.length; j++) {
+			var value = $(listCheckboxs[j]).attr('data-value');
+			if(thisTypeSelcted[i] == value) {
+				$(listCheckboxs[j]).attr('checked', true);
 			}
 		}
 	}
@@ -130,7 +130,8 @@ mui('body').on('tap','.all',function(){
 		$(this).addClass('allSelected');
 		flag=true;		
 	}
-
+	
+	//checkbox全选中
 	var listCheckboxs = $('.field-list-checkbox');
 	for(var j = 0; j < listCheckboxs.length; j++) {
 		addOrdelSelected( $(listCheckboxs[j]),flag);
@@ -138,7 +139,6 @@ mui('body').on('tap','.all',function(){
 });
 
 function addOrdelSelected(target,flag) {
-	//checkbox全选中
 		var value = target.attr('data-value');
 		if(flag) {
 			target.prop('checked', true);
