@@ -5,7 +5,6 @@ var fieldSearchList=JSON.parse(localStorage.getItem('fieldSearchList'));
 
 var fieldsNav=[];
 
-
 mui.ready(function() {
 	loadData();
 	getCalendarParms(); //日历参数
@@ -18,8 +17,11 @@ mui.ready(function() {
 
 
 
-function loadData() {
-	var data=getEquipData();
+function loadData() {	
+	var path='http://svw.chinaautomarket.com/api/AnalysisField';
+	Ajax(path,'AnalysisField');
+	
+	var data=JSON.parse(localStorage.getItem('AnalysisField'));
 	var fields=data.data.fields;
     fieldsNav=getConditionList(fields,'name');
     var fieldsNavStr=JSON.stringify(fieldsNav);
@@ -31,39 +33,15 @@ function loadData() {
      var equipDataArr=JSON.stringify(equipData);
     localStorage.setItem('fieldsNav',fieldsNavStr);
     localStorage.setItem('equipData',equipDataArr);
-	
-	
-	var path='http://svw.chinaautomarket.com/api/AnalysisField';
-	mui.ajax(path, {
-		data: {},
-		dataType: 'json', //服务器返回json格式数据
-		type: 'get', //HTTP请求类型
-		timeout: 10000, //超时时间设置为10秒；
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		success: function(data) {
-			console.log(data);
-//			if(data.error) {
-//				mui.toast(data.error);
-//			} else {				
-//			}
-		},
-		error: function(xhr, type, errorThrown) {
-			//异常处理；
-			console.log(type);
-		}
-	});	
 }
 
-
-
 function getCalendarParms() {  
-    var data = {
-		"result":"OK",
-		"data":{"beginDate":"201301","endDate":"201707"},
-		"message":null
-	}
+    var path="http://svw.chinaautomarket.com/api/daterange";
+    Ajax(path,'daterange');
+
+    var data=JSON.parse(localStorage.getItem('daterange'));
+	var fields=data.data.fields;
+
     var obj={'dateType':'month','selectedCalendarDate':[],'beginDate':data.data.beginDate,'endDate':data.data.endDate,
              'dateRangeEndbled':false,'single':true
            };
@@ -102,6 +80,38 @@ function getCalendarParms() {
     var calendarParms=JSON.stringify(arry);
     localStorage.setItem('calendarParms',calendarParms);
 }
+
+function Ajax(path,type) {
+	var obj = {};
+	mui.ajax(path, {
+		data: {},
+		dataType: 'json', //服务器返回json格式数据
+		type: 'get', //HTTP请求类型
+		timeout: 3000, //超时时间设置为3秒；
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		success: function(data) {
+			if(data.error) {
+				mui.toast(data.error);
+			} else {
+				 var dataObj = JSON.stringify(data);
+				if(type=='AnalysisField'){
+				    localStorage.setItem('AnalysisField', dataObj);
+				}
+				if(type=='daterange'){
+				    localStorage.setItem('daterange', dataObj);
+				}
+				
+			}
+		},
+		error: function(xhr, type, errorThrown) {
+			//异常处理；
+			console.log(type);
+		}
+	});
+}
+
 
 function getCalcField(){
     calcFieldData=[
