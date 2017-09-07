@@ -274,28 +274,3 @@ function getSelectedRangeArr(selectedList, dataType) {
 	selectedArr = selectedArr.split(',');
 	return selectedArr;
 }
-//判断同一厂商汽车重名
-function jugeModel(list, recordsList) {
-	var arry = [],
-		count = 0;
-	for(var i = 0; i < recordsList.length; i++) {
-		var modelValue = recordsList[i].modelValue;
-		var dataId = recordsList[i].dataId;
-		var id = recordsList[i].id;
-		var dataOem = recordsList[i].dataOem;
-
-		count = jugeCell(list, recordsList[i].id, 'ModelID');
-		if(count > 1) {
-			modelValue = recordsList[i].modelValue + '(' + recordsList[i].dataOem + ')';
-			arry.push({
-				"modelValue": modelValue,
-				"dataId": dataId,
-				"id": id,
-				"dataOem": dataOem
-			})
-		} else {
-			arry.push(recordsList[i]);
-		}
-	}
-	return arry;
-}

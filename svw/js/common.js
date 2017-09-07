@@ -20,20 +20,8 @@ mui('.mui-content').on('tap', '.go-next', function(e) {
 	var thisValue = $(this).attr('data-value');
 	var url = 'sales.html';
 	switch(thisValue) {
-		case "选车":
-			url = 'chooseCar.html';
-			break;
-		case "newChooseCar":
-			url = 'newChooseCar.html';
-			break;
-		case "newIndexedList":
-			url = 'indexedList.html';
-			break;
 		case "month":
 			url = '../public/calendar/calendarMonth.html';
-			break;
-		default:
-			url = 'sales.html';
 			break;
 	}
 	mui.openWindow({

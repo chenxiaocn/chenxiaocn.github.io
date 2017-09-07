@@ -134,7 +134,7 @@ mui('body').on('tap','.all',function(){
 	//checkbox全选中
 	var listCheckboxs = $('.field-list-checkbox');
 	for(var j = 0; j < listCheckboxs.length; j++) {
-		addOrdelSelected( $(listCheckboxs[j]),flag);
+		addOrdelSelected($(listCheckboxs[j]),flag);
 	}
 });
 
