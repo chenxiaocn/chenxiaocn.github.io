@@ -10,12 +10,8 @@ if(fieldCellSelcted){
 	thisTypeSelcted=fieldCellSelcted.split(',');//转化成数组；
 }
 
-console.log(fieldType);
-console.log(searchList);
-
 mui.ready(function() {
 	loadIndexedListBar();
-	initBodyList();
 	loadIndexedList();
 });
 
@@ -27,12 +23,6 @@ function loadIndexedListBar(){
 		list+=itemHtml;
 	}
 	$('.mui-indexed-list-bar').append(list);
-}
-
-function initBodyList() {
-	var list = document.getElementById('list');
-	list.style.height = (document.body.offsetHeight) + 'px';
-	window.indexedList = new mui.IndexedList(list);
 }
 
 function loadIndexedList(){

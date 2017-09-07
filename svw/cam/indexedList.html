@@ -61,6 +61,14 @@
 		<script src="../js/dataDeal.js"></script>
 		<script src="../js/pinyin.js"></script>
 		<script src="../js/indexedList.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			mui.ready(function() {
+				var list = document.getElementById('list');
+	            list.style.height = (document.body.offsetHeight) + 'px';
+	            window.indexedList = new mui.IndexedList(list);
+			});
+		</script>
 	</body>
 
 </html>
