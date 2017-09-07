@@ -10,9 +10,9 @@ mui.ready(function() {
 	loadData();
 	getCalendarParms(); //日历参数
 	getCalcField();//计算项参数
-	getWordField();//字段参数
-	loadCalcField();//加载计算项目;
-	fillField();//返回回来的字段选中内容填充；
+//	getWordField();//字段参数
+//	loadCalcField();//加载计算项目;
+//	fillField();//返回回来的字段选中内容填充；
 	fillChooseCar();//填充选车
 });
 
