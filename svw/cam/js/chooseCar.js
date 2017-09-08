@@ -1,7 +1,6 @@
  var bodySearchList=JSON.parse(localStorage.getItem('bodySearchList'));
  var searchList=JSON.parse(localStorage.getItem('searchList'));
 var conditionType=[];
-
 mui.ready(function(){
 	loadChooseList();	
 });
@@ -68,7 +67,9 @@ mui('.mui-content').on('tap', '.plus,.choose-li', function(e) {
 mui('body').on('tap','.mui-icon-left-nav', function() {
 	var carSearchList=JSON.stringify(bodySearchList);
 	var searchListArr=JSON.stringify(searchList);
+	var bodySearchListArr=JSON.stringify(bodySearchList);
 	
+	localStorage.setItem('bodySearchList', bodySearchListArr);
 	localStorage.setItem('searchList', searchListArr);
 	localStorage.setItem('carSearchList', carSearchList);
 	

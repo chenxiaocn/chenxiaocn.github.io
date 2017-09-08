@@ -13,7 +13,7 @@ function fillField(){
 				if(key==dataTypeType){
 					var fieldItemKey=(bodySearchList[item][key]).join(',');
 					if(fieldItemKey){
-						$(fieldLi[i]).find('label').text(dataTypeType+":"+fieldItemKey);
+						$(fieldLi[i]).find('label').text(fieldItemKey);
 					}
 				}
 			}
