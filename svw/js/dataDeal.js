@@ -20,6 +20,9 @@ function delThisValue(type,searchList,keyWord){
 					if(arr[i]==keyWord){
 						arr.splice(i,1);
 						searchList[item][key]=arr;
+						if(searchList[item][key].length==0){
+							searchList.splice(item,1);
+						}
 						break;
 					}
 				}

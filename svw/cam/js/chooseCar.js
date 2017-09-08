@@ -67,6 +67,9 @@ mui('.mui-content').on('tap', '.plus,.choose-li', function(e) {
    /////////////////返回////////////////
 mui('body').on('tap','.mui-icon-left-nav', function() {
 	var carSearchList=JSON.stringify(bodySearchList);
+	var searchListArr=JSON.stringify(searchList);
+	
+	localStorage.setItem('searchList', searchListArr);
 	localStorage.setItem('carSearchList', carSearchList);
 	
 	mui.openWindow({

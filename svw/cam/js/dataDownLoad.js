@@ -11,39 +11,71 @@ mui.ready(function() {
 	loadData();
 	getCalendarParms(); //日历参数
 	fillChooseCar();//填充选车
-//	getCalcField();//计算项参数
-//	getWordField();//字段参数
-//	loadCalcField();//加载计算项目;
-//	fillField();//返回回来的字段选中内容填充；
 });
 
 
 
 function loadData() {	
 	var path='http://svw.chinaautomarket.com/api/AnalysisField';
-	Ajax(path,'AnalysisField');
 	
-	var data=JSON.parse(localStorage.getItem('AnalysisField'));
-	var fields=data.data.fields;
-    fieldsNav=getConditionList(fields,'name');
-    var fieldsNavStr=JSON.stringify(fieldsNav);
-  
-    var equipDataTmp=data.data.data;
-    equipDataTmp.splice(0,1); 
-    var equipData=arrToJson(equipDataTmp,fieldsNav);
-     
-     var equipDataArr=JSON.stringify(equipData);
-    localStorage.setItem('fieldsNav',fieldsNavStr);
-    localStorage.setItem('equipData',equipDataArr);
+	mui.ajax(path, {
+//		data:'',
+		dataType: 'json', //服务器返回json格式数据
+		type: 'get', //HTTP请求类型
+		timeout: 3000, //超时时间设置为3秒；
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		success: function(data) {
+			if(data.error) {
+				mui.toast(data.error);
+			} else {
+				var fields=data.data.fields;
+			    fieldsNav=getConditionList(fields,'name');
+			    var fieldsNavStr=JSON.stringify(fieldsNav);
+			  
+			    var equipDataTmp=data.data.data;
+			    equipDataTmp.splice(0,1); 
+			    var equipData=arrToJson(equipDataTmp,fieldsNav);
+			     
+			     var equipDataArr=JSON.stringify(equipData);
+			    localStorage.setItem('fieldsNav',fieldsNavStr);
+			    localStorage.setItem('equipData',equipDataArr);		
+			}
+		},
+		error: function(xhr, type, errorThrown) {
+			//异常处理；
+			console.log(type);
+		}
+	});
 }
 
 function getCalendarParms() {  
     var path="http://svw.chinaautomarket.com/api/daterange";
-    Ajax(path,'daterange');
+    mui.ajax(path, {
+//		data:'',
+		dataType: 'json', //服务器返回json格式数据
+		type: 'get', //HTTP请求类型
+		timeout: 3000, //超时时间设置为3秒；
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		success: function(data) {
+			if(data.error) {
+				mui.toast(data.error);
+			} else {
+				fillCalendar(data);			
+			}
+		},
+		error: function(xhr, type, errorThrown) {
+			//异常处理；
+			console.log(type);
+		}
+	});
+}
 
-    var data=JSON.parse(localStorage.getItem('daterange'));
-
-    var obj={'dateType':'month','selectedCalendarDate':[],'beginDate':data.data.beginDate,'endDate':data.data.endDate,
+function fillCalendar(data){
+	var obj={'dateType':'month','selectedCalendarDate':[],'beginDate':data.data.beginDate,'endDate':data.data.endDate,
              'dateRangeEndbled':false,'single':true
            };
 
@@ -82,175 +114,6 @@ function getCalendarParms() {
     localStorage.setItem('calendarParms',calendarParms);
 }
 
-function Ajax(path,type) {
-	mui.ajax(path, {
-//		data:'',
-		dataType: 'json', //服务器返回json格式数据
-		type: 'get', //HTTP请求类型
-		timeout: 3000, //超时时间设置为3秒；
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		success: function(data) {
-			if(data.error) {
-				mui.toast(data.error);
-			} else {
-				 var dataObj = JSON.stringify(data);
-				if(type=='AnalysisField'){
-				    localStorage.setItem('AnalysisField', dataObj);
-				}
-				if(type=='daterange'){
-				    localStorage.setItem('daterange', dataObj);
-				}				
-			}
-		},
-		error: function(xhr, type, errorThrown) {
-			//异常处理；
-			console.log(type);
-		}
-	});
-}
-
-function getCalcField(){
-    calcFieldData=[
-        {
-            "Name": "销量",
-            "Fields": [
-                {
-                    "ID": 2,
-                    "Name": "CAM CPCA",
-                    "FormatType": 10
-                }
-            ]
-        },
-        {
-            "Name": "价格", 
-            "Fields": [
-                {
-                    "ID": 0,
-                    "Name": "MSRP",
-                    "FormatType": 9
-                },
-                {
-                    "ID": 0,
-                    "Name": "TP",
-                    "FormatType": 9
-                },
-                {
-                    "ID": 0,
-                    "Name": "最小MSRP",
-                    "FormatType": 9
-                },
-                {
-                    "ID": 0,
-                    "Name": "最小TP",
-                    "FormatType": 9
-                },
-                {
-                    "ID": 0,
-                    "Name": "最大MSRP",
-                    "FormatType": 9
-                },
-                {
-                    "ID": 0,
-                    "Name": "最大TP",
-                    "FormatType": 9
-                }
-            ]
-        }
-    ]
-}
-
-function getWordField(){
-	wordFieldData= [
-	{
-			"FieldID": 2433,
-			"Name": "合资自主"
-		},
-		{
-			"FieldID": 48,
-			"Name": "车身形式"
-		},
-		{
-			"FieldID": 7,
-			"Name": "车型级别"
-		},
-		{
-			"FieldID": 50,
-			"Name": "车型子级别"
-		},
-		{
-			"FieldID": 1,
-			"Name": "制造商"
-		},
-		{
-			"FieldID": 2,
-			"Name": "品牌"
-		},
-		{
-			"FieldID": 3,
-			"Name": "车系"
-		},
-		{
-			"FieldID": 12,
-			"Name": "车型派系"
-		},
-		{
-			"FieldID": 384,
-			"Name": "燃油种类"
-		},
-		{
-			"FieldID": 47,
-			"Name": "排量"
-		},
-		{
-			"FieldID": 898,
-			"Name": "变速箱形式"
-		},
-		{
-			"FieldID": 44,
-			"Name": "型号/车型名称"
-		},
-		{
-			"FieldID": 45,
-			"Name": "车型编号"
-		}
-	]
-}
-
-function loadCalcField(){
-	var list=[];
-	var calNameList=getConditionList(calcFieldData,'Name');
-	
-	for(var i=0;i<calcFieldData.length;i++){
-		var itemHtml='<li class="mui-table-view-cell field-li" data-type='+calNameList[i]+'>'
-					 +'<a class="mui-navigate-right" href="#">'+calNameList[i]
-					 +'<label class="mui-pull-right text-overflow" for=""></label>'
-					 +'</a>'
-					 +'</li>';
-			list+=itemHtml;
-	}
-	$('.calcField-ul').append(list);
-}
-
-function fillField(){
-	var fieldLi=$('.field-li');
-	for(var i=0;i<fieldLi.length;i++){
-		var dataTypeCell=$($(fieldLi[i])).attr('data-type');
-
-		for(var item in fieldSearchList){
-			for(var key in fieldSearchList[item]){
-				if(key==dataTypeCell){
-					var fieldItemKey=(fieldSearchList[item][key]).join(',');
-					if(fieldItemKey){
-						$(fieldLi[i]).find('label').text(fieldItemKey);
-					}
-				}
-			}
-		}
-	}
-}
-
 function fillChooseCar(){
 	var list='';
 	for(var item in bodySearchList){
@@ -265,34 +128,10 @@ function fillChooseCar(){
 				itemStr=key+':'+keyStr+',';
 		}
 	list+=itemStr;
-	list = list.substr(0,list.length-1);
 	}
+	list = list.substr(0,list.length-1);
 	$('.chooseCar-label').text(list);
 };
-
-mui('body').on('tap', '.field-li', function() {
-	var dataType = $(this).attr('data-type');
-	var thisValue=$(this).find('label').text();
-
-	var fieldsList=[];
-	if(dataType=="字段"){
-		fieldsList=wordFieldData;
-	}
-	else{
-		fieldsList=(getChildPropertyList(calcFieldData, "Name", dataType, 'Fields'))[0];
-	}
-	
-	fieldsList=JSON.stringify(fieldsList);
-
-	localStorage.setItem('dataType',dataType);
-	localStorage.setItem('fieldsList',fieldsList);
-	localStorage.setItem('fieldsCellSelcteds',thisValue);
-
-	mui.openWindow({
-		url: 'field.html',
-		id: 'field.html'
-	});
-});
 
 //选车
 mui('body').on('tap', '.choose-car-li', function(){
@@ -308,60 +147,73 @@ mui('body').on('tap', '.choose-car-li', function(){
 		id: url
 	});
 });
-
 //查询
-mui('body').on('tap', '.search-btn', function() {
-	$('.mui-popover').toggle();
-	if($('.mui-popover').is(':visible')){
-		var listSFG=[];
-	    var listSFGCel={};
-	    for(var item in searchList){
-	    	var listSF={};
-	    	for(var key in searchList[item]){   		
-	    		listSF={'Field':key,'Values':searchList[item][key]};
-	    	}
-	    	listSFGCel={'listSF':[listSF],"Type": 0};
-	    	listSFG.push(listSFGCel);
-	    }
-	     
-		var queryStr = {
-			"SelectedSFG": {
-				"Type": 1,
-				"listSFG": [{
-					"listSFG": listSFG
-				}]
-			},
-			"BeginDate":selectedRangeStr,
-			"EndDate": selectedRangeStr
-		};
-		
-		var query=JSON.stringify(queryStr);
-	    var path="http://svw.chinaautomarket.com/api/dataquery";	
-		mui.ajax(path, {
-			data:query,
-			dataType: 'json', //服务器返回json格式数据
-			type: 'post', //HTTP请求类型
-			timeout: 10000, //超时时间设置为10秒；
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			success: function(data) {
-				if(data.error) {
-					mui.toast(data.error);
-				} else {	
-					var queryResult=data.data;					
-					showQuery(queryResult);//查询结果
-				}
-			},
-			error: function(xhr, type, errorThrown) {
-				//异常处理；
-				console.log(type);
-			}
-		});	
+mui('body').on('tap', '.search-btn', function(e) {	
+    $('.mui-popover').toggle();
+    var chooseFlag=true;
+	if(selectedRangeStr==''){
+		mui.toast('请选择时间');	
+	    e.stopPropagation();
+	    chooseFlag=false;
+	    return;
 	}
+	if(searchList==null||searchList.length==0){
+		mui.toast('请选择条件');	
+	    e.stopPropagation();
+	    chooseFlag=false;
+	    return;
+	}
+	if(chooseFlag){
+		if($('.mui-popover').is(':visible')){
+			var listSFG=[];
+		    var listSFGCel={};
+		    
+		   //条件
+		    for(var item in searchList){
+		    	var listSF={};
+		    	for(var key in searchList[item]){   		
+		    		listSF={'Field':key,'Values':searchList[item][key]};
+		    	}
+		    	listSFGCel={'listSF':[listSF]};
+		    	listSFG.push(listSFGCel);
+		    }
+		     
+			var queryStr = {
+				"SelectedSFG": {
+					"listSFG": [{
+						"listSFG": listSFG
+					}]
+				},
+				"BeginDate":selectedRangeStr,
+				"EndDate": selectedRangeStr
+			};
+			
+			var query=JSON.stringify(queryStr);
+		    var path="http://svw.chinaautomarket.com/api/dataquery";	
+			mui.ajax(path, {
+				data:query,
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				success: function(data) {
+					if(data.error) {
+						mui.toast(data.error);
+					} else {	
+						var queryResult=data.data;					
+						showQuery(queryResult);//查询结果
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					//异常处理；
+					console.log(type);
+				}
+			});	
+		}
+	}	
 });
-
-
 //查询结果展示
 function showQuery(data){
 	mui('.mui-scroll-wrapper').scroll();
