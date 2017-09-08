@@ -9,6 +9,11 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../css/mui.min.css">
 		<link rel="stylesheet" href="../css/common.css">
+		<style>
+			.mui-popover {
+				height: 300px;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -18,7 +23,7 @@
 		<div class="mui-content">
 			<ul class="mui-table-view mui-table-view-chevron ul-item">
 				<li class="mui-table-view-cell" data-type="month">
-					<a id='time' class="mui-navigate-right go-next"  data-value="month" href="#">
+					<a id='time' class="mui-navigate-right go-next" data-value="month" href="#">
 						时间
 						<label class="mui-pull-right text-overflow" for=""></label>
 					</a>
@@ -28,7 +33,7 @@
 						<label class="mui-pull-right text-overflow chooseCar-label" for=""></label>
 					</a>
 				</li>
-				
+
 				<!--<li class="mui-table-view-cell field-li" data-type="字段">
 					<a class="mui-navigate-right" href="#">字段
 						<label class="mui-pull-right text-overflow" for=""></label>
@@ -41,9 +46,22 @@
 				</li>-->
 			</ul>
 
-			<div class="mui-content-padded search-btn" style="margin-top: 80px;">
-				<button class="mui-btn mui-btn-block mui-btn-primary">查询</button>
+			<div class="mui-content-padded search-btn">
+				<a href="#middlePopover" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined" style="padding: 0px 0px;">
+					<button class="mui-btn mui-btn-block mui-btn-primary" style="margin-bottom: 0px;">查询</button>
+				</a>
 			</div>
+
+			<div id="middlePopover" class="mui-popover">
+				<div class="mui-popover-arrow"></div>
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view result-ul"></ul>
+					</div>
+				</div>
+
+			</div>
+
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/jquery.1.9.1.min.js"></script>

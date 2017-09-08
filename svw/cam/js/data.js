@@ -13705,3 +13705,17 @@ queryStr: {
     "BeginDate": "201707",
     "EndDate": "201707"
 }
+
+//	   var result = {
+// 	"result": "OK",
+// 	"data": [{
+// 		"oem": "Audi",
+// 		"model_brand": "Audi (FBU)",
+// 		"retail": 123.55,
+// 		"wholeSales": null,
+// 		"msrp": null,
+// 		"tp": null
+// 	}],
+// 	"message": null
+// };
+//	
